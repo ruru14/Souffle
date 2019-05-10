@@ -14,7 +14,6 @@
         android:layout_marginBottom="100dp"
         android:text="***님 환영합니다"
         android:textSize="35dp" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package com.seoultech.lesson.souffle.ui;
+package com.seoultech.lesson.souffle.ui.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -65,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                 //  startActivity(intent);
             }
         });
+
 
 
     }

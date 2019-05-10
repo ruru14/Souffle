@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".trash.MainActivity">
         </activity>
-        <activity android:name=".ui.LoginActivity">
+        <activity android:name=".ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,19 +19,25 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.SelectRoomActivity">
+        <activity android:name=".ui.add_Plan.SelectRoomActivity">
 
         </activity>
 
-        <activity android:name=".ui.FloorPlanActivity">
+        <activity android:name=".ui.viewing.FloorPlanActivity">
 
         </activity>
 
-        <activity android:name=".ui.TimeReserveActivity">
+        <activity android:name=".ui.add_Plan.TimeReserveActivity">
 
         </activity>
 
-        <activity android:name=".ui.SelectMenuActivity">
+        <activity android:name=".ui.login.SelectMenuActivity">
+
+        </activity>
+        <activity android:name=".ui.add_Plan.ReserveContentsActivity">
+
+        </activity>
+        <activity android:name=".ui.add_Plan.AddOptionActivity">
 
         </activity>
 
