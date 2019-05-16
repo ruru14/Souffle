@@ -9,13 +9,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".trash.MainActivity">
+        </activity>
+        <activity android:name=".ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.add_Plan.SelectRoomActivity">
+
+        </activity>
+
+        <activity android:name=".ui.viewing.FloorPlanActivity">
+
+        </activity>
+
+        <activity android:name=".ui.add_Plan.TimeReserveActivity">
+
+        </activity>
+
+        <activity android:name=".ui.login.SelectMenuActivity">
+
+        </activity>
+        <activity android:name=".ui.add_Plan.ReserveContentsActivity">
+
+        </activity>
+        <activity android:name=".ui.add_Plan.AddOptionActivity">
+
+        </activity>
+
     </application>
 
 </manifest>

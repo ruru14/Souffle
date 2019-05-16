@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+
+    <TextView
+        android:layout_marginBottom="20dp"
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:text="강의실 층 선택" />
+    <Spinner
+        android:id="@+id/spinner_layer"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="20dp" />
+    <Button
+        android:id="@+id/btn_layer_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/spinner_layer"
+        android:text="선택" />
+    <TextView
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btn_layer_select"
+        android:textSize ="20dp"
+        android:text="강의실 선택" />
+
+    <!--프레임 레이아웃 내에 각 층의 방을 선택하는 버튼 넣음-->
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible">
+        <!--1층-->
+        <GridLayout
+            android:id="@+id/grid_first_select"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/textView4"
+            android:layout_alignParentStart="true"
+            android:visibility="invisible">
+            <Button
+                android:id="@+id/btn_109"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="Room109" />
+            <Button
+                android:id="@+id/btn_111"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:text="Room111" />
+            <Button
+                android:id="@+id/btn_113"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:text="Room113" />
+            <Button
+                android:id="@+id/btn_115"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:text="Room115" />
+
+            <Button
+                android:id="@+id/btn_117"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:text="Room117" />
+            <Button
+                android:id="@+id/btn_119"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="2"
+                android:layout_column="1"
+                android:text="Room119" />
+            <Button
+                android:id="@+id/btn_121"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="2"
+                android:text="Room121" />
+            <Button
+                android:id="@+id/btn_123"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="2"
+                android:text="Room123" />
+            <Button
+                android:id="@+id/btn_125"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="2"
+                android:layout_column="2"
+                android:text="Room125" />
+        </GridLayout>
+        <!--2층-->
+        <GridLayout
+            android:id="@+id/grid_second_floor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/textView4"
+            android:layout_alignParentStart="true"
+            android:visibility="invisible">
+            <Button
+                android:id="@+id/btn_209"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="Room209" />
+            <Button
+                android:id="@+id/btn_211"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:text="Room211" />
+            <Button
+                android:id="@+id/btn_213"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:text="Room213" />
+            <Button
+                android:id="@+id/btn_215"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:text="Room215" />
+            <Button
+                android:id="@+id/btn_217"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:text="Room217" />
+            <Button
+                android:id="@+id/btn_219"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="2"
+                android:layout_column="1"
+                android:text="Room219" />
+            <Button
+                android:id="@+id/btn_221"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="2"
+                android:text="Room221" />
+            <Button
+                android:id="@+id/btn_223"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="2"
+                android:text="Room223" />
+            <Button
+                android:id="@+id/btn_225"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="2"
+                android:layout_column="2"
+                android:text="Room225" />
+        </GridLayout>
+        <!--3층-->
+        <GridLayout
+            android:id="@+id/grid_third_floor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/textView4"
+            android:layout_alignParentStart="true"
+            android:visibility="invisible">
+            <Button
+                android:id = "@+id/btn_301"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="301호"
+                android:layout_row="0"
+                android:layout_column="0">
+            </Button>
+            <Button
+                android:id = "@+id/btn_305"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="305호"
+                android:layout_row="1"
+                android:layout_column="0">
+            </Button>
+            <Button
+                android:id = "@+id/btn_309"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="309호"
+                android:layout_row="0"
+                android:layout_column="1">
+            </Button>
+        </GridLayout>
+
+        <GridLayout
+            android:id="@+id/grid_fourth_floor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/textView4"
+            android:layout_alignParentStart="true"
+            android:visibility="invisible">
+            <Button
+                android:id = "@+id/btn_401"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="401호"
+                android:layout_row="0"
+                android:layout_column="0">
+            </Button>
+            <Button
+                android:id = "@+id/btn_405"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="405호"
+                android:layout_row="1"
+                android:layout_column="0">
+            </Button>
+            <Button
+                android:id = "@+id/btn_409"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="409호"
+                android:layout_row="0"
+                android:layout_column="1">
+            </Button>
+        </GridLayout>
+        <GridLayout
+            android:id="@+id/grid_fifth_floor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/textView4"
+            android:layout_alignParentStart="true"
+            android:visibility="invisible">
+            <Button
+                android:id = "@+id/btn_501"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="501호"
+                android:layout_row="0"
+                android:layout_column="0">
+            </Button>
+            <Button
+                android:id = "@+id/btn_505"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="505호"
+                android:layout_row="1"
+                android:layout_column="0">
+            </Button>
+            <Button
+                android:id = "@+id/btn_509"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="509호"
+                android:layout_row="0"
+                android:layout_column="1">
+            </Button>
+        </GridLayout>
+        <GridLayout
+            android:id="@+id/grid_b1_floor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/textView4"
+            android:layout_alignParentStart="true"
+            android:visibility="invisible">
+            <Button
+                android:id = "@+id/btn_b101"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="b101호"
+                android:layout_row="0"
+                android:layout_column="0">
+            </Button>
+            <Button
+                android:id = "@+id/btn_b105"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="b105호"
+                android:layout_row="1"
+                android:layout_column="0">
+            </Button>
+            <Button
+                android:id = "@+id/btn_b109"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="b109호"
+                android:layout_row="0"
+                android:layout_column="1">
+            </Button>
+        </GridLayout>
+    </FrameLayout>
+
+
+    <Button
+        android:layout_marginTop="50dp"
+        android:id="@+id/btn_plan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/grid_second_floor"
+        android:text="도면 보기"
+        android:visibility="invisible" />
+
+
+    <Button
+        android:layout_marginTop="50dp"
+        android:id="@+id/btn_Return_Main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:text="메인 화면으로 돌아가기" />
+
+
+</LinearLayout>
