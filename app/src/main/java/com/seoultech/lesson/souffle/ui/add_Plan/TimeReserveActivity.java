@@ -1,6 +1,8 @@
 package com.seoultech.lesson.souffle.ui.add_Plan;
 
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.ui.viewing.FloorPlanActivity;
 
 import java.text.Format;
 import java.text.ParseException;
@@ -33,7 +36,7 @@ public class TimeReserveActivity extends AppCompatActivity {
     TextView test_hour, test_txt, test_day_between;
     String room_nums;
     DatePicker date;
-    Button btn_date;
+    Button btn_date, btn_plan_in_time;
     Date current_time;
     Date reserve_time;
     Calendar today_cal, reserve_cal;
@@ -57,7 +60,11 @@ public class TimeReserveActivity extends AppCompatActivity {
 
         Intent time_intent = new Intent(this.getIntent());
 
+   //     DatePickerDialog date_dlg = new DatePickerDialog(this, listener, 2019,5,18);
+   //     date_dlg.show();
+
         room_nums = time_intent.getExtras().getString("room_number");
+        final int room_num_int = Integer.parseInt(room_nums);
   //      test_txt.setText(room_nums + "호 강의실 테스트중");
 
         final TextView test_txt = (TextView)findViewById(R.id.test_test);
@@ -66,6 +73,7 @@ public class TimeReserveActivity extends AppCompatActivity {
         test_day_between = (TextView)findViewById(R.id.test_between_day);
         time = (TimePicker) findViewById(R.id.time_pick);
         test_hour = (TextView) findViewById(R.id.txt_hour);
+        btn_plan_in_time = (Button)findViewById(R.id.btn_plan_in_time);
 
         numberPicker = (NumberPicker)time.findViewById(Resources.getSystem().getIdentifier("minute","id","android"));
         numberPicker.setMinValue(0);
@@ -77,30 +85,28 @@ public class TimeReserveActivity extends AppCompatActivity {
         numberPicker.setDisplayedValues(minuteVal.toArray(new String[0]));
 
 
+        date.setMinDate(System.currentTimeMillis());
+        date.setMaxDate(System.currentTimeMillis()+ 3600000 * 168 * 2);
+        //시간 예매는 오늘로부터 최대 14일 후까지만 가능합니다
+
+
         current_time = Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM dd hh mm");
-       // SimpleDateFormat reserve_sdf = new SimpleDateFormat("yyyy MM dd hh mm");
+        SimpleDateFormat sdf_date = new SimpleDateFormat("yy MM dd");
         sdf.format(current_time.getTime());
+        sdf_date.format(current_time.getTime());
         String today = sdf.format(current_time);
-        //test_day_between.setText(today);
 
 
-
-    /*  reserve_cal.set(Calendar.YEAR,dYear);
-        reserve_cal.set(Calendar.MONTH,dMonth);
-        reserve_cal.set(Calendar.DAY_OF_MONTH,dDay);
-        reserve_cal.set(Calendar.HOUR_OF_DAY,dHour);
-        reserve_cal.set(Calendar.MINUTE,dMinute);
-        test_txt.setText(reserve_cal.get(Calendar.YEAR) - today_cal.get(Calendar.YEAR));*/
-
-   /*   try {
-            Date date1 = sdf.parse(today);
-            Date date2 = sdf.parse(inputString2);
-            long diff = date2.getTime() - date1.getTime();
-            System.out.println ("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }*/
+        btn_plan_in_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent to_plan_intent = new Intent(getApplicationContext(), FloorPlanActivity.class);
+                to_plan_intent.putExtra("room_num_int",room_num_int);
+                to_plan_intent.putExtra("room_plan",1);
+                startActivity(to_plan_intent);
+            }
+        });
 
         btn_date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,6 +135,7 @@ public class TimeReserveActivity extends AppCompatActivity {
                             to_option_intent.putExtra("reserve_day",tDay);
                             to_option_intent.putExtra("reserve_hour",tHour);
                             to_option_intent.putExtra("reserve_minute",tMinute);
+                            to_option_intent.putExtra("room_numbers",room_nums);
                             startActivity(to_option_intent);
                         }
                     });
@@ -137,6 +144,8 @@ public class TimeReserveActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //date.remove
 
         date.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
             @Override
@@ -147,7 +156,6 @@ public class TimeReserveActivity extends AppCompatActivity {
                 test_txt.setText(dYear+"년 " + dMonth +"월 " +dDay +"일 ");
             }
         });
-
         time.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
@@ -158,6 +166,7 @@ public class TimeReserveActivity extends AppCompatActivity {
         });
 
     }
+
 
     public int getReturn(int n){
         return n;

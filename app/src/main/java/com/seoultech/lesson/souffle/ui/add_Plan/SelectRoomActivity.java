@@ -234,6 +234,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                     @Override
                     public void onClick(View view) {
                         to_floor_plan_intent.putExtra("floor_number",0);
+                        to_floor_plan_intent.putExtra("floor_plan",1);
                         startActivity(to_floor_plan_intent);
                     }
                 });
@@ -249,6 +250,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                     @Override
                     public void onClick(View view) {
                         to_floor_plan_intent.putExtra("floor_number",1);
+                        to_floor_plan_intent.putExtra("floor_plan",1);
                         startActivity(to_floor_plan_intent);
                     }
                 });
@@ -264,6 +266,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                     @Override
                     public void onClick(View view) {
                         to_floor_plan_intent.putExtra("floor_number",2);
+                        to_floor_plan_intent.putExtra("floor_plan",1);
                         startActivity(to_floor_plan_intent);
                     }
                 });
@@ -279,6 +282,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                     @Override
                     public void onClick(View view) {
                         to_floor_plan_intent.putExtra("floor_number",3);
+                        to_floor_plan_intent.putExtra("floor_plan",1);
                         startActivity(to_floor_plan_intent);
                     }
                 });
@@ -294,6 +298,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                     @Override
                     public void onClick(View view) {
                         to_floor_plan_intent.putExtra("floor_number",4);
+                        to_floor_plan_intent.putExtra("floor_plan",1);
                         startActivity(to_floor_plan_intent);
                     }
                 });
@@ -309,6 +314,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                     @Override
                     public void onClick(View view) {
                         to_floor_plan_intent.putExtra("floor_number",5);
+                        to_floor_plan_intent.putExtra("floor_plan",1);
                         startActivity(to_floor_plan_intent);
                     }
                 });

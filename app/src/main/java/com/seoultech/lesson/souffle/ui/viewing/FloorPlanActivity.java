@@ -14,8 +14,9 @@ import com.seoultech.lesson.souffle.ui.add_Plan.SelectRoomActivity;
 public class FloorPlanActivity extends AppCompatActivity {
 
     ImageView image_floor_plan;
-    int room_number = 0;
-    int floor_number = 0;
+    int floor_number = -1;
+    int bool_floor_plan = -1;
+    int bool_room_plan = -1;
     TextView guide;
     Button btn_back;
 
@@ -32,38 +33,47 @@ public class FloorPlanActivity extends AppCompatActivity {
         guide = (TextView) findViewById(R.id.txt_guide);
         Intent Reserve_intent = new Intent(this.getIntent());
         ImageView image_floor_plan = (ImageView) findViewById(R.id.image_floor_plan);
-
+        bool_floor_plan = Reserve_intent.getExtras().getInt("floor_plan");
+        bool_room_plan = Reserve_intent.getExtras().getInt("room_plan");
         floor_number = Reserve_intent.getExtras().getInt("floor_number");
-        room_number = Reserve_intent.getExtras().getInt("room_number");
+        int room_num_int = Reserve_intent.getExtras().getInt("room_num_int");
 
+        guide.setText(room_num_int + "호 강의실 사진");
 
-        switch (floor_number) {         //각 층의 도면보여주기
-            case 0:
-                image_floor_plan.setImageResource(R.drawable.floor_b1);
-                guide.setText("B1층 강의실 도면");
-                break;
-            case 1:
-                image_floor_plan.setImageResource(R.drawable.floor_1st);   //1층 도면
-                guide.setText(floor_number + "층 강의실 도면");
-                break;
-            case 2:
-                image_floor_plan.setImageResource(R.drawable.floor_2nd);  //2층 도면
-                guide.setText(floor_number + "층 강의실 도면");
-                break;
-            case 3:
-                image_floor_plan.setImageResource(R.drawable.floor_3rd);  //3층 도면
-                guide.setText(floor_number + "층 강의실 도면");
-                break;
-            case 4:
-                image_floor_plan.setImageResource(R.drawable.floor_4th);  //4층 도면
-                guide.setText(floor_number + "층 강의실 도면");
-                break;
-            case 5:
-                image_floor_plan.setImageResource(R.drawable.floor_5th);  //5층 도면
-                guide.setText(floor_number + "층 강의실 도면");
-                break;
+        if(bool_room_plan == 1){        //강의실 사진용
+            guide.setText(room_num_int + "호 강의실 사진");
+            image_floor_plan.setImageResource(R.drawable.floor_b1);
         }
 
+
+        if(bool_floor_plan == 1) {
+            switch (floor_number) {         //각 층의 도면보여주기
+                case 0:
+                    image_floor_plan.setImageResource(R.drawable.floor_b1);
+                    guide.setText("B1층 강의실 도면");
+                    break;
+                case 1:
+                    image_floor_plan.setImageResource(R.drawable.floor_1st);   //1층 도면
+                    guide.setText(floor_number + "층 강의실 도면");
+                    break;
+                case 2:
+                    image_floor_plan.setImageResource(R.drawable.floor_2nd);  //2층 도면
+                    guide.setText(floor_number + "층 강의실 도면");
+                    break;
+                case 3:
+                    image_floor_plan.setImageResource(R.drawable.floor_3rd);  //3층 도면
+                    guide.setText(floor_number + "층 강의실 도면");
+                    break;
+                case 4:
+                    image_floor_plan.setImageResource(R.drawable.floor_4th);  //4층 도면
+                    guide.setText(floor_number + "층 강의실 도면");
+                    break;
+                case 5:
+                    image_floor_plan.setImageResource(R.drawable.floor_5th);  //5층 도면
+                    guide.setText(floor_number + "층 강의실 도면");
+                    break;
+            }
+        }
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
