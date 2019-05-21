@@ -16,11 +16,14 @@ public class SelectMenuActivity extends AppCompatActivity {
 
     Intent select_menu_intent;
 
+    private BackPressCloseHandler backPressCloseHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_menu);
 
+        backPressCloseHandler = new BackPressCloseHandler(this);
 
         btn_reserve = (Button)findViewById(R.id.btn_reserve);
         btn_confirm = (Button)findViewById(R.id.btn_confirm);
@@ -43,5 +46,9 @@ public class SelectMenuActivity extends AppCompatActivity {
         });
 
     }
-
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+       backPressCloseHandler.onBackPressed();
+    }
 }

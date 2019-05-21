@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.ui.login.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.viewing.FloorPlanActivity;
 
 import java.text.Format;
@@ -32,6 +33,7 @@ import java.util.concurrent.TimeUnit;
 
 public class TimeReserveActivity extends AppCompatActivity {
 
+    private BackPressCloseHandler backPressCloseHandler;
     TimePicker time;
     TextView test_hour, test_txt, test_day_between;
     String room_nums;
@@ -58,10 +60,12 @@ public class TimeReserveActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_reserve);
 
+        backPressCloseHandler = new BackPressCloseHandler(this);
+
         Intent time_intent = new Intent(this.getIntent());
 
-   //     DatePickerDialog date_dlg = new DatePickerDialog(this, listener, 2019,5,18);
-   //     date_dlg.show();
+       /* DatePickerDialog date_dlg = new DatePickerDialog(this, listener, 2019,5,18);
+        date_dlg.show();*/
 
         room_nums = time_intent.getExtras().getString("room_number");
         final int room_num_int = Integer.parseInt(room_nums);
@@ -73,7 +77,7 @@ public class TimeReserveActivity extends AppCompatActivity {
         test_day_between = (TextView)findViewById(R.id.test_between_day);
         time = (TimePicker) findViewById(R.id.time_pick);
         test_hour = (TextView) findViewById(R.id.txt_hour);
-        btn_plan_in_time = (Button)findViewById(R.id.btn_plan_in_time);
+       // btn_plan_in_time = (Button)findViewById(R.id.btn_plan_in_time);
 
         numberPicker = (NumberPicker)time.findViewById(Resources.getSystem().getIdentifier("minute","id","android"));
         numberPicker.setMinValue(0);
@@ -98,7 +102,7 @@ public class TimeReserveActivity extends AppCompatActivity {
         String today = sdf.format(current_time);
 
 
-        btn_plan_in_time.setOnClickListener(new View.OnClickListener() {
+        /*btn_plan_in_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent to_plan_intent = new Intent(getApplicationContext(), FloorPlanActivity.class);
@@ -107,7 +111,7 @@ public class TimeReserveActivity extends AppCompatActivity {
                 startActivity(to_plan_intent);
             }
         });
-
+*/
         btn_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,6 +171,11 @@ public class TimeReserveActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        backPressCloseHandler.onBackPressed();
+    }
 
     public int getReturn(int n){
         return n;

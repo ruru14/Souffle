@@ -39,6 +39,9 @@
         <activity android:name=".ui.add_Plan.AddOptionActivity">
 
         </activity>
+        <activity android:name=".ui.viewing.RoomPlanActivity">
+
+        </activity>
 
     </application>
 

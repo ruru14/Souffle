@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.ui.add_Plan.TimeReserveActivity;
+import com.seoultech.lesson.souffle.ui.login.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 
 import java.sql.Time;
@@ -21,12 +22,15 @@ public class ReserveContentsActivity extends AppCompatActivity {
     public int rDay;
     Button btn_back_to_main;
 
+    private BackPressCloseHandler backPressCloseHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reserve_contents);
 
+        backPressCloseHandler = new BackPressCloseHandler(this);
         Intent intent = new Intent(this.getIntent());
 
         btn_back_to_main = (Button)findViewById(R.id.btn_back_main);
@@ -42,5 +46,9 @@ public class ReserveContentsActivity extends AppCompatActivity {
 
 
     }
-
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        backPressCloseHandler.onBackPressed();
+    }
 }

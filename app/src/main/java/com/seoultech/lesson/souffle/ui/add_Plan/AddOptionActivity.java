@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.ui.login.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 
 public class AddOptionActivity extends AppCompatActivity {
@@ -19,10 +20,13 @@ public class AddOptionActivity extends AppCompatActivity {
     Button btn_back_to_time_reserve, btn_commit_reserve;
     String room_num;
 
+    private BackPressCloseHandler backPressCloseHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_option);
+        backPressCloseHandler = new BackPressCloseHandler(this);
 
         Intent intent = new Intent(this.getIntent());
         room_num = intent.getExtras().getString("room_numbers");
@@ -74,5 +78,11 @@ public class AddOptionActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        backPressCloseHandler.onBackPressed();
     }
 }

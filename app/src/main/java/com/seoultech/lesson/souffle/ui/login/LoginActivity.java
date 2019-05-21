@@ -1,12 +1,15 @@
 package com.seoultech.lesson.souffle.ui.login;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
 
@@ -17,11 +20,14 @@ public class LoginActivity extends AppCompatActivity {
     EditText edit_id, edit_pw;
     Intent to_floor_select;
 
+    private BackPressCloseHandler backPressCloseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        backPressCloseHandler = new BackPressCloseHandler(this);
 
         to_floor_select = new Intent(this.getIntent());
         test_id = (TextView) findViewById(R.id.test_ID);
@@ -37,6 +43,8 @@ public class LoginActivity extends AppCompatActivity {
         edit_id = (EditText) findViewById(R.id.edit_login_ID);
         edit_pw = (EditText) findViewById(R.id.edit_login_PW);
 
+        //textView.setPaintFlags(textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);   -> 글자에 선긋기
+
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,6 +52,8 @@ public class LoginActivity extends AppCompatActivity {
                 test_pw.setText(edit_pw.getText());
             }
         });
+
+
 
         btn_exit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
 
         btn_test.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +78,12 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+    }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        backPressCloseHandler.onBackPressed();
     }
 }
+
