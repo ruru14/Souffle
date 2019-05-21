@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.ui.add_Plan.SelectRoomActivity;
-import com.seoultech.lesson.souffle.ui.login.BackPressCloseHandler;
+import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 
 public class RoomPlanActivity extends AppCompatActivity {
 

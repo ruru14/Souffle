@@ -7,11 +7,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.seoultech.lesson.souffle.R;
-import com.seoultech.lesson.souffle.ui.add_Plan.TimeReserveActivity;
-import com.seoultech.lesson.souffle.ui.login.BackPressCloseHandler;
+import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
-
-import java.sql.Time;
 
 public class ReserveContentsActivity extends AppCompatActivity {
 

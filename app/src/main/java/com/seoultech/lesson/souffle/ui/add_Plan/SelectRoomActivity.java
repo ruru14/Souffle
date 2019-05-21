@@ -12,8 +12,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
-import com.seoultech.lesson.souffle.ui.add_Plan.TimeReserveActivity;
-import com.seoultech.lesson.souffle.ui.login.BackPressCloseHandler;
+import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.login.LoginActivity;
 import com.seoultech.lesson.souffle.ui.viewing.FloorPlanActivity;
 

@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
-import com.seoultech.lesson.souffle.ui.login.BackPressCloseHandler;
+import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 
 public class AddOptionActivity extends AppCompatActivity {

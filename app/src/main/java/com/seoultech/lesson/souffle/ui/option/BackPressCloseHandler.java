@@ -1,4 +1,4 @@
-package com.seoultech.lesson.souffle.ui.login;
+package com.seoultech.lesson.souffle.ui.option;
 
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +22,7 @@ public class BackPressCloseHandler extends AppCompatActivity {
         if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
             //int pid = android.os.Process.myPid();
             //android.os.Process.killProcess(pid);
-            //activity.finish();
+            activity.finish();
             toast.cancel();
         }
     }

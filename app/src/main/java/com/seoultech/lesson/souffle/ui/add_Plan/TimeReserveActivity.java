@@ -1,8 +1,6 @@
 package com.seoultech.lesson.souffle.ui.add_Plan;
 
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -17,17 +15,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import com.seoultech.lesson.souffle.R;
-import com.seoultech.lesson.souffle.ui.login.BackPressCloseHandler;
-import com.seoultech.lesson.souffle.ui.viewing.FloorPlanActivity;
+import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 
-import java.text.Format;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 //해당 강의실을 예약할 날짜와 시간을 고르는 액티비티
 
