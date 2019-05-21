@@ -22,6 +22,7 @@ public class BackPressCloseHandler extends AppCompatActivity {
         if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
             //int pid = android.os.Process.myPid();
             //android.os.Process.killProcess(pid);
+            //finishAffinity();
             activity.finish();
             toast.cancel();
         }
