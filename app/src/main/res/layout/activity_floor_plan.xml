@@ -28,13 +28,155 @@
         tools:layout_editor_absoluteX="78dp"
         tools:layout_editor_absoluteY="78dp" />
 
+    <TextView
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text = "사진을 보고 싶은 방을 선택하세요"
+        android:textSize="20dp"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <GridLayout
+            android:id = "@+id/grid_mirae_1st_floor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id = "@+id/btn_109_plan"
+                android:text = "109호"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id = "@+id/btn_111_plan"
+                android:text = "111호"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id = "@+id/btn_113_plan"
+                android:text = "113호"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id = "@+id/btn_115_plan"
+                android:text = "115호"/>
+        </GridLayout>
+        <GridLayout
+            android:id = "@+id/grid_mirae_2nd_floor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id = "@+id/btn_209_plan"
+                android:text = "209호"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id = "@+id/btn_211_plan"
+                android:text = "211호"/>
+            <Button
+                android:id = "@+id/btn_213_plan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "213호"/>
+            <Button
+                android:id = "@+id/btn_215_plan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "215호"/>
+        </GridLayout>
+        <GridLayout
+            android:id = "@+id/grid_mirae_3rd_floor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id = "@+id/btn_301_plan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "301호"/>
+            <Button
+                android:id = "@+id/btn_305_plan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "305호"/>
+            <Button
+                android:id = "@+id/btn_309_plan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "309호"/>
+        </GridLayout>
+        <GridLayout
+            android:id = "@+id/grid_mirae_4th_floor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id = "@+id/btn_401_plan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "401호"/>
+            <Button
+                android:id = "@+id/btn_403_plan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "403호"/>
+            <Button
+                android:id = "@+id/btn_405_plan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "405호"/>
+        </GridLayout>
+        <GridLayout
+            android:id = "@+id/grid_mirae_5th_floor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id = "@+id/btn_501_plan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "501호"/>
+            <Button
+                android:id = "@+id/btn_505_plan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "505호"/>
+            <Button
+                android:id = "@+id/btn_509_plan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "509호"/>
+        </GridLayout>
+        <GridLayout
+            android:id = "@+id/grid_mirae_b1th_floor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id = "@+id/btn_b101_plan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "b101호"/>
+            <Button
+                android:id = "@+id/btn_b105_plan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "b105호"/>
+            <Button
+                android:id = "@+id/btn_b109_plan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "b109호"/>
+        </GridLayout>
+    </FrameLayout>
+
     <Button
         android:id="@+id/btn_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="right"
         android:layout_alignEnd="@+id/image_floor_plan"
         android:layout_below="@+id/image_floor_plan"
-        android:layout_marginTop="36dp"
         android:text="뒤로가기" />
 
 

@@ -30,6 +30,7 @@
                 android:id = "@+id/test_test"/>
 
         </LinearLayout>
+
         <Button
             android:id="@+id/btn_date_time"
             android:layout_width="wrap_content"
@@ -46,6 +47,16 @@
     </LinearLayout>
 
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "시간 선택 : "
+            android:textSize="20dp"
+            android:layout_gravity="center"/>
     <TimePicker
         android:id="@+id/time_pick"
         android:layout_width="wrap_content"
@@ -56,6 +67,21 @@
         android:timePickerMode="spinner"
         android:visibility="visible">
     </TimePicker>
+
+    </LinearLayout>
+<!--    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id = "@+id/btn_plan_in_time"
+        android:layout_gravity="right"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="10dp"
+        android:text= "해당 호의 도면 보기"/>-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </LinearLayout>
 
     <DatePicker
         android:layout_width ="wrap_content"

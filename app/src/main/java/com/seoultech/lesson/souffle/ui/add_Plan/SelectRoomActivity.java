@@ -12,7 +12,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
-import com.seoultech.lesson.souffle.ui.add_Plan.TimeReserveActivity;
+import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.login.LoginActivity;
 import com.seoultech.lesson.souffle.ui.viewing.FloorPlanActivity;
 
@@ -28,6 +28,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
     Button btn_501, btn_505, btn_509;
     Button btn_b101, btn_b105, btn_b109;
 
+    private BackPressCloseHandler backPressCloseHandler;
 
     Button btn_layer_select;
     Button btn_plan;
@@ -46,6 +47,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_room);
 
+        backPressCloseHandler = new BackPressCloseHandler(this);
         First_floor_intent = new Intent(this.getIntent());
         spinner_layer = (Spinner) findViewById(R.id.spinner_layer);
 
@@ -223,6 +225,14 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
         else
             btn_plan.setVisibility(VISIBLE);
         switch (i) {
+            case 0:
+                grid_1st_floor.setVisibility(INVISIBLE);
+                grid_second_floor.setVisibility(INVISIBLE);
+                grid_third_floor.setVisibility(INVISIBLE);
+                grid_fourth_floor.setVisibility(INVISIBLE);
+                grid_fifth_floor.setVisibility(INVISIBLE);
+                grid_b1_floor.setVisibility(INVISIBLE);
+                break;
             case 1:
                 grid_1st_floor.setVisibility(INVISIBLE);
                 grid_second_floor.setVisibility(INVISIBLE);
@@ -234,6 +244,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                     @Override
                     public void onClick(View view) {
                         to_floor_plan_intent.putExtra("floor_number",0);
+                        to_floor_plan_intent.putExtra("floor_plan",1);
                         startActivity(to_floor_plan_intent);
                     }
                 });
@@ -249,6 +260,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                     @Override
                     public void onClick(View view) {
                         to_floor_plan_intent.putExtra("floor_number",1);
+                        to_floor_plan_intent.putExtra("floor_plan",1);
                         startActivity(to_floor_plan_intent);
                     }
                 });
@@ -264,6 +276,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                     @Override
                     public void onClick(View view) {
                         to_floor_plan_intent.putExtra("floor_number",2);
+                        to_floor_plan_intent.putExtra("floor_plan",1);
                         startActivity(to_floor_plan_intent);
                     }
                 });
@@ -279,6 +292,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                     @Override
                     public void onClick(View view) {
                         to_floor_plan_intent.putExtra("floor_number",3);
+                        to_floor_plan_intent.putExtra("floor_plan",1);
                         startActivity(to_floor_plan_intent);
                     }
                 });
@@ -294,6 +308,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                     @Override
                     public void onClick(View view) {
                         to_floor_plan_intent.putExtra("floor_number",4);
+                        to_floor_plan_intent.putExtra("floor_plan",1);
                         startActivity(to_floor_plan_intent);
                     }
                 });
@@ -309,6 +324,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                     @Override
                     public void onClick(View view) {
                         to_floor_plan_intent.putExtra("floor_number",5);
+                        to_floor_plan_intent.putExtra("floor_plan",1);
                         startActivity(to_floor_plan_intent);
                     }
                 });
@@ -319,6 +335,12 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
         Toast.makeText(getApplicationContext(),"층을 선택해 주세요",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        backPressCloseHandler.onBackPressed();
     }
 }
 
