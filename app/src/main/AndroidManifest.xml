@@ -34,7 +34,7 @@
         <activity android:name=".ui.login.SelectMenuActivity">
 
         </activity>
-        <activity android:name=".ui.add_Plan.ReserveContentsActivity">
+        <activity android:name=".ui.add_Plan.UpdatePlanActivity">
 
         </activity>
         <activity android:name=".ui.add_Plan.AddOptionActivity">

@@ -16,7 +16,7 @@
         android:id = "@+id/img_room"
         android:layout_width="wrap_content"
         android:layout_height="451dp"
-        android:src="@drawable/floor_1st" />
+        android:src="@drawable/floor_mirae_1st" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

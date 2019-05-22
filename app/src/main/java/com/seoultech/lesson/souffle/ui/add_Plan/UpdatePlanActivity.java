@@ -10,7 +10,7 @@ import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 
-public class ReserveContentsActivity extends AppCompatActivity {
+public class UpdatePlanActivity extends AppCompatActivity {
 
     public int rHour;
     public int rMinute;
@@ -25,7 +25,7 @@ public class ReserveContentsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reserve_contents);
+        setContentView(R.layout.activity_update_plan);
 
         backPressCloseHandler = new BackPressCloseHandler(this);
         Intent intent = new Intent(this.getIntent());

@@ -1,54 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<TableLayout
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="100dp"
-        android:text="***님 환영합니다"
-        android:textSize="35dp" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignBottom="@id/textView5">
-
-        <Button
-            android:id="@+id/btn_reserve"
+       <TableRow
+           android:layout_weight="1"
+           android:gravity="bottom">
+        <LinearLayout
+            android:id = "@+id/linear_plan_add"
+            android:background = "@android:color/holo_orange_light"
+            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="강의실 예약" />
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_update"
-            android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/img_add_plan" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="예약 추가"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id = "@+id/linear_plan_modify"
+            android:background = "@android:color/holo_red_light"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="예약 수정" />
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                android:src="@drawable/img_modify_plan" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="예약 변경"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+    </TableRow>
+
+    <TableRow
+        android:layout_weight="1"
+        android:gravity="top">
+        <LinearLayout
+            android:id = "@+id/linear_plan_delete"
+            android:background="@android:color/holo_blue_bright"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="예약 취소" />
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_confirm"
-            android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                android:src="@drawable/img_delete_plan" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="예약 삭제"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id = "@+id/linear_plan_update"
+            android:background ="@android:color/holo_purple"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="예약 확인" />
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                android:src="@drawable/img_update_plan" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="예약 확인"
+                android:textSize="20dp" />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_exit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="종료" />
-    </LinearLayout>
+    </TableRow>
 
-</LinearLayout>
+
+</TableLayout>

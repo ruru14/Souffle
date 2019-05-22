@@ -105,7 +105,7 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
         if(bool_floor_plan == 1) {
             switch (floor_number) {         //각 층의 도면보여주기
                 case 0:
-                    image_floor_plan.setImageResource(R.drawable.floor_b1);     //b1층 도면
+                    image_floor_plan.setImageResource(R.drawable.floor_mirae_b1);     //b1층 도면
                     guide.setText("B1층 강의실 도면");
                     grid_mirae_b1th_floor.setVisibility(View.VISIBLE);
                     grid_mirae_1st_floor.setVisibility(View.INVISIBLE);
@@ -115,7 +115,7 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
                     grid_mirae_5th_floor.setVisibility(View.INVISIBLE);
                     break;
                 case 1:
-                    image_floor_plan.setImageResource(R.drawable.floor_1st);   //1층 도면
+                    image_floor_plan.setImageResource(R.drawable.floor_mirae_1st);   //1층 도면
                     guide.setText(floor_number + "층 강의실 도면");
                     grid_mirae_b1th_floor.setVisibility(View.INVISIBLE);
                     grid_mirae_1st_floor.setVisibility(View.VISIBLE);
@@ -125,7 +125,7 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
                     grid_mirae_5th_floor.setVisibility(View.INVISIBLE);
                     break;
                 case 2:
-                    image_floor_plan.setImageResource(R.drawable.floor_2nd);  //2층 도면
+                    image_floor_plan.setImageResource(R.drawable.floor_mirae_2nd);  //2층 도면
                     guide.setText(floor_number + "층 강의실 도면");
                     grid_mirae_b1th_floor.setVisibility(View.INVISIBLE);
                     grid_mirae_1st_floor.setVisibility(View.INVISIBLE);
@@ -135,7 +135,7 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
                     grid_mirae_5th_floor.setVisibility(View.INVISIBLE);
                     break;
                 case 3:
-                    image_floor_plan.setImageResource(R.drawable.floor_3rd);  //3층 도면
+                    image_floor_plan.setImageResource(R.drawable.floor_mirae_3rd);  //3층 도면
                     guide.setText(floor_number + "층 강의실 도면");
                     grid_mirae_b1th_floor.setVisibility(View.INVISIBLE);
                     grid_mirae_1st_floor.setVisibility(View.INVISIBLE);
@@ -145,7 +145,7 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
                     grid_mirae_5th_floor.setVisibility(View.INVISIBLE);
                     break;
                 case 4:
-                    image_floor_plan.setImageResource(R.drawable.floor_4th);  //4층 도면
+                    image_floor_plan.setImageResource(R.drawable.floor_mirae_4th);  //4층 도면
                     guide.setText(floor_number + "층 강의실 도면");
                     grid_mirae_b1th_floor.setVisibility(View.INVISIBLE);
                     grid_mirae_1st_floor.setVisibility(View.INVISIBLE);
@@ -155,7 +155,7 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
                     grid_mirae_5th_floor.setVisibility(View.INVISIBLE);
                     break;
                 case 5:
-                    image_floor_plan.setImageResource(R.drawable.floor_5th);  //5층 도면
+                    image_floor_plan.setImageResource(R.drawable.floor_mirae_5th);  //5층 도면
                     guide.setText(floor_number + "층 강의실 도면");
                     grid_mirae_b1th_floor.setVisibility(View.INVISIBLE);
                     grid_mirae_1st_floor.setVisibility(View.INVISIBLE);
