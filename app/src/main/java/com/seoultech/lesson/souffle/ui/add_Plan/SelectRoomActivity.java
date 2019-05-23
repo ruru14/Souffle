@@ -45,6 +45,11 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try
+        {
+            this.getSupportActionBar().hide();
+        }
+        catch (NullPointerException e){}
         setContentView(R.layout.activity_select_room);
 
         backPressCloseHandler = new BackPressCloseHandler(this);

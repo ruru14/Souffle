@@ -25,6 +25,11 @@ public class UpdatePlanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        try
+        {
+            this.getSupportActionBar().hide();
+        }
+        catch (NullPointerException e){}
         setContentView(R.layout.activity_update_plan);
 
         backPressCloseHandler = new BackPressCloseHandler(this);
