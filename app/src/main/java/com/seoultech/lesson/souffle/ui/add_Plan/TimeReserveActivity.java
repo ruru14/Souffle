@@ -1,20 +1,30 @@
 package com.seoultech.lesson.souffle.ui.add_Plan;
 
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.NumberPicker;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 
 import java.text.SimpleDateFormat;
@@ -25,17 +35,19 @@ import java.util.List;
 
 //해당 강의실을 예약할 날짜와 시간을 고르는 액티비티
 
-public class TimeReserveActivity extends AppCompatActivity {
+public class TimeReserveActivity extends AppCompatActivity implements View.OnClickListener{
 
     private BackPressCloseHandler backPressCloseHandler;
+    CoordinatorLayout layout_cor;
+    ScrollView scrollView;
     TimePicker time;
-    TextView test_hour, test_txt, test_day_between;
+    TextView txt_year_dlg, txt_month_dlg, txt_day_dlg, txt_room_dlg;
     String room_nums;
-    DatePicker date;
-    Button btn_date, btn_plan_in_time;
+    Button btn_date, btn_plan_in_time, btn_select_date;
     Date current_time;
-    Date reserve_time;
-    Calendar today_cal, reserve_cal;
+    CheckBox chk_am9, chk_am10, chk_am11, chk_pm12, chk_pm2, chk_pm3, chk_pm4, chk_pm5;
+    TextView txt_am9, txt_am10, txt_am11, txt_pm12, txt_pm2, txt_pm3, txt_pm4, txt_pm5;
+    DatePickerDialog dateDlg;
     int dYear = -1;
     int dMonth, dDay;
     int dHour = -1;
@@ -47,6 +59,9 @@ public class TimeReserveActivity extends AppCompatActivity {
     int tMinute = 0;
     NumberPicker numberPicker;
     private final int TIME_INTERVAL = 30;
+    FloatingActionButton fab_main, fab_menu1, fab_menu2;
+    private Animation fab_open, fab_close;
+    private Boolean isFabOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,24 +74,53 @@ public class TimeReserveActivity extends AppCompatActivity {
         catch (NullPointerException e){}
         setContentView(R.layout.activity_time_reserve);
 
+        fab_main = (FloatingActionButton)findViewById(R.id.fab) ;
+        fab_menu1 = (FloatingActionButton)findViewById(R.id.fab1) ;
+        fab_menu2 = (FloatingActionButton)findViewById(R.id.fab2) ;
+
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+
+        fab_main.setOnClickListener(this);
+        fab_menu1.setOnClickListener(this);
+        fab_menu2.setOnClickListener(this);
+
         backPressCloseHandler = new BackPressCloseHandler(this);
 
         Intent time_intent = new Intent(this.getIntent());
 
-       /* DatePickerDialog date_dlg = new DatePickerDialog(this, listener, 2019,5,18);
-        date_dlg.show();*/
+        txt_room_dlg = (TextView)findViewById(R.id.txt_room_dlg);
+        txt_year_dlg = (TextView)findViewById(R.id.txt_year_dlg);
+        txt_month_dlg = (TextView)findViewById(R.id.txt_month_dlg);
+        txt_day_dlg = (TextView)findViewById(R.id.txt_day_dlg);
+
+        chk_am9 = (CheckBox)findViewById(R.id.chk_am9);     chk_am10 = (CheckBox)findViewById(R.id.chk_am10);
+        chk_am11 = (CheckBox)findViewById(R.id.chk_am11);   chk_pm12 = (CheckBox)findViewById(R.id.chk_pm12);
+        chk_pm2 = (CheckBox)findViewById(R.id.chk_pm2);     chk_pm3 = (CheckBox)findViewById(R.id.chk_pm3);
+        chk_pm4 = (CheckBox)findViewById(R.id.chk_pm4);     chk_pm5 = (CheckBox)findViewById(R.id.chk_pm5);
+
+        txt_am9 = (TextView)findViewById(R.id.txt_am9);        txt_am10 = (TextView)findViewById(R.id.txt_am10);
+        txt_am11 = (TextView)findViewById(R.id.txt_am11);      txt_pm12 = (TextView)findViewById(R.id.txt_pm12);
+        txt_pm2 = (TextView)findViewById(R.id.txt_pm2);        txt_pm3 = (TextView)findViewById(R.id.txt_pm3);
+        txt_pm4 = (TextView)findViewById(R.id.txt_pm4);        txt_pm5 = (TextView)findViewById(R.id.txt_pm5);
+
+        chk_am9.setId(View.generateViewId());           txt_am9.setId(View.generateViewId());
+        chk_am10.setId(View.generateViewId());          txt_am10.setId(View.generateViewId());
+        chk_am11.setId(View.generateViewId());          txt_am11.setId(View.generateViewId());
+        chk_pm12.setId(View.generateViewId());          txt_pm12.setId(View.generateViewId());
+        chk_pm2.setId(View.generateViewId());           txt_pm2.setId(View.generateViewId());
+        chk_pm3.setId(View.generateViewId());           txt_pm3.setId(View.generateViewId());
+        chk_pm4.setId(View.generateViewId());           txt_pm4.setId(View.generateViewId());
+        chk_pm5.setId(View.generateViewId());           txt_pm5.setId(View.generateViewId());
+
 
         room_nums = time_intent.getExtras().getString("room_number");
+        txt_room_dlg.setText(room_nums + "호");
         final int room_num_int = Integer.parseInt(room_nums);
-  //      test_txt.setText(room_nums + "호 강의실 테스트중");
 
-        final TextView test_txt = (TextView)findViewById(R.id.test_test);
-        date = (DatePicker)findViewById(R.id.datePick);
         btn_date = (Button)findViewById(R.id.btn_date_time);
-        test_day_between = (TextView)findViewById(R.id.test_between_day);
         time = (TimePicker) findViewById(R.id.time_pick);
-        test_hour = (TextView) findViewById(R.id.txt_hour);
-       // btn_plan_in_time = (Button)findViewById(R.id.btn_plan_in_time);
+        btn_select_date = (Button)findViewById(R.id.btn_select_date);
 
         numberPicker = (NumberPicker)time.findViewById(Resources.getSystem().getIdentifier("minute","id","android"));
         numberPicker.setMinValue(0);
@@ -87,30 +131,45 @@ public class TimeReserveActivity extends AppCompatActivity {
         }
         numberPicker.setDisplayedValues(minuteVal.toArray(new String[0]));
 
-
-        date.setMinDate(System.currentTimeMillis());
-        date.setMaxDate(System.currentTimeMillis()+ 3600000 * 168 * 2);
-        //시간 예매는 오늘로부터 최대 14일 후까지만 가능합니다
-
-
         current_time = Calendar.getInstance().getTime();
+        final int mYear = Calendar.getInstance().get(Calendar.YEAR);
+        final int mMonth = Calendar.getInstance().get(Calendar.MONTH);
+        final int mDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM dd hh mm");
         SimpleDateFormat sdf_date = new SimpleDateFormat("yy MM dd");
         sdf.format(current_time.getTime());
         sdf_date.format(current_time.getTime());
         String today = sdf.format(current_time);
 
-
-        /*btn_plan_in_time.setOnClickListener(new View.OnClickListener() {
+        btn_select_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent to_plan_intent = new Intent(getApplicationContext(), FloorPlanActivity.class);
-                to_plan_intent.putExtra("room_num_int",room_num_int);
-                to_plan_intent.putExtra("room_plan",1);
-                startActivity(to_plan_intent);
+                dateDlg = new DatePickerDialog(TimeReserveActivity.this, listener, mYear, mMonth,mDay);
+                dateDlg.getDatePicker().setMaxDate(System.currentTimeMillis()+3600000 * 168 * 2);   //날짜선택은 오늘~2주 후까지만 가능
+                dateDlg.getDatePicker().setMinDate(System.currentTimeMillis());
+                dateDlg.getDatePicker().setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
+                    @Override
+                    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        dYear = year;
+                        dMonth = monthOfYear +1;
+                        dDay = dayOfMonth;
+                    }
+                });
+                dateDlg.setButton(DialogInterface.BUTTON_POSITIVE, "확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(which == DialogInterface.BUTTON_POSITIVE) {
+                            txt_year_dlg.setText(dYear + "년 ");
+                            txt_month_dlg.setText(dMonth + "월 ");
+                            txt_day_dlg.setText(dDay + "일 ");
+                        }
+                    }
+                });
+                dateDlg.show();
             }
         });
-*/
+
         btn_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,26 +207,62 @@ public class TimeReserveActivity extends AppCompatActivity {
             }
         });
 
-        //date.remove
-
-        date.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
-            @Override
-            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                dYear = year;
-                dMonth = monthOfYear +1;
-                dDay = dayOfMonth;
-                test_txt.setText(dYear+"년 " + dMonth +"월 " +dDay +"일 ");
-            }
-        });
         time.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
                 dHour = hourOfDay;
                 dMinute = minute*30 ;       //15분 단위로설정
-                test_hour.setText(dHour +"시 "+dMinute+"분");
             }
         });
 
+
+
+    }
+
+    DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            dYear = year;
+            dMonth = month +1;
+            dDay = dayOfMonth;
+        }
+    };
+
+    public void anim() {
+        if (isFabOpen) {
+            fab_menu1.startAnimation(fab_close);
+            fab_menu2.startAnimation(fab_close);
+            fab_menu1.setClickable(false);
+            fab_menu2.setClickable(false);
+            isFabOpen = false;
+        } else {
+            fab_menu1.startAnimation(fab_open);
+            fab_menu2.startAnimation(fab_open);
+            fab_menu1.setClickable(true);
+            fab_menu2.setClickable(true);
+            isFabOpen = true;
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.fab:
+                anim();
+                Toast.makeText(this, "Floating Action Button", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fab1:
+                anim();
+                Toast.makeText(this, "Button1", Toast.LENGTH_SHORT).show();
+                Intent to_main_menu_intent = new Intent(getApplicationContext(), SelectMenuActivity.class);
+                startActivity(to_main_menu_intent);
+                break;
+            case R.id.fab2:
+                anim();
+                Toast.makeText(this, "Button2", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     @Override

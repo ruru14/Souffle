@@ -2,10 +2,13 @@ package com.seoultech.lesson.souffle.ui.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.seoultech.lesson.souffle.R;
@@ -84,6 +87,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
+
 
     @Override
     public void onBackPressed() {

@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
-    android:padding="5dp"
+
+<android.support.design.widget.CoordinatorLayout
+    android:padding="10dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:id="@+id/layout_cor"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id = "@+id/time_reserve_frame">
+
+
+    <android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/ScrollView01"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/txt_hour"
-                android:text= "hour 테스트"/>
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint = "test"
-                android:id = "@+id/test_test"/>
-
-        </LinearLayout>
+        android:orientation="horizontal"
+        android:layout_marginBottom="15dp">
 
         <Button
             android:id="@+id/btn_date_time"
@@ -37,13 +39,6 @@
             android:layout_height="wrap_content"
             android:text="확인" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/test_between_day"
-            android:text ="날짜계산 테스트중"
-            />
-
     </LinearLayout>
 
 
@@ -54,39 +49,207 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text = "시간 선택 : "
+            android:text = "날짜 선택 : "
+            android:textSize="20dp" />
+        <TextView
+            android:id = "@+id/txt_year_dlg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textSize="20dp"
-            android:layout_gravity="center"/>
-    <TimePicker
-        android:id="@+id/time_pick"
-        android:layout_width="wrap_content"
-        android:layout_height="212dp"
-        android:layout_centerHorizontal="true"
-        android:scaleX="0.8"
-        android:scaleY ="0.7"
-        android:timePickerMode="spinner"
-        android:visibility="visible">
-    </TimePicker>
+            android:text="  년"/>
+        <TextView
+            android:id = "@+id/txt_month_dlg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="  월"/>
+        <TextView
+            android:id = "@+id/txt_day_dlg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="  일"/>
+        <TextView
+            android:id = "@+id/txt_room_dlg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="    호"/>
+
+        <Button
+            android:id = "@+id/btn_select_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text = "날짜 선택"/>
+
+
 
     </LinearLayout>
-<!--    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id = "@+id/btn_plan_in_time"
-        android:layout_gravity="right"
-        android:layout_marginRight="50dp"
-        android:layout_marginBottom="10dp"
-        android:text= "해당 호의 도면 보기"/>-->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
     </LinearLayout>
-
-    <DatePicker
-        android:layout_width ="wrap_content"
+        <TimePicker
+            android:id="@+id/time_pick"
+            android:layout_width="wrap_content"
+            android:layout_height="212dp"
+            android:layout_centerHorizontal="true"
+            android:scaleX="0.8"
+            android:scaleY ="0.7"
+            android:timePickerMode="spinner"
+            android:visibility="visible">
+        </TimePicker>
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TableRow>
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/datePick"
-        />
-
+        android:text="시간 선택"
+        android:textSize="20dp"/>
+            </TableRow>
+            <TableRow>
+         <TextView
+             android:id = "@+id/txt_am9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="09:00 ~ 10:00"
+            android:layout_marginRight="20dp"
+            android:textSize="20dp"/>
+            <CheckBox
+                android:id = "@+id/chk_am9"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id = "@+id/txt_am10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10:00 ~ 11:00"
+            android:layout_marginRight="20dp"
+            android:textSize="20dp"/>
+            <CheckBox
+                android:id = "@+id/chk_am10"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id = "@+id/txt_am11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="11:00 ~ 12:00"
+            android:textSize="20dp"/>
+            <CheckBox
+                android:id = "@+id/chk_am11"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id = "@+id/txt_pm12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:00 ~ 13:00"
+            android:textSize="20dp"/>
+            <CheckBox
+                android:id = "@+id/chk_pm12"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id = "@+id/txt_pm2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="14:00 ~ 15:00"
+            android:textSize="20dp"/>
+            <CheckBox
+                android:id = "@+id/chk_pm2"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id = "@+id/txt_pm3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15:00 ~ 16:00"
+            android:textSize="20dp"/>
+            <CheckBox
+                android:id = "@+id/chk_pm3"/>
+            </TableRow>
+        <TableRow>
+        <TextView
+            android:id = "@+id/txt_pm4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="16:00 ~ 17:00"
+            android:textSize="20dp"/>
+            <CheckBox
+                android:id = "@+id/chk_pm4"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id = "@+id/txt_pm5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="17:00 ~ 18:00"
+            android:textSize="20dp"/>
+            <CheckBox
+                android:id = "@+id/chk_pm5"/>
+        </TableRow>
+        <!--<TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="18:00 ~ 19:00"
+            android:textSize="20dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="19:00 ~ 20:00"
+            android:textSize="20dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20:00 ~ 21:00"
+            android:textSize="20dp"/>-->
+        </TableLayout>
 </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+        <LinearLayout
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="right">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:backgroundTint="#9500ff"
+                app:elevation="16dp"
+                android:src="@mipmap/ic_launcher_round" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab1"
+                android:layout_marginRight="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_launcher_round"
+                android:visibility="invisible"
+                app:backgroundTint="#ffffff"
+                app:elevation="16dp"
+                app:pressedTranslationZ="4dp" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab2"
+                android:layout_marginRight="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_launcher_round"
+                android:visibility="invisible"
+                app:backgroundTint="#ffffff"
+                app:elevation="16dp"
+                app:pressedTranslationZ="4dp" />
+        </LinearLayout>
+    </FrameLayout>
+</android.support.design.widget.CoordinatorLayout>
