@@ -1,11 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<RelativeLayout android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background = "@color/cardview_shadow_start_color"
+        android:id = "@+id/layout_toolbar">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_alignParentRight="true"
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:backgroundTint="#9500ff"
+            app:elevation="16dp"
+            android:src="@mipmap/ic_launcher_round" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="right">
+
+
+
+        </LinearLayout>
+
+
+
 <android.support.design.widget.CoordinatorLayout
-    android:padding="10dp"
+    android:layout_below="@+id/layout_toolbar"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:id="@+id/layout_cor"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -14,10 +53,56 @@
         android:layout_height="wrap_content"
         android:id = "@+id/time_reserve_frame">
 
+    <LinearLayout
+        android:background ="#55000000"
+        android:id ="@+id/layout_slide"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:background="@color/cardview_dark_background"/>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:textSize="25dp"
+                android:enabled="false"
+                android:text = "***님\n***과"
+                android:layout_weight="1"/>
+            <Button
+                android:id ="@+id/btn_to_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="25dp"
+                android:text ="처음으로"/>
+            <Button
+                android:id = "@+id/btn_setting"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text = "설정"
+                android:textSize="25dp"
+                android:layout_weight="1"/>
+            <Button
+                android:id = "@+id/btn_logout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="로그아웃"
+                android:textSize="25dp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
 
     <android.support.v4.widget.NestedScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/ScrollView01"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -27,23 +112,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="30dp"
+    android:elevation="20dp"
+    android:layout_marginBottom="10dp"
+    android:text = "날짜 및 시간 선택 화면"/>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="15dp">
-
-        <Button
-            android:id="@+id/btn_date_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="확인" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
@@ -75,22 +154,15 @@
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:text="    호"/>
-
         <Button
             android:id = "@+id/btn_select_date"
+            android:layout_gravity="right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text = "날짜 선택"/>
-
-
-
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
 
-    </LinearLayout>
         <TimePicker
             android:id="@+id/time_pick"
             android:layout_width="wrap_content"
@@ -101,17 +173,24 @@
             android:timePickerMode="spinner"
             android:visibility="visible">
         </TimePicker>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
         <TableLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <TableRow>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="시간 선택"
-        android:textSize="20dp"/>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="시간 선택"
+                android:textSize="20dp"/>
             </TableRow>
-            <TableRow>
+         <TableRow>
          <TextView
              android:id = "@+id/txt_am9"
             android:layout_width="wrap_content"
@@ -193,63 +272,46 @@
             <CheckBox
                 android:id = "@+id/chk_pm5"/>
         </TableRow>
-        <!--<TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="18:00 ~ 19:00"
-            android:textSize="20dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="19:00 ~ 20:00"
-            android:textSize="20dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="20:00 ~ 21:00"
-            android:textSize="20dp"/>-->
+
+            <!--<TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="18:00 ~ 19:00"
+                android:textSize="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="19:00 ~ 20:00"
+                android:textSize="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20:00 ~ 21:00"
+                android:textSize="20dp"/>-->
         </TableLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="시간 테스트"
+                android:layout_gravity="center"
+                android:id="@+id/text_test"/>
+            <Button
+                android:id="@+id/btn_date_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:text="날짜 확인"
+                />
+
+        </LinearLayout>
 </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
 
-        <LinearLayout
-            android:layout_gravity="right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="right">
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:backgroundTint="#9500ff"
-                app:elevation="16dp"
-                android:src="@mipmap/ic_launcher_round" />
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab1"
-                android:layout_marginRight="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcher_round"
-                android:visibility="invisible"
-                app:backgroundTint="#ffffff"
-                app:elevation="16dp"
-                app:pressedTranslationZ="4dp" />
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab2"
-                android:layout_marginRight="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcher_round"
-                android:visibility="invisible"
-                app:backgroundTint="#ffffff"
-                app:elevation="16dp"
-                app:pressedTranslationZ="4dp" />
-        </LinearLayout>
     </FrameLayout>
+
+
 </android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>
