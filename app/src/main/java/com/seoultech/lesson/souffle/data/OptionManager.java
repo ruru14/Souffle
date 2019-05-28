@@ -1,5 +1,7 @@
 package com.seoultech.lesson.souffle.data;
 
+import com.seoultech.lesson.souffle.data.model.Option;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -13,6 +15,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 public class OptionManager {
+
+    private Option option;
+
      public OptionManager(){
          try{
              String filepath = "src/main/res/xml/attribute.xml";
@@ -27,7 +32,7 @@ public class OptionManager {
              Element elm = (Element) list.item(0);
              Node node = elm.getElementsByTagName("autoLogin").item(0);
 
-             System.out.println(node.getTextContent());
+             option = new Option(Boolean.parseBoolean(node.getTextContent()));
          } catch (ParserConfigurationException e) {
              e.printStackTrace();
          } catch (SAXException e) {
@@ -36,4 +41,9 @@ public class OptionManager {
              e.printStackTrace();
          }
      }
+
+     public boolean setAutoLogin(boolean attr){
+         return false;
+     }
+
 }

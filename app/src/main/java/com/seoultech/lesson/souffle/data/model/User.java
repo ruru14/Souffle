@@ -7,9 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Option {
+public class User {
 
-    private boolean autoLogin = false;
+    private String name;
 
+    private int studentNumber;
 
 }
