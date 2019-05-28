@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <login>
+        <autoLogin>false</autoLogin>
+        <studentNumber>-1</studentNumber>
+        <password>-1</password>
+    </login>
+</resources>
