@@ -11,5 +11,6 @@ public class Option {
 
     private boolean autoLogin = false;
 
+    private String language;
 
 }

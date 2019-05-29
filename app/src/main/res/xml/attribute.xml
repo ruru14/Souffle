@@ -1,7 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="no"?><resources>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
     <login>
         <autoLogin>true</autoLogin>
         <studentNumber>-1</studentNumber>
         <password>-1</password>
     </login>
+    <setting>
+        <language>한국어</language>
+    </setting>
 </resources>
