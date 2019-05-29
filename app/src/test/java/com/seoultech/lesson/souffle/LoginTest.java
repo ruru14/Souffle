@@ -9,6 +9,6 @@ public class LoginTest {
     @Test
     public void loginTest(){
         LoginManager loginManager = new LoginManager();
-        loginManager.login(1,"1");
+        loginManager.login(11111111,"asdf");
     }
 }

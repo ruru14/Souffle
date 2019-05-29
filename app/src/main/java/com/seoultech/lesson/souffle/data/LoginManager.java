@@ -1,68 +1,77 @@
 package com.seoultech.lesson.souffle.data;
 
-import android.webkit.CookieManager;
-
+import com.seoultech.lesson.souffle.data.model.Option;
 import com.seoultech.lesson.souffle.data.model.User;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 public class LoginManager {
 
-    public boolean isAutoLogin(){
+    private List<String> arr;
 
-        return false;
+    public LoginManager() {
+    }
+
+    public boolean isAutoLogin(Option option) {
+        return option.isAutoLogin();
     }
 
     public User login(int studentNumber, String password) {
         try {
-//            String userAgent = "Mozilla/5.0 (Linux; U; Android 4.4.2; en-us; SCH-I535 Build/KOT49H) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
-//            String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36";
-            String userAgent = "Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6";
-            Map<String, String> data = new HashMap<>();
-            data.put("userId", "15109355");
-            data.put("password", "dnjs0402@889");
-            data.put("ssoLangKnd","ko");
-            data.put("returnUrl", "");
-//            Document doc = Jsoup.connect("http://portal.seoultech.ac.kr/").get();
-            Connection.Response siteResponse = Jsoup.connect("https://portal.seoultech.ac.kr/user/seouolTechLogin.face")
+            String requestBody = "userId=" + studentNumber + "&password=" + password + "&ssoLangKnd=ko&returnUrl=";
+            arr = new ArrayList<>();
+
+            Connection.Response cookieRequest = Jsoup.connect("http://portal.seoultech.ac.kr/user/seouolTechLogin.face")
+                    .timeout(10000)
+                    .maxBodySize(0)
                     .method(Connection.Method.GET)
                     .execute();
 
-            Map<String, String> loginTryCookie = siteResponse.cookies();
+            Map loginTryCookie2 = cookieRequest.cookies();
 
-            CookieManager cookieManager = CookieManager.getInstance();
-            String cookie = cookieManager.getCookie("https://portal.seoultech.ac.kr/user/seouolTechLogin.face");
-
-            Connection.Response response = Jsoup.connect("https://portal.seoultech.ac.kr/user/seouolTechLogin.face")
-//                    .userAgent(userAgent)
-                    .timeout(0)
+            Connection.Response response = Jsoup.connect("http://portal.seoultech.ac.kr/user/seouolTechLogin.face")
+                    .timeout(10000)
+                    .maxBodySize(0)
                     .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3")
                     .header("Accept-Encoding", "gzip, deflate, br")
                     .header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
                     .header("Cache-Control", "max-age=0")
                     .header("Connection", "keep-alive")
-                    .header("Content-Type", "application/x-www-form-urlencoded")
+                    .header("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8")
                     .header("Host", "portal.seoultech.ac.kr")
                     .header("Origin", "http://portal.seoultech.ac.kr")
                     .header("Referer", "http://portal.seoultech.ac.kr/portal/default/SEOULTECH/LOGIN")
-                    .header("Upgrade-Insecure-Requests", "1")
-                    .header("User-Agent", "Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                    .header("Cookie", cookie)
-                    .data(data)
+                    .referrer("http://portal.seoultech.ac.kr/portal/default/SEOULTECH/LOGIN")
+                    .data("userId", Integer.toString(studentNumber))
+                    .data("password", password)
+                    .cookies(loginTryCookie2)
+                    .requestBody(requestBody)
                     .method(Connection.Method.POST)
                     .execute();
 
-            String title = response.body();
-            System.out.println(title);
+            Document doc = response.parse();
+            Element elm = doc.selectFirst("#header_wrap > div.tnb > ul > li:nth-child(1)");
+            StringTokenizer token = new StringTokenizer(elm.ownText(), "( ) [ ]", false);
+            for (int i = 0; i < 3; i++) {
+                String temp = token.nextToken();
+                if (i == 1) continue;
+                arr.add(temp);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException e){
+            return new User("UNAUTHORIZED", -1, "UNAUTHORIZED", false);
         }
-        return null;
+        return new User(arr.get(0), studentNumber, arr.get(1), true);
     }
 }

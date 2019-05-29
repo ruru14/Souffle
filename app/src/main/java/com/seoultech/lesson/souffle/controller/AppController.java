@@ -20,7 +20,7 @@ public class AppController {
     }
 
     public boolean isAutoLogin(){
-        return loginManager.isAutoLogin();
+        return loginManager.isAutoLogin(optionManager.getOption());
     }
 
     public User login(int studentNumber, String password){

@@ -66,4 +66,8 @@ public class OptionManager {
          option.setAutoLogin(attr);
      }
 
+     public Option getOption(){
+         return this.option;
+     }
+
 }
