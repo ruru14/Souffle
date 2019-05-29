@@ -64,16 +64,32 @@ public class OptionManager {
         }
     }
 
-    public void setAutoLogin(boolean attr) throws TransformerException {
-        autoLogin.setTextContent(Boolean.toString(attr));
-        former.transform(new DOMSource(doc), new StreamResult(new File(attributePath)));
-        option.setAutoLogin(attr);
+    public boolean isAutoLogin(){
+        return option.isAutoLogin();
     }
 
-    public void setLanguage(String attr) throws TransformerException {
-        language.setTextContent(attr);
-        former.transform(new DOMSource(doc), new StreamResult(new File(attributePath)));
-        option.setLanguage(attr);
+    public void setAutoLogin(boolean attr) {
+        try {
+            autoLogin.setTextContent(Boolean.toString(attr));
+            former.transform(new DOMSource(doc), new StreamResult(new File(attributePath)));
+            option.setAutoLogin(attr);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getLanguage(){
+        return option.getLanguage();
+    }
+
+    public void setLanguage(String attr) {
+        try {
+            language.setTextContent(attr);
+            former.transform(new DOMSource(doc), new StreamResult(new File(attributePath)));
+            option.setLanguage(attr);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
     }
 
     public Option getOption() {

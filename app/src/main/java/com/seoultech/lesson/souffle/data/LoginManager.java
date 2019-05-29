@@ -21,10 +21,6 @@ public class LoginManager {
     public LoginManager() {
     }
 
-    public boolean isAutoLogin(Option option) {
-        return option.isAutoLogin();
-    }
-
     public User login(int studentNumber, String password) {
         try {
             String requestBody = "userId=" + studentNumber + "&password=" + password + "&ssoLangKnd=ko&returnUrl=";
