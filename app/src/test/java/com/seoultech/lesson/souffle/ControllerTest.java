@@ -12,6 +12,7 @@ public class ControllerTest {
     @Test
     public void controllerTest(){
         AppController controller = AppController.getInstance();
+        controller.setAutoLogin(false);
         System.out.println(controller.isAutoLogin());
     }
 }
