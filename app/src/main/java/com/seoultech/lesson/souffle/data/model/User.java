@@ -13,6 +13,8 @@ public class User {
 
     private int studentNumber;
 
+    private String password;
+
     private String major;
 
     private boolean isAuthorized;

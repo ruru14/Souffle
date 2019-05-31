@@ -20,15 +20,27 @@ public class AppController {
     }
 
     public boolean isAutoLogin(){
-        return loginManager.isAutoLogin(optionManager.getOption());
+        return optionManager.isAutoLogin();
+    }
+
+    public User autoLogin(){
+        return null;
     }
 
     public User login(int studentNumber, String password){
         return loginManager.login(studentNumber, password);
     }
 
-    public void setOption(Option option){
+    public void setAutoLogin(boolean attr, User user){
+        optionManager.setAutoLogin(attr, user);
+    }
 
+    public String getLanguage(){
+        return optionManager.getLanguage();
+    }
+
+    public void setLanguage(String attr){
+        optionManager.setLanguage(attr);
     }
 
     private static class LazyHolder{

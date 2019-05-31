@@ -1,5 +1,6 @@
 package com.seoultech.lesson.souffle.data.model;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

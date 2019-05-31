@@ -56,6 +56,10 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.22'
     // https://mvnrepository.com/artifact/net.sourceforge.htmlunit/htmlunit
     implementation group: 'net.sourceforge.htmlunit', name: 'htmlunit', version: '2.34.1'
+    // https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit
+    implementation group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.5.0'
+    implementation 'com.google.code.gson:gson:2.6.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
 
 
 }
