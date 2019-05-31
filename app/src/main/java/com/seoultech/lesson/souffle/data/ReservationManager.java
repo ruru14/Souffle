@@ -12,8 +12,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ReservationManager {
 
-    Reservation reservation;
-    Option option;
+    private Reservation reservation;
+    private Option option;
 
     private Retrofit retrofit;
     private ReservationAPI reservationAPI;
