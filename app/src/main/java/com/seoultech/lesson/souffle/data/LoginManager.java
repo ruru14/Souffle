@@ -1,6 +1,5 @@
 package com.seoultech.lesson.souffle.data;
 
-import com.seoultech.lesson.souffle.data.model.Option;
 import com.seoultech.lesson.souffle.data.model.User;
 
 import org.jsoup.Connection;
@@ -66,8 +65,8 @@ public class LoginManager {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NullPointerException e){
-            return new User("UNAUTHORIZED", -1, "UNAUTHORIZED", false);
+            return new User("UNAUTHORIZED", -1, "UNAUTHORIZED", "UNAUTHORIZED", false);
         }
-        return new User(arr.get(0), studentNumber, arr.get(1), true);
+        return new User(arr.get(0), studentNumber, password,  arr.get(1), true);
     }
 }

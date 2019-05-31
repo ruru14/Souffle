@@ -23,12 +23,16 @@ public class AppController {
         return optionManager.isAutoLogin();
     }
 
+    public User autoLogin(){
+        return null;
+    }
+
     public User login(int studentNumber, String password){
         return loginManager.login(studentNumber, password);
     }
 
-    public void setAutoLogin(boolean attr){
-        optionManager.setAutoLogin(attr);
+    public void setAutoLogin(boolean attr, User user){
+        optionManager.setAutoLogin(attr, user);
     }
 
     public String getLanguage(){

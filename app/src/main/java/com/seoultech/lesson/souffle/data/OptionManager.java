@@ -1,6 +1,7 @@
 package com.seoultech.lesson.souffle.data;
 
 import com.seoultech.lesson.souffle.data.model.Option;
+import com.seoultech.lesson.souffle.data.model.User;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -32,6 +33,8 @@ public class OptionManager {
     private Document doc;
     private Transformer former;
     private Node autoLogin;
+    private Node studentNumber;
+    private Node password;
     private Node language;
 
     public OptionManager() {
@@ -47,6 +50,8 @@ public class OptionManager {
             NodeList login = root.getElementsByTagName("login");
             Element loginElm = (Element) login.item(0);
             autoLogin = loginElm.getElementsByTagName("autoLogin").item(0);
+            studentNumber = loginElm.getElementsByTagName("studentNumber").item(0);
+            password = loginElm.getElementsByTagName("password").item(0);
             NodeList setting = root.getElementsByTagName("setting");
             Element settingElm = (Element) setting.item(0);
             language = settingElm.getElementsByTagName("language").item(0);
@@ -59,8 +64,6 @@ public class OptionManager {
             e.printStackTrace();
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();
-        } catch (TransformerException e) {
-            e.printStackTrace();
         }
     }
 
@@ -68,9 +71,11 @@ public class OptionManager {
         return option.isAutoLogin();
     }
 
-    public void setAutoLogin(boolean attr) {
+    public void setAutoLogin(boolean attr, User user) {
         try {
             autoLogin.setTextContent(Boolean.toString(attr));
+            studentNumber.setTextContent(Integer.toString(user.getStudentNumber()));
+            password.setTextContent(user.getPassword());
             former.transform(new DOMSource(doc), new StreamResult(new File(attributePath)));
             option.setAutoLogin(attr);
         } catch (TransformerException e) {
