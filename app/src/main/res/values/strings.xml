@@ -1,10 +1,19 @@
 <resources>
     <string name="app_name">Souffle</string>
-    <string name="floor_1">1</string>
-    <string name="floor_2">2</string>
-    <string name="floor_3">3</string>
-    <string name="floor_4">4</string>
-    <string name="floor_5">5</string>
-    <string name="floor_b1">B1</string>
+
+    <string-array name="language">
+        <item>한국어</item>
+        <item>English</item>
+    </string-array>
+
+    <string name="lecture_room_reserving_title_kr">강의실 예약 프로그램</string>
+    <string name="lecture_room_reserving_title_en">Lecture Room Reserve Application</string>
+
+    <string name="add_reserve_menu_en">Add Reserve</string>
+    <string name="add_reserve_menu_kr">예약 추가</string>
+
+    <string name="update_reserve_menu_en">Update Reserve</string>
+    <string name="update_reserve_menu_kr">예약 </string>
+
 
 </resources>

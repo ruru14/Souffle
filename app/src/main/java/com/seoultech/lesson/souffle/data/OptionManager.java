@@ -59,8 +59,6 @@ public class OptionManager {
             e.printStackTrace();
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();
-        } catch (TransformerException e) {
-            e.printStackTrace();
         }
     }
 
