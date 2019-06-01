@@ -1,5 +1,8 @@
 package com.seoultech.lesson.souffle.controller;
 
+import android.app.Activity;
+import android.content.res.Resources;
+
 import com.seoultech.lesson.souffle.data.LoginManager;
 import com.seoultech.lesson.souffle.data.OptionManager;
 import com.seoultech.lesson.souffle.data.ReservationManager;
@@ -13,9 +16,11 @@ public class AppController {
     private ReservationManager reservationManager;
 
     private AppController(){
-        // TODO : Manager Initialize
+    }
+
+    public void init(Activity activity){
         loginManager = new LoginManager();
-        optionManager = new OptionManager();
+        optionManager = new OptionManager(activity);
         reservationManager = new ReservationManager();
     }
 

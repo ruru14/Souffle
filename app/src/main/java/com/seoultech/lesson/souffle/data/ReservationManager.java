@@ -20,11 +20,11 @@ public class ReservationManager {
     private Call<Reservation> reservationList;
 
     public ReservationManager() {
-        retrofit = new Retrofit.Builder()
-                .baseUrl("asdf")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        reservationAPI = retrofit.create(ReservationAPI.class);
+//        retrofit = new Retrofit.Builder()
+//                .baseUrl("35.194.37.76:1234/")
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//        reservationAPI = retrofit.create(ReservationAPI.class);
     }
 
     public void createReservation(Reservation reservation) {
