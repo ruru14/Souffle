@@ -38,8 +38,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         appController = AppController.getInstance();
-        appController.init(this);
-        appController.readReservation();
 
         backPressCloseHandler = new BackPressCloseHandler(this);
 
