@@ -1,7 +1,8 @@
 package com.seoultech.lesson.souffle.data;
 
 import com.seoultech.lesson.souffle.data.model.Reservation;
-import com.seoultech.lesson.souffle.data.model.User;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.DELETE;
@@ -14,8 +15,8 @@ public interface ReservationAPI {
     @POST("/reserve")
     void createReservation(Reservation reservation);
 
-    @GET("/reserve")
-    Call<Reservation> readReservation();
+    @GET("reserve")
+    Call<List<Reservation>> readReservation();
 
     @GET("/reserve/state")
     Call<Reservation> readReservationByState();

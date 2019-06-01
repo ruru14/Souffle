@@ -9,6 +9,8 @@ import com.seoultech.lesson.souffle.data.ReservationManager;
 import com.seoultech.lesson.souffle.data.model.Option;
 import com.seoultech.lesson.souffle.data.model.User;
 
+import java.util.List;
+
 public class AppController {
 
     private LoginManager loginManager;
@@ -24,6 +26,7 @@ public class AppController {
         reservationManager = new ReservationManager();
     }
 
+    // LoginManager
     public boolean isAutoLogin(){
         return optionManager.isAutoLogin();
     }
@@ -40,6 +43,7 @@ public class AppController {
         optionManager.setAutoLogin(attr, user);
     }
 
+    // OptionManager
     public String getLanguage(){
         return optionManager.getLanguage();
     }
@@ -48,6 +52,12 @@ public class AppController {
         optionManager.setLanguage(attr);
     }
 
+    // ReservationManager
+    public void readReservation(){
+        reservationManager.readReservation();
+    }
+
+    // Singleton
     private static class LazyHolder{
         public static final AppController instance = new AppController();
     }

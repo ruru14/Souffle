@@ -1,5 +1,8 @@
 package com.seoultech.lesson.souffle.data.model;
 
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,24 +13,34 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Reservation {
 
+    @SerializedName("id")
     private Long id;
 
+    @SerializedName("roomNumber")
     private int roomNumber;
 
+    @SerializedName("date")
     private String date;
 
+    @SerializedName("studentNumber")
     private int studentNumber;
 
+    @SerializedName("name")
     private String name;
 
+    @SerializedName("purpose")
     private String purpose;
 
+    @SerializedName("totalMember")
     private int totalMember;
 
+    @SerializedName("timeStart")
     private String timeStart;
 
+    @SerializedName("timeEnd")
     private String timeEnd;
 
+    @SerializedName("state")
     private String state;
 
     @Builder
