@@ -7,6 +7,7 @@ import com.seoultech.lesson.souffle.data.LoginManager;
 import com.seoultech.lesson.souffle.data.OptionManager;
 import com.seoultech.lesson.souffle.data.ReservationManager;
 import com.seoultech.lesson.souffle.data.model.Option;
+import com.seoultech.lesson.souffle.data.model.Reservation;
 import com.seoultech.lesson.souffle.data.model.User;
 
 import java.util.List;
@@ -53,6 +54,10 @@ public class AppController {
     }
 
     // ReservationManager
+    public void createReservation(Reservation reservation){
+        reservationManager.createReservation(reservation);
+    }
+
     public void readReservation(){
         reservationManager.readReservation();
     }

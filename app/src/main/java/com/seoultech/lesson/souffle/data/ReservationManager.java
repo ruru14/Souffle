@@ -19,7 +19,8 @@ public class ReservationManager {
 
     private Retrofit retrofit;
     private ReservationAPI reservationAPI;
-    private Call<List<Reservation>> reservationList;
+    private Call<List<Reservation>> getList;
+    private Call<Reservation> post;
     private Gson gson;
 
     public ReservationManager() {
@@ -31,12 +32,24 @@ public class ReservationManager {
     }
 
     public void createReservation(Reservation reservation) {
+        post = reservationAPI.createReservation(reservation);
+        post.enqueue(new Callback<Reservation>() {
+            @Override
+            public void onResponse(Call<Reservation> call, Response<Reservation> response) {
+                System.out.println("CCCCCCCCCC");
+            }
+
+            @Override
+            public void onFailure(Call<Reservation> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
 
     }
 
     public void readReservation() {
-        reservationList = reservationAPI.readReservation();
-        reservationList.enqueue(new Callback<List<Reservation>>() {
+        getList = reservationAPI.readReservation();
+        getList.enqueue(new Callback<List<Reservation>>() {
             @Override
             public void onResponse(Call<List<Reservation>> call, Response<List<Reservation>> response) {
                 List<Reservation> list = response.body();
@@ -48,7 +61,6 @@ public class ReservationManager {
             @Override
             public void onFailure(Call<List<Reservation>> call, Throwable t) {
                 t.printStackTrace();
-//                System.out.println("FFFFFFFFF");
             }
         });
     }

@@ -5,28 +5,30 @@ import com.seoultech.lesson.souffle.data.model.Reservation;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Query;
 
 public interface ReservationAPI {
 
-    @POST("/reserve")
-    void createReservation(Reservation reservation);
+    @POST("reserve")
+    Call<Reservation> createReservation(@Body Reservation reservation);
 
     @GET("reserve")
     Call<List<Reservation>> readReservation();
 
-    @GET("/reserve/state")
-    Call<Reservation> readReservationByState();
+    @GET("reserve/state")
+    Call<List<Reservation>> readReservationByState(@Query("state") String state);
 
-    @GET("/reserve/stnumber")
-    Call<Reservation> readReservationByStudentNumber();
+    @GET("reserve/stnumber")
+    Call<List<Reservation>> readReservationByStudentNumber(@Query("studentNumber") int studentNumber);
 
-    @PUT("/reserve")
-    void updateReservation(Reservation reservation);
+    @PUT("reserve")
+    Call<Reservation> updateReservation(Reservation reservation);
 
-    @DELETE("/reserve")
-    void deleteReservation(Reservation reservation);
+    @DELETE("reserve")
+    Call<Reservation> deleteReservation(Reservation reservation);
 }
