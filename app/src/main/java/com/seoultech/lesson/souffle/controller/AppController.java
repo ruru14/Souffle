@@ -64,8 +64,16 @@ public class AppController {
         return reservationManager.readReservationByStudentNumber(studentNumber);
     }
 
+    public List<Reservation> readReservationByStudentNumberAndDate(int studentNumber, String date){
+        return reservationManager.readReservationByStudentNumberAndDate(studentNumber, date);
+    }
+
     public List<Reservation> readReservationByBuilding(String building){
         return reservationManager.readReservationByBuilding(building);
+    }
+
+    public List<Reservation> readReservationByBuildingAndRoomNumberAndDate(String building, int roomNumber, String date){
+        return reservationManager.readReservationByBuildingAndRoomNumberAndDate(building, roomNumber, date);
     }
 
     public boolean updateReservation(Reservation reservation){
