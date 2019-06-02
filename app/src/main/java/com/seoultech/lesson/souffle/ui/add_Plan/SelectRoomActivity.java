@@ -2,12 +2,17 @@ package com.seoultech.lesson.souffle.ui.add_Plan;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -21,27 +26,33 @@ import static android.view.View.VISIBLE;
 
 public class SelectRoomActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
-    Button btn_109, btn_111, btn_113, btn_115;
-    Button btn_209, btn_211, btn_213, btn_215;
-    Button btn_301, btn_305, btn_309;
-    Button btn_401, btn_405, btn_409;
-    Button btn_501, btn_505, btn_509;
-    Button btn_b101, btn_b105, btn_b109;
+    private Button btn_109, btn_111, btn_113, btn_115;
+    private Button btn_209, btn_211, btn_213, btn_215;
+    private Button btn_301, btn_305, btn_309;
+    private Button btn_401, btn_405, btn_409;
+    private Button btn_501, btn_505, btn_509;
+    private Button btn_b101, btn_b105, btn_b109;
 
     private BackPressCloseHandler backPressCloseHandler;
 
-    Button btnLayerSelect;
-    Button btnPlan;
-    Intent FirstFloorIntent;
-    Button btnReturnMain;
-    Spinner spinnerLayer;
-    String[] floorLayer;
-    GridLayout gridFirstFloor, gridSecondFloor, gridThirdFloor,
+    private Button btnLayerSelect;
+    private Button btnPlan;
+    private Intent FirstFloorIntent;
+    private Button btnReturnMain;
+    private Spinner spinnerLayer;
+    private String[] floorLayer;
+    private GridLayout gridFirstFloor, gridSecondFloor, gridThirdFloor,
             gridFourthFloor, gridFifthFloor, gridB1Floor;
-    Intent toFloorPlanIntent;
-    Intent toTimeReserveIntent;
+    private Intent toFloorPlanIntent;
+    private Intent toTimeReserveIntent;
 
     private String building_name;
+    private Animation pullFromRight, pushToRight;
+    private Boolean isFabOpen = false;
+    private FloatingActionButton fabMenu;
+    private LinearLayout slideLayout;
+    private FrameLayout frameSelectMenu;
+    private Button btnToMain;
 
 
     @Override
@@ -57,6 +68,16 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
         backPressCloseHandler = new BackPressCloseHandler(this);
         FirstFloorIntent = new Intent(this.getIntent());
         spinnerLayer = (Spinner) findViewById(R.id.spinner_layer);
+
+        btnToMain = (Button)findViewById(R.id.btn_to_main_in_select_room) ;
+        fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_select_room);
+
+        pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
+        pullFromRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pullfromright);
+
+        slideLayout = (LinearLayout)findViewById(R.id.slide_layout_in_select_room);
+        frameSelectMenu = (FrameLayout)findViewById(R.id.select_room_frame);
+        frameSelectMenu.bringChildToFront(slideLayout);
 
         building_name = FirstFloorIntent.getExtras().getString("building_name");
 
@@ -135,6 +156,35 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
         btn_b101.setOnClickListener(this);        btn_b105.setOnClickListener(this);
         btn_b109.setOnClickListener(this);
 
+        btnToMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent to_main_intent = new Intent(getApplicationContext(), SelectMenuActivity.class);
+                startActivity(to_main_intent);
+            }
+        });
+
+        fabMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                anim();
+            }
+        });
+
+    }
+
+    //OnCreate end
+
+    public void anim() {
+        if (isFabOpen) {
+            slideLayout.startAnimation(pushToRight);
+            slideLayout.setVisibility(View.INVISIBLE);
+            isFabOpen = false;
+        } else {
+            slideLayout.startAnimation(pullFromRight);
+            slideLayout.setVisibility(View.VISIBLE);
+            isFabOpen = true;
+        }
     }
 
     //(버튼)방 선택시 해당 방의 번호 넘김. 코드는 나중에 추가 가능
@@ -320,6 +370,8 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                 });
                 break;
         }
+
+
     }
 
     @Override

@@ -9,7 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
@@ -17,7 +20,9 @@ import com.seoultech.lesson.souffle.ui.add_Plan.SelectBuildingActivity;
 import com.seoultech.lesson.souffle.ui.add_Plan.UpdatePlanActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 
-public class SelectMenuActivity extends AppCompatActivity{
+import org.apache.bcel.verifier.structurals.Frame;
+
+public class SelectMenuActivity extends AppCompatActivity implements View.OnClickListener{
 
    LinearLayout linearPlanAdd, linearPlanDelete, linearPlanModify, linearPlanUpdate;
 
@@ -26,6 +31,8 @@ public class SelectMenuActivity extends AppCompatActivity{
     private Boolean isFabOpen = false;
     private FloatingActionButton fabMenu;
     private LinearLayout slideLayout;
+    private FrameLayout frameSelectMenu;
+    private Button btnToMain;
 
     private Toast toast;
     private long backKeyPressedTime = 0;
@@ -52,13 +59,15 @@ public class SelectMenuActivity extends AppCompatActivity{
         linearPlanModify = (LinearLayout)findViewById(R.id.linear_plan_modify);
         linearPlanUpdate = (LinearLayout)findViewById(R.id.linear_plan_update);
 
-//        fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_selectMenu);
-//
-//        pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
-//        pullFromRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pullfromright);
-//
+        btnToMain = (Button)findViewById(R.id.btn_to_main_in_selectmenu) ;
+        fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_selectMenu);
 
-//        slideLayout = (LinearLayout)findViewById(R.id.slide_layout);
+        pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
+        pullFromRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pullfromright);
+
+        slideLayout = (LinearLayout)findViewById(R.id.slide_layout_in_select_menu);
+        frameSelectMenu = (FrameLayout)findViewById(R.id.select_menu_frame);
+        frameSelectMenu.bringChildToFront(slideLayout);
 
        linearPlanAdd.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -76,33 +85,42 @@ public class SelectMenuActivity extends AppCompatActivity{
            }
        });
 
-        //fabMenu.setOnClickListener(this);
+        btnToMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent to_main_intent = new Intent(getApplicationContext(),SelectMenuActivity.class);
+//                startActivity(to_main_intent);
+                Toast.makeText(getApplicationContext(),"이미 메인화면입니다",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        fabMenu.setOnClickListener(this);
 
     }
     //onCreate End
 
 
-//    @Override
-//    public void onClick(View v) {
-//        int id = v.getId();
-//        switch (id) {
-//            case R.id.fab_in_selectMenu:
-//                anim();
-//                break;
-//        }
-//    }
-//
-//    public void anim() {
-//        if (isFabOpen) {
-//            slideLayout.startAnimation(pushToRight);
-//            slideLayout.setVisibility(View.INVISIBLE);
-//            isFabOpen = false;
-//        } else {
-//            slideLayout.startAnimation(pullFromRight);
-//            slideLayout.setVisibility(View.VISIBLE);
-//            isFabOpen = true;
-//        }
-//    }
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.fab_in_selectMenu:
+                anim();
+                break;
+        }
+    }
+
+    public void anim() {
+        if (isFabOpen) {
+            slideLayout.startAnimation(pushToRight);
+            slideLayout.setVisibility(View.INVISIBLE);
+            isFabOpen = false;
+        } else {
+            slideLayout.startAnimation(pullFromRight);
+            slideLayout.setVisibility(View.VISIBLE);
+            isFabOpen = true;
+        }
+    }
 
     @Override
     public void onBackPressed() {

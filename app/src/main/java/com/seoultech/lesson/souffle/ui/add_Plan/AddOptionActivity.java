@@ -3,22 +3,33 @@ package com.seoultech.lesson.souffle.ui.add_Plan;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 
-public class AddOptionActivity extends AppCompatActivity {
+public class AddOptionActivity extends AppCompatActivity implements View.OnClickListener{
 
-    EditText editName, editNumber, editTime, editObjective, editPeopleNumber, editRoomNum;
-    Button btnBackToTimeReserve, btnCommitReserve;
-    String roomNum;
+    private EditText editName, editNumber, editTime, editObjective, editPeopleNumber, editRoomNum;
+    private Button btnBackToTimeReserve, btnCommitReserve;
+    private String roomNum;
+    private Animation pullFromRight, pushToRight;
+    private Boolean isFabOpen = false;
+    private FloatingActionButton fabMenu;
+    private LinearLayout slideLayout;
+    private FrameLayout frameSelectMenu;
+    private Button btnToMain;
 
     private BackPressCloseHandler backPressCloseHandler;
 
@@ -32,6 +43,16 @@ public class AddOptionActivity extends AppCompatActivity {
         catch (NullPointerException e){}
         setContentView(R.layout.activity_add_option);
         backPressCloseHandler = new BackPressCloseHandler(this);
+
+        btnToMain = (Button)findViewById(R.id.btn_to_main_in_add_option);
+        fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_add_option);
+
+        pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
+        pullFromRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pullfromright);
+
+        slideLayout = (LinearLayout)findViewById(R.id.slide_layout_in_add_option);
+        frameSelectMenu = (FrameLayout)findViewById(R.id.add_option_frame);
+        frameSelectMenu.bringChildToFront(slideLayout);
 
         Intent intent = new Intent(this.getIntent());
         roomNum = intent.getExtras().getString("room_numbers");
@@ -63,7 +84,6 @@ public class AddOptionActivity extends AppCompatActivity {
             }
         });
 
-
         btnCommitReserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +102,39 @@ public class AddOptionActivity extends AppCompatActivity {
             }
         });
 
+        btnToMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent to_main_intent = new Intent(getApplicationContext(), SelectMenuActivity.class);
+                startActivity(to_main_intent);
+            }
+        });
 
+        fabMenu.setOnClickListener(this);
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.fab_in_add_option:
+                anim();
+                break;
+        }
+    }
+
+    public void anim() {
+        if (isFabOpen) {
+            slideLayout.startAnimation(pushToRight);
+            slideLayout.setVisibility(View.INVISIBLE);
+            isFabOpen = false;
+        } else {
+            slideLayout.startAnimation(pullFromRight);
+            slideLayout.setVisibility(View.VISIBLE);
+            isFabOpen = true;
+        }
     }
 
     @Override

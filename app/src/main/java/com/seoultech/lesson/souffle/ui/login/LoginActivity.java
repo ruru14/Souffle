@@ -43,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private BackPressCloseHandler backPressCloseHandler;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

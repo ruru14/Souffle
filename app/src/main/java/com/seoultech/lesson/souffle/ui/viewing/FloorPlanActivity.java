@@ -2,30 +2,44 @@ package com.seoultech.lesson.souffle.ui.viewing;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 
 public class FloorPlanActivity extends AppCompatActivity implements  View.OnClickListener{
 
-    ImageView imageFloorPlan;
+    private ImageView imageFloorPlan;
     private BackPressCloseHandler backPressCloseHandler;
-    int floorNumber = -1;
-    int boolFloorPlan = -1;
-    int boolRoomPlan = -1;
-    TextView guide;
-    Button btnBack;
-    GridLayout gridMiraeFirstFloor, gridMiraeSecondFloor, gridMiraeThirdFloor, gridMiraeFourthFloor,
+    private int floorNumber = -1;
+    private int boolFloorPlan = -1;
+    private int boolRoomPlan = -1;
+    private TextView guide;
+    private Button btnBack;
+    private GridLayout gridMiraeFirstFloor, gridMiraeSecondFloor, gridMiraeThirdFloor, gridMiraeFourthFloor,
             gridMiraeFifthFloor, gridMiraeB1thFloor;
-    Button btn109Room, btn111Room, btn113Room, btn115Room, btn209Room, btn211Room, btn213Room, btn215Room,
+    private Button btn109Room, btn111Room, btn113Room, btn115Room, btn209Room, btn211Room, btn213Room, btn215Room,
             btn301Room, btn305Room, btn309Room, btn401Room, btn403Room, btn405Room, btn501Room, btn505Room, btn509Room,
             btnB101Room, btnB105Room, btnB109Room;
+
+    private Animation pullFromRight, pushToRight;
+    private Boolean isFabOpen = false;
+    private FloatingActionButton fabMenu;
+    private LinearLayout slideLayout;
+    private FrameLayout frameSelectMenu;
+    private Button btnToMain;
+
 
 
     @Override
@@ -40,6 +54,16 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
         setContentView(R.layout.activity_floor_plan);
 
         backPressCloseHandler = new BackPressCloseHandler(this);
+
+        btnToMain = (Button)findViewById(R.id.btn_to_main_in_floor_plan);
+        fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_floor_plan);
+
+        pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
+        pullFromRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pullfromright);
+
+        slideLayout = (LinearLayout)findViewById(R.id.slide_layout_in_floor_plan);
+        frameSelectMenu = (FrameLayout)findViewById(R.id.floor_plan_frame);
+        frameSelectMenu.bringChildToFront(slideLayout);
 
 //  해당 층의 도면 보여주는 액티비티
 
@@ -180,7 +204,35 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
                 onBackPressed();
             }
         });
-    };
+
+        btnToMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent to_main_intent = new Intent(getApplicationContext(), SelectMenuActivity.class);
+                startActivity(to_main_intent);
+            }
+        });
+
+        fabMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                anim();
+            }
+        });
+    }
+    //onCreate End
+
+    public void anim() {
+        if (isFabOpen) {
+            slideLayout.startAnimation(pushToRight);
+            slideLayout.setVisibility(View.INVISIBLE);
+            isFabOpen = false;
+        } else {
+            slideLayout.startAnimation(pullFromRight);
+            slideLayout.setVisibility(View.VISIBLE);
+            isFabOpen = true;
+        }
+    }
 
     @Override
     public void onClick(View v){
