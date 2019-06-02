@@ -54,12 +54,28 @@ public class AppController {
     }
 
     // ReservationManager
-    public void createReservation(Reservation reservation){
-        reservationManager.createReservation(reservation);
+    public boolean createReservation(Reservation reservation){
+        return reservationManager.createReservation(reservation);
     }
 
-    public void readReservation(){
-        reservationManager.readReservation();
+    public List<Reservation> readReservation(){
+        return reservationManager.readReservation();
+    }
+
+    public List<Reservation> readReservationByStudentNumber(int studentNumber){
+        return reservationManager.readReservationByStudentNumber(studentNumber);
+    }
+
+    public List<Reservation> readReservationByState(String state){
+        return reservationManager.readReservationByState(state);
+    }
+
+    public boolean updateReservation(Reservation reservation){
+        return reservationManager.updateReservation(reservation);
+    }
+
+    public boolean deleteReservation(Reservation reservation){
+        return reservationManager.deleteReservation(reservation);
     }
 
     // Singleton

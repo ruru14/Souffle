@@ -4,24 +4,20 @@ import com.google.gson.Gson;
 import com.seoultech.lesson.souffle.data.model.Option;
 import com.seoultech.lesson.souffle.data.model.Reservation;
 
+import java.io.IOException;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ReservationManager {
 
-    private Reservation reservation;
-    private Option option;
-
     private Retrofit retrofit;
     private ReservationAPI reservationAPI;
     private Call<List<Reservation>> getList;
     private Call<Reservation> post;
-    private Gson gson;
 
     public ReservationManager() {
         retrofit = new Retrofit.Builder()
@@ -31,53 +27,69 @@ public class ReservationManager {
         reservationAPI = retrofit.create(ReservationAPI.class);
     }
 
-    public void createReservation(Reservation reservation) {
+    public boolean createReservation(Reservation reservation) {
         post = reservationAPI.createReservation(reservation);
-        post.enqueue(new Callback<Reservation>() {
-            @Override
-            public void onResponse(Call<Reservation> call, Response<Reservation> response) {
-                System.out.println("CCCCCCCCCC");
-            }
-
-            @Override
-            public void onFailure(Call<Reservation> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
-
+        boolean isSuccess = false;
+        try{
+            isSuccess = post.execute().isSuccessful();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return isSuccess;
     }
 
-    public void readReservation() {
+    public List<Reservation> readReservation() {
         getList = reservationAPI.readReservation();
-        getList.enqueue(new Callback<List<Reservation>>() {
-            @Override
-            public void onResponse(Call<List<Reservation>> call, Response<List<Reservation>> response) {
-                List<Reservation> list = response.body();
-                for(Reservation reservation : list){
-                    System.out.println(reservation.getName());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Reservation>> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
+        List<Reservation> response = null;
+        try{
+            response = getList.execute().body();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return response;
     }
 
-    public void readReservationByStudentNumber() {
-
+    public List<Reservation> readReservationByStudentNumber(int studentNumber) {
+        getList = reservationAPI.readReservationByStudentNumber(studentNumber);
+        List<Reservation> response = null;
+        try{
+            response = getList.execute().body();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return response;
     }
 
-    public void readReservationByState() {
-
+    public List<Reservation> readReservationByState(String state) {
+        getList = reservationAPI.readReservationByState(state);
+        List<Reservation> response = null;
+        try{
+            response = getList.execute().body();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return response;
     }
 
-    public void updateReservation(Reservation reservation) {
-
+    public boolean updateReservation(Reservation reservation) {
+        post = reservationAPI.updateReservation(reservation);
+        boolean isSuccess = false;
+        try{
+            isSuccess = post.execute().isSuccessful();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return isSuccess;
     }
 
-    public void deleteReservation(Reservation reservation) {
-
+    public boolean deleteReservation(Reservation reservation) {
+        Call<Reservation> deleteCall = reservationAPI.deleteReservation(reservation.getId());
+        boolean isSuccess = false;
+        try{
+            isSuccess = deleteCall.execute().isSuccessful();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return isSuccess;
     }
 }
