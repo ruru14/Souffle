@@ -16,7 +16,7 @@
 
         <android.support.design.widget.FloatingActionButton
             android:layout_alignParentRight="true"
-            android:id="@+id/fab"
+            android:id="@+id/fab_in_selectMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -37,8 +37,6 @@
 
         </LinearLayout>
 
-
-
 <android.support.design.widget.CoordinatorLayout
     android:layout_below="@+id/layout_toolbar"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -53,9 +51,10 @@
         android:layout_height="wrap_content"
         android:id = "@+id/time_reserve_frame">
 
+
     <LinearLayout
         android:background ="#55000000"
-        android:id ="@+id/layout_slide"
+        android:id ="@+id/slide_menu"
         android:visibility="gone"
         android:orientation="horizontal"
         android:layout_width="fill_parent"
@@ -163,18 +162,6 @@
             android:text = "날짜 선택"/>
     </LinearLayout>
 
-        <TimePicker
-            android:id="@+id/time_pick"
-            android:layout_width="wrap_content"
-            android:layout_height="212dp"
-            android:layout_centerHorizontal="true"
-            android:scaleX="0.8"
-            android:scaleY ="0.7"
-            android:timePickerMode="spinner"
-            android:visibility="visible">
-        </TimePicker>
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -272,22 +259,65 @@
             <CheckBox
                 android:id = "@+id/chk_pm5"/>
         </TableRow>
-
-            <!--<TextView
+        <TableRow>
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="18:00 ~ 19:00"
                 android:textSize="20dp"/>
+            <CheckBox
+            android:id = "@+id/chk_pm6"/>
+        </TableRow>
+
+            <TableRow>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="19:00 ~ 20:00"
                 android:textSize="20dp"/>
+            <CheckBox
+                android:id = "@+id/chk_pm7"/>
+            </TableRow>
+
+            <TableRow>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20:00 ~ 21:00"
-                android:textSize="20dp"/>-->
+                android:textSize="20dp"/>
+            <CheckBox
+                android:id = "@+id/chk_pm8"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="21:00 ~ 20:00"
+                    android:textSize="20dp"/>
+                <CheckBox
+                    android:id = "@+id/chk_pm9"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="22:00 ~ 23:00"
+                    android:textSize="20dp"/>
+                <CheckBox
+                    android:id = "@+id/chk_pm10"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="23:00 ~ 24:00"
+                    android:textSize="20dp"/>
+                <CheckBox
+                    android:id = "@+id/chk_pm11"/>
+            </TableRow>
         </TableLayout>
 
             <TextView
@@ -301,15 +331,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
-                android:text="날짜 확인"
+                android:text="최종 확인 테스트"
                 />
 
         </LinearLayout>
-</LinearLayout>
-
+    </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
-
     </FrameLayout>
 
 

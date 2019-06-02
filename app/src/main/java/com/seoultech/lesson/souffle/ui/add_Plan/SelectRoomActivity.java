@@ -12,8 +12,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
-import com.seoultech.lesson.souffle.ui.login.LoginActivity;
 import com.seoultech.lesson.souffle.ui.viewing.FloorPlanActivity;
 
 import static android.view.View.INVISIBLE;
@@ -30,16 +30,18 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
 
     private BackPressCloseHandler backPressCloseHandler;
 
-    Button btn_layer_select;
-    Button btn_plan;
-    Intent First_floor_intent;
-    Button btn_Return_Main;
-    Spinner spinner_layer;
-    String[] floor_layer;
-    GridLayout grid_1st_floor, grid_second_floor, grid_third_floor,
-               grid_fourth_floor, grid_fifth_floor, grid_b1_floor;
-    Intent to_floor_plan_intent;
-    Intent to_time_reserve_intent;
+    Button btnLayerSelect;
+    Button btnPlan;
+    Intent FirstFloorIntent;
+    Button btnReturnMain;
+    Spinner spinnerLayer;
+    String[] floorLayer;
+    GridLayout gridFirstFloor, gridSecondFloor, gridThirdFloor,
+            gridFourthFloor, gridFifthFloor, gridB1Floor;
+    Intent toFloorPlanIntent;
+    Intent toTimeReserveIntent;
+
+    private String building_name;
 
 
     @Override
@@ -53,11 +55,13 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
         setContentView(R.layout.activity_select_room);
 
         backPressCloseHandler = new BackPressCloseHandler(this);
-        First_floor_intent = new Intent(this.getIntent());
-        spinner_layer = (Spinner) findViewById(R.id.spinner_layer);
+        FirstFloorIntent = new Intent(this.getIntent());
+        spinnerLayer = (Spinner) findViewById(R.id.spinner_layer);
 
-        btn_layer_select = (Button) findViewById(R.id.btn_layer_select);
-        btn_Return_Main = (Button) findViewById(R.id.btn_Return_Main);
+        building_name = FirstFloorIntent.getExtras().getString("building_name");
+
+        btnLayerSelect = (Button) findViewById(R.id.btn_layer_select);
+        btnReturnMain = (Button) findViewById(R.id.btn_Return_Main);
 
         btn_109 = (Button) findViewById(R.id.btn_109);
         btn_111 = (Button) findViewById(R.id.btn_111);
@@ -85,32 +89,31 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
         btn_b105 = (Button) findViewById(R.id.btn_b105);
         btn_b109 = (Button) findViewById(R.id.btn_b109);
 
-        btn_plan = (Button) findViewById(R.id.btn_plan);
+        btnPlan = (Button) findViewById(R.id.btn_plan);
 
-        grid_1st_floor = (GridLayout) findViewById(R.id.grid_first_select);
-        grid_second_floor = (GridLayout) findViewById(R.id.grid_second_floor);
-        grid_third_floor = (GridLayout)findViewById(R.id.grid_third_floor);
-        grid_fourth_floor = (GridLayout)findViewById(R.id.grid_fourth_floor);
-        grid_fifth_floor = (GridLayout)findViewById(R.id.grid_fifth_floor);
-        grid_b1_floor = (GridLayout)findViewById(R.id.grid_b1_floor);
+        gridFirstFloor = (GridLayout) findViewById(R.id.grid_first_select);
+        gridSecondFloor = (GridLayout) findViewById(R.id.grid_second_floor);
+        gridThirdFloor = (GridLayout)findViewById(R.id.grid_third_floor);
+        gridFourthFloor = (GridLayout)findViewById(R.id.grid_fourth_floor);
+        gridFifthFloor = (GridLayout)findViewById(R.id.grid_fifth_floor);
+        gridB1Floor = (GridLayout)findViewById(R.id.grid_b1_floor);
 
 
-        to_floor_plan_intent = new Intent(getApplicationContext(), FloorPlanActivity.class);
-        to_time_reserve_intent = new Intent(getApplicationContext(), TimeReserveActivity.class);
+        toFloorPlanIntent = new Intent(getApplicationContext(), FloorPlanActivity.class);
+        toTimeReserveIntent = new Intent(getApplicationContext(), TimeReserveActivity.class);
 
-        spinner_layer.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
-        floor_layer = new String[]{"선택하세요", "B1F", "1F", "2F", "3F", "4F", "5F"};
+        spinnerLayer.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        floorLayer = new String[]{"선택하세요", "B1F", "1F", "2F", "3F", "4F", "5F"};
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, floor_layer);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, floorLayer);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_layer.setAdapter(adapter);
+        spinnerLayer.setAdapter(adapter);
 
-        btn_Return_Main.setOnClickListener(new View.OnClickListener() {
+        btnReturnMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent To_Main_intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(To_Main_intent);
-
+                Intent toMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
+                startActivity(toMenuIntent);
             }
         });
 
@@ -137,88 +140,70 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
     //(버튼)방 선택시 해당 방의 번호 넘김. 코드는 나중에 추가 가능
     @Override
     public void onClick(View v){
+        toTimeReserveIntent.putExtra("building_name_to_time_reserve",building_name);
         switch(v.getId()){
             case R.id.btn_109:
-                to_time_reserve_intent.putExtra("room_number","109");
-                startActivity(to_time_reserve_intent);
+                toTimeReserveIntent.putExtra("room_number","109");
                 break;
             case R.id.btn_111:
-                to_time_reserve_intent.putExtra("room_number","111");
-                startActivity(to_time_reserve_intent);
+                toTimeReserveIntent.putExtra("room_number","111");
                 break;
             case R.id.btn_113:
-                to_time_reserve_intent.putExtra("room_number","113");
-                startActivity(to_time_reserve_intent);
+                toTimeReserveIntent.putExtra("room_number","113");
                 break;
             case R.id.btn_115:
-                to_time_reserve_intent.putExtra("room_number","115");
-                startActivity(to_time_reserve_intent);
+                toTimeReserveIntent.putExtra("room_number","115");
                 break;
             case R.id.btn_209:
-                to_time_reserve_intent.putExtra("room_number","209");
-                startActivity(to_time_reserve_intent);
+                toTimeReserveIntent.putExtra("room_number","209");
                 break;
             case R.id.btn_211:
-                to_time_reserve_intent.putExtra("room_number","211");
-                startActivity(to_time_reserve_intent);
+                toTimeReserveIntent.putExtra("room_number","211");
                 break;
             case R.id.btn_213:
-                to_time_reserve_intent.putExtra("room_number","213");
-                startActivity(to_time_reserve_intent);
+                toTimeReserveIntent.putExtra("room_number","213");
                 break;
             case R.id.btn_215:
-                to_time_reserve_intent.putExtra("room_number","215");
-                startActivity(to_time_reserve_intent);
+                toTimeReserveIntent.putExtra("room_number","215");
                 break;
             case R.id.btn_301:
-                to_time_reserve_intent.putExtra("room_number","301");
-                startActivity(to_time_reserve_intent);
+                toTimeReserveIntent.putExtra("room_number","301");
                 break;
             case R.id.btn_305:
-                to_time_reserve_intent.putExtra("room_number","305");
-                startActivity(to_time_reserve_intent);
+                toTimeReserveIntent.putExtra("room_number","305");
                 break;
             case R.id.btn_309:
-                to_time_reserve_intent.putExtra("room_number","309");
-                startActivity(to_time_reserve_intent);
+                toTimeReserveIntent.putExtra("room_number","309");
                 break;
             case R.id.btn_401:
-                to_time_reserve_intent.putExtra("room_number","401");
-                startActivity(to_time_reserve_intent);
+                toTimeReserveIntent.putExtra("room_number","401");
                 break;
             case R.id.btn_405:
-                to_time_reserve_intent.putExtra("room_number","405");
-                startActivity(to_time_reserve_intent);
+                toTimeReserveIntent.putExtra("room_number","405");
                 break;
             case R.id.btn_409:
-                to_time_reserve_intent.putExtra("room_number","409");
-                startActivity(to_time_reserve_intent);
+                toTimeReserveIntent.putExtra("room_number","409");
                 break;
             case R.id.btn_501:
-                to_time_reserve_intent.putExtra("room_number","501");
-                startActivity(to_time_reserve_intent);
+                toTimeReserveIntent.putExtra("room_number","501");
                 break;
             case R.id.btn_505:
-                to_time_reserve_intent.putExtra("room_number","505");
-                startActivity(to_time_reserve_intent);
+                toTimeReserveIntent.putExtra("room_number","505");
                 break;
             case R.id.btn_509:
-                to_time_reserve_intent.putExtra("room_number","509");
-                startActivity(to_time_reserve_intent);
+                toTimeReserveIntent.putExtra("room_number","509");
                 break;
             case R.id.btn_b101:
-                to_time_reserve_intent.putExtra("room_number","b101");
-                startActivity(to_time_reserve_intent);
+                toTimeReserveIntent.putExtra("room_number","b101");
                 break;
             case R.id.btn_b105:
-                to_time_reserve_intent.putExtra("room_number","b105");
-                startActivity(to_time_reserve_intent);
+                toTimeReserveIntent.putExtra("room_number","b105");
                 break;
             case R.id.btn_b109:
-                to_time_reserve_intent.putExtra("room_number","b109");
-                startActivity(to_time_reserve_intent);
+                toTimeReserveIntent.putExtra("room_number","b109");
                 break;
         }
+        startActivity(toTimeReserveIntent);
     }
 
     //case 1부터 B1, 1, 2, 3, 4, 5층 순서임
@@ -226,111 +211,111 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View v, int i, long l) {
         if (i == 0)
-            btn_plan.setVisibility(INVISIBLE);
+            btnPlan.setVisibility(INVISIBLE);
         else
-            btn_plan.setVisibility(VISIBLE);
+            btnPlan.setVisibility(VISIBLE);
         switch (i) {
             case 0:
-                grid_1st_floor.setVisibility(INVISIBLE);
-                grid_second_floor.setVisibility(INVISIBLE);
-                grid_third_floor.setVisibility(INVISIBLE);
-                grid_fourth_floor.setVisibility(INVISIBLE);
-                grid_fifth_floor.setVisibility(INVISIBLE);
-                grid_b1_floor.setVisibility(INVISIBLE);
+                gridFirstFloor.setVisibility(INVISIBLE);
+                gridSecondFloor.setVisibility(INVISIBLE);
+                gridThirdFloor.setVisibility(INVISIBLE);
+                gridFourthFloor.setVisibility(INVISIBLE);
+                gridFifthFloor.setVisibility(INVISIBLE);
+                gridB1Floor.setVisibility(INVISIBLE);
                 break;
             case 1:
-                grid_1st_floor.setVisibility(INVISIBLE);
-                grid_second_floor.setVisibility(INVISIBLE);
-                grid_third_floor.setVisibility(INVISIBLE);
-                grid_fourth_floor.setVisibility(INVISIBLE);
-                grid_fifth_floor.setVisibility(INVISIBLE);
-                grid_b1_floor.setVisibility(VISIBLE);
-                btn_plan.setOnClickListener(new View.OnClickListener() {
+                gridFirstFloor.setVisibility(INVISIBLE);
+                gridSecondFloor.setVisibility(INVISIBLE);
+                gridThirdFloor.setVisibility(INVISIBLE);
+                gridFourthFloor.setVisibility(INVISIBLE);
+                gridFifthFloor.setVisibility(INVISIBLE);
+                gridB1Floor.setVisibility(VISIBLE);
+                btnPlan.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        to_floor_plan_intent.putExtra("floor_number",0);
-                        to_floor_plan_intent.putExtra("floor_plan",1);
-                        startActivity(to_floor_plan_intent);
+                        toFloorPlanIntent.putExtra("floor_number",0);
+                        toFloorPlanIntent.putExtra("floor_plan",1);
+                        startActivity(toFloorPlanIntent);
                     }
                 });
                 break;
             case 2:
-                grid_1st_floor.setVisibility(VISIBLE);
-                grid_second_floor.setVisibility(INVISIBLE);
-                grid_third_floor.setVisibility(INVISIBLE);
-                grid_fourth_floor.setVisibility(INVISIBLE);
-                grid_fifth_floor.setVisibility(INVISIBLE);
-                grid_b1_floor.setVisibility(INVISIBLE);
-                btn_plan.setOnClickListener(new View.OnClickListener() {
+                gridFirstFloor.setVisibility(VISIBLE);
+                gridSecondFloor.setVisibility(INVISIBLE);
+                gridThirdFloor.setVisibility(INVISIBLE);
+                gridFourthFloor.setVisibility(INVISIBLE);
+                gridFifthFloor.setVisibility(INVISIBLE);
+                gridB1Floor.setVisibility(INVISIBLE);
+                btnPlan.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        to_floor_plan_intent.putExtra("floor_number",1);
-                        to_floor_plan_intent.putExtra("floor_plan",1);
-                        startActivity(to_floor_plan_intent);
+                        toFloorPlanIntent.putExtra("floor_number",1);
+                        toFloorPlanIntent.putExtra("floor_plan",1);
+                        startActivity(toFloorPlanIntent);
                     }
                 });
                 break;
             case 3:
-                grid_1st_floor.setVisibility(INVISIBLE);
-                grid_second_floor.setVisibility(VISIBLE);
-                grid_third_floor.setVisibility(INVISIBLE);
-                grid_fourth_floor.setVisibility(INVISIBLE);
-                grid_fifth_floor.setVisibility(INVISIBLE);
-                grid_b1_floor.setVisibility(INVISIBLE);
-                btn_plan.setOnClickListener(new View.OnClickListener() {
+                gridFirstFloor.setVisibility(INVISIBLE);
+                gridSecondFloor.setVisibility(VISIBLE);
+                gridThirdFloor.setVisibility(INVISIBLE);
+                gridFourthFloor.setVisibility(INVISIBLE);
+                gridFifthFloor.setVisibility(INVISIBLE);
+                gridB1Floor.setVisibility(INVISIBLE);
+                btnPlan.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        to_floor_plan_intent.putExtra("floor_number",2);
-                        to_floor_plan_intent.putExtra("floor_plan",1);
-                        startActivity(to_floor_plan_intent);
+                        toFloorPlanIntent.putExtra("floor_number",2);
+                        toFloorPlanIntent.putExtra("floor_plan",1);
+                        startActivity(toFloorPlanIntent);
                     }
                 });
                 break;
             case 4:
-                grid_1st_floor.setVisibility(INVISIBLE);
-                grid_second_floor.setVisibility(INVISIBLE);
-                grid_third_floor.setVisibility(VISIBLE);
-                grid_fourth_floor.setVisibility(INVISIBLE);
-                grid_fifth_floor.setVisibility(INVISIBLE);
-                grid_b1_floor.setVisibility(INVISIBLE);
-                btn_plan.setOnClickListener(new View.OnClickListener() {
+                gridFirstFloor.setVisibility(INVISIBLE);
+                gridSecondFloor.setVisibility(INVISIBLE);
+                gridThirdFloor.setVisibility(VISIBLE);
+                gridFourthFloor.setVisibility(INVISIBLE);
+                gridFifthFloor.setVisibility(INVISIBLE);
+                gridB1Floor.setVisibility(INVISIBLE);
+                btnPlan.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        to_floor_plan_intent.putExtra("floor_number",3);
-                        to_floor_plan_intent.putExtra("floor_plan",1);
-                        startActivity(to_floor_plan_intent);
+                        toFloorPlanIntent.putExtra("floor_number",3);
+                        toFloorPlanIntent.putExtra("floor_plan",1);
+                        startActivity(toFloorPlanIntent);
                     }
                 });
                 break;
             case 5:
-                grid_1st_floor.setVisibility(INVISIBLE);
-                grid_second_floor.setVisibility(INVISIBLE);
-                grid_third_floor.setVisibility(INVISIBLE);
-                grid_fourth_floor.setVisibility(VISIBLE);
-                grid_fifth_floor.setVisibility(INVISIBLE);
-                grid_b1_floor.setVisibility(INVISIBLE);
-                btn_plan.setOnClickListener(new View.OnClickListener() {
+                gridFirstFloor.setVisibility(INVISIBLE);
+                gridSecondFloor.setVisibility(INVISIBLE);
+                gridThirdFloor.setVisibility(INVISIBLE);
+                gridFourthFloor.setVisibility(VISIBLE);
+                gridFifthFloor.setVisibility(INVISIBLE);
+                gridB1Floor.setVisibility(INVISIBLE);
+                btnPlan.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        to_floor_plan_intent.putExtra("floor_number",4);
-                        to_floor_plan_intent.putExtra("floor_plan",1);
-                        startActivity(to_floor_plan_intent);
+                        toFloorPlanIntent.putExtra("floor_number",4);
+                        toFloorPlanIntent.putExtra("floor_plan",1);
+                        startActivity(toFloorPlanIntent);
                     }
                 });
                 break;
             case 6:
-                grid_1st_floor.setVisibility(INVISIBLE);
-                grid_second_floor.setVisibility(INVISIBLE);
-                grid_third_floor.setVisibility(INVISIBLE);
-                grid_fourth_floor.setVisibility(INVISIBLE);
-                grid_fifth_floor.setVisibility(VISIBLE);
-                grid_b1_floor.setVisibility(INVISIBLE);
-                btn_plan.setOnClickListener(new View.OnClickListener() {
+                gridFirstFloor.setVisibility(INVISIBLE);
+                gridSecondFloor.setVisibility(INVISIBLE);
+                gridThirdFloor.setVisibility(INVISIBLE);
+                gridFourthFloor.setVisibility(INVISIBLE);
+                gridFifthFloor.setVisibility(VISIBLE);
+                gridB1Floor.setVisibility(INVISIBLE);
+                btnPlan.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        to_floor_plan_intent.putExtra("floor_number",5);
-                        to_floor_plan_intent.putExtra("floor_plan",1);
-                        startActivity(to_floor_plan_intent);
+                        toFloorPlanIntent.putExtra("floor_number",5);
+                        toFloorPlanIntent.putExtra("floor_plan",1);
+                        startActivity(toFloorPlanIntent);
                     }
                 });
                 break;

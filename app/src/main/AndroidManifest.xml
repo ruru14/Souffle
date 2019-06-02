@@ -3,6 +3,7 @@
     package="com.seoultech.lesson.souffle">
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
 
 
     <application
@@ -30,6 +31,9 @@
         </activity>
 
         <activity android:name=".ui.add_Plan.TimeReserveActivity">
+
+        </activity>
+        <activity android:name=".ui.add_Plan.SelectBuildingActivity">
 
         </activity>
 

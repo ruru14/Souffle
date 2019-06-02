@@ -16,9 +16,9 @@ import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 
 public class AddOptionActivity extends AppCompatActivity {
 
-    EditText edit_name, edit_number, edit_time, edit_objective, edit_people_number, edit_room_num;
-    Button btn_back_to_time_reserve, btn_commit_reserve;
-    String room_num;
+    EditText editName, editNumber, editTime, editObjective, editPeopleNumber, editRoomNum;
+    Button btnBackToTimeReserve, btnCommitReserve;
+    String roomNum;
 
     private BackPressCloseHandler backPressCloseHandler;
 
@@ -34,17 +34,17 @@ public class AddOptionActivity extends AppCompatActivity {
         backPressCloseHandler = new BackPressCloseHandler(this);
 
         Intent intent = new Intent(this.getIntent());
-        room_num = intent.getExtras().getString("room_numbers");
+        roomNum = intent.getExtras().getString("room_numbers");
 
-        edit_name = (EditText)findViewById(R.id.edit_name);
-        edit_number = (EditText)findViewById(R.id.edit_number);
-        edit_time = (EditText)findViewById(R.id.edit_time);
-        edit_objective = (EditText)findViewById(R.id.edit_object);
-        edit_people_number = (EditText)findViewById(R.id.edit_people_number);
-        edit_room_num = (EditText)findViewById(R.id.edit_room);
+        editName = (EditText)findViewById(R.id.edit_name);
+        editNumber = (EditText)findViewById(R.id.edit_number);
+        editTime = (EditText)findViewById(R.id.edit_time);
+        editObjective = (EditText)findViewById(R.id.edit_object);
+        editPeopleNumber = (EditText)findViewById(R.id.edit_people_number);
+        editRoomNum = (EditText)findViewById(R.id.edit_room);
 
-        btn_back_to_time_reserve = (Button)findViewById(R.id.btn_back_to_time_reserve);
-        btn_commit_reserve = (Button)findViewById(R.id.btn_commit_reserve);
+        btnBackToTimeReserve = (Button)findViewById(R.id.btn_back_to_time_reserve);
+        btnCommitReserve = (Button)findViewById(R.id.btn_commit_reserve);
 
         int year = intent.getExtras().getInt("reserve_year");
         int month = intent.getExtras().getInt("reserve_month");
@@ -52,11 +52,11 @@ public class AddOptionActivity extends AppCompatActivity {
         int hour = intent.getExtras().getInt("reserve_hour");
         int minute = intent.getExtras().getInt("reserve_minute");
 
-        edit_time.setText(year + "년 " + month + "월 " +
+        editTime.setText(year + "년 " + month + "월 " +
                 day + "일\n" + hour + "시 " + minute + "분");
-        edit_room_num.setText(room_num + "호");
+        editRoomNum.setText(roomNum + "호");
 
-        btn_back_to_time_reserve.setOnClickListener(new View.OnClickListener() {
+        btnBackToTimeReserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AddOptionActivity.super.onBackPressed();
@@ -64,7 +64,7 @@ public class AddOptionActivity extends AppCompatActivity {
         });
 
 
-        btn_commit_reserve.setOnClickListener(new View.OnClickListener() {
+        btnCommitReserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder commit_dlg =  new AlertDialog.Builder(AddOptionActivity.this);

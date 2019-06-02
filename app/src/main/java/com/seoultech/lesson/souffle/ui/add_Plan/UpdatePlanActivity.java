@@ -17,7 +17,7 @@ public class UpdatePlanActivity extends AppCompatActivity {
     public int rYear;
     public int rMonth;
     public int rDay;
-    Button btn_back_to_main;
+    Button btnBackToMain;
 
     private BackPressCloseHandler backPressCloseHandler;
 
@@ -35,10 +35,9 @@ public class UpdatePlanActivity extends AppCompatActivity {
         backPressCloseHandler = new BackPressCloseHandler(this);
         Intent intent = new Intent(this.getIntent());
 
-        btn_back_to_main = (Button)findViewById(R.id.btn_back_main);
+        btnBackToMain = (Button)findViewById(R.id.btn_back_main);
 
-
-        btn_back_to_main.setOnClickListener(new View.OnClickListener() {
+        btnBackToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent to_main_menu = new Intent(getApplicationContext(), SelectMenuActivity.class);

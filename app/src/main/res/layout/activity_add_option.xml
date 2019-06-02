@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="기타 입력란"
+        android:text="상세 정보 입력"
         android:textSize="30dp"/>
     <GridLayout
         android:layout_width="match_parent"
@@ -83,10 +83,27 @@
             android:hint = "시간 입력하는 구역"
             android:enabled="false"/>
         <TextView
+            android:id = "@+id/option_building"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint = "건물명"
+            android:layout_row="4"
+            android:layout_column = "0"
+            android:textSize="20dp">
+        </TextView>
+        <EditText
+            android:id = "@+id/txt_building"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint = "건물명 자동입력됨"
+            android:layout_row="4"
+            android:layout_column = "1"
+            android:enabled="false"/>
+        <TextView
             android:id="@+id/option_people_nunber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_row="4"
+            android:layout_row="5"
             android:layout_column="0"
             android:textSize="20dp"
             android:text="사용 인원" />
@@ -94,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/edit_people_number"
-            android:layout_row="4"
+            android:layout_row="5"
             android:layout_column="1"
             android:hint = "사용 인원 입력하는 구역"
             />
@@ -102,7 +119,7 @@
             android:id="@+id/option_room"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_row="5"
+            android:layout_row="6"
             android:layout_column="0"
             android:textSize="20dp"
             android:text="강의실" />
@@ -110,7 +127,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/edit_room"
-            android:layout_row="5"
+            android:layout_row="6"
             android:layout_column="1"
             android:enabled="false"
             android:hint = "예약한 강의실 자동 입력되는 구역"
@@ -119,7 +136,7 @@
             android:id="@+id/option_object"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_row="6"
+            android:layout_row="7"
             android:layout_column="0"
             android:textSize="20dp"
             android:text="목적" />
@@ -127,7 +144,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/edit_object"
-            android:layout_row="6"
+            android:layout_row="7"
             android:layout_column="1"
             android:hint = "목적 입력하는 구역"
             />
@@ -135,7 +152,7 @@
             android:id="@+id/option_etc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_row="7"
+            android:layout_row="8"
             android:layout_column="0"
             android:textSize="20dp"
             android:text="기타" />
@@ -143,7 +160,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/edit_etc"
-            android:layout_row="7"
+            android:layout_row="8"
             android:layout_column="1"
             android:hint = "기타 입력하는 구역"
             />
