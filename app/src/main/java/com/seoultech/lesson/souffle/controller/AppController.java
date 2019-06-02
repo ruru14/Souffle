@@ -1,12 +1,10 @@
 package com.seoultech.lesson.souffle.controller;
 
 import android.app.Activity;
-import android.content.res.Resources;
 
 import com.seoultech.lesson.souffle.data.LoginManager;
 import com.seoultech.lesson.souffle.data.OptionManager;
 import com.seoultech.lesson.souffle.data.ReservationManager;
-import com.seoultech.lesson.souffle.data.model.Option;
 import com.seoultech.lesson.souffle.data.model.Reservation;
 import com.seoultech.lesson.souffle.data.model.User;
 
@@ -66,8 +64,8 @@ public class AppController {
         return reservationManager.readReservationByStudentNumber(studentNumber);
     }
 
-    public List<Reservation> readReservationByState(String state){
-        return reservationManager.readReservationByState(state);
+    public List<Reservation> readReservationByBuilding(String building){
+        return reservationManager.readReservationByBuilding(building);
     }
 
     public boolean updateReservation(Reservation reservation){

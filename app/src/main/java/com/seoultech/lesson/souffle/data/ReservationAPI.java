@@ -4,11 +4,8 @@ import com.seoultech.lesson.souffle.data.model.Reservation;
 
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
 import retrofit2.http.POST;
@@ -23,11 +20,17 @@ public interface ReservationAPI {
     @GET("reserve")
     Call<List<Reservation>> readReservation();
 
-    @GET("reserve/state")
-    Call<List<Reservation>> readReservationByState(@Query("state") String state);
+    @GET("reserve/building")
+    Call<List<Reservation>> readReservationByBuilding(@Query("building") String building);
+
+    @GET("reserve/building_roomnum_date")
+    Call<List<Reservation>> readReservationByBuildingAndRoomNumberAndDate(@Query("building") String building, @Query("roomNumber") int roomNumber, @Query("date") String date);
 
     @GET("reserve/stnumber")
     Call<List<Reservation>> readReservationByStudentNumber(@Query("studentNumber") int studentNumber);
+
+    @GET("reserve/stnumber_date")
+    Call<List<Reservation>> readReservationByStudentNumberAndDate(@Query("studentNumber") int studentNumber, @Query("date") String date);
 
     @PUT("reserve")
     Call<Reservation> updateReservation(@Body Reservation reservation);

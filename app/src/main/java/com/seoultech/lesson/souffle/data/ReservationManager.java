@@ -1,13 +1,10 @@
 package com.seoultech.lesson.souffle.data;
 
-import com.google.gson.Gson;
-import com.seoultech.lesson.souffle.data.model.Option;
 import com.seoultech.lesson.souffle.data.model.Reservation;
 
 import java.io.IOException;
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -16,8 +13,6 @@ public class ReservationManager {
 
     private Retrofit retrofit;
     private ReservationAPI reservationAPI;
-    private Call<List<Reservation>> getList;
-    private Call<Reservation> post;
 
     public ReservationManager() {
         retrofit = new Retrofit.Builder()
@@ -28,10 +23,10 @@ public class ReservationManager {
     }
 
     public boolean createReservation(Reservation reservation) {
-        post = reservationAPI.createReservation(reservation);
+        Call<Reservation> create = reservationAPI.createReservation(reservation);
         boolean isSuccess = false;
         try{
-            isSuccess = post.execute().isSuccessful();
+            isSuccess = create.execute().isSuccessful();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,10 +34,10 @@ public class ReservationManager {
     }
 
     public List<Reservation> readReservation() {
-        getList = reservationAPI.readReservation();
+        Call<List<Reservation>> read = reservationAPI.readReservation();
         List<Reservation> response = null;
         try{
-            response = getList.execute().body();
+            response = read.execute().body();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,21 +45,43 @@ public class ReservationManager {
     }
 
     public List<Reservation> readReservationByStudentNumber(int studentNumber) {
-        getList = reservationAPI.readReservationByStudentNumber(studentNumber);
+        Call<List<Reservation>> read = reservationAPI.readReservationByStudentNumber(studentNumber);
         List<Reservation> response = null;
         try{
-            response = getList.execute().body();
+            response = read.execute().body();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return response;
     }
 
-    public List<Reservation> readReservationByState(String state) {
-        getList = reservationAPI.readReservationByState(state);
+    public List<Reservation> readReservationByStudentNumberAndDate(int studentNumber, String date) {
+        Call<List<Reservation>> read = reservationAPI.readReservationByStudentNumberAndDate(studentNumber, date);
         List<Reservation> response = null;
         try{
-            response = getList.execute().body();
+            response = read.execute().body();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return response;
+    }
+
+    public List<Reservation> readReservationByBuilding(String building) {
+        Call<List<Reservation>> read = reservationAPI.readReservationByBuilding(building);
+        List<Reservation> response = null;
+        try{
+            response = read.execute().body();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return response;
+    }
+
+    public List<Reservation> readReservationByBuildingAndRoomNumberAndDate(String building, int roomNumber, String date) {
+        Call<List<Reservation>> read = reservationAPI.readReservationByBuildingAndRoomNumberAndDate(building, roomNumber, date);
+        List<Reservation> response = null;
+        try{
+            response = read.execute().body();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,10 +89,10 @@ public class ReservationManager {
     }
 
     public boolean updateReservation(Reservation reservation) {
-        post = reservationAPI.updateReservation(reservation);
+        Call<Reservation> update = reservationAPI.updateReservation(reservation);
         boolean isSuccess = false;
         try{
-            isSuccess = post.execute().isSuccessful();
+            isSuccess = update.execute().isSuccessful();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -83,10 +100,10 @@ public class ReservationManager {
     }
 
     public boolean deleteReservation(Reservation reservation) {
-        Call<Reservation> deleteCall = reservationAPI.deleteReservation(reservation.getId());
+        Call<Reservation> delete = reservationAPI.deleteReservation(reservation.getId());
         boolean isSuccess = false;
         try{
-            isSuccess = deleteCall.execute().isSuccessful();
+            isSuccess = delete.execute().isSuccessful();
         } catch (IOException e) {
             e.printStackTrace();
         }

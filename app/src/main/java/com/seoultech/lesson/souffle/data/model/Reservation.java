@@ -42,11 +42,11 @@ public class Reservation {
     @SerializedName("timeEnd")
     private String timeEnd;
 
-    @SerializedName("state")
-    private String state;
+    @SerializedName("building")
+    private String building;
 
     @Builder
-    public Reservation(int roomNumber, String date, int studentNumber, String name, String purpose, int totalMember, String timeStart, String timeEnd, String state){
+    public Reservation(int roomNumber, String date, int studentNumber, String name, String purpose, int totalMember, String timeStart, String timeEnd, String building){
         this.roomNumber = roomNumber;
         this.date = date;
         this.studentNumber = studentNumber;
@@ -55,7 +55,7 @@ public class Reservation {
         this.totalMember = totalMember;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
-        this.state = state;
+        this.building = building;
     }
 
 }
