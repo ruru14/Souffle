@@ -12,15 +12,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
 import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.data.model.User;
 import com.seoultech.lesson.souffle.ui.add_Plan.SelectBuildingActivity;
 import com.seoultech.lesson.souffle.ui.add_Plan.UpdatePlanActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
-
-import org.apache.bcel.verifier.structurals.Frame;
 
 public class SelectMenuActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -33,6 +31,10 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
     private LinearLayout slideLayout;
     private FrameLayout frameSelectMenu;
     private Button btnToMain;
+    private String user_name, user_major;
+    private int user_stNumber;
+    private Button btnUserInfo;
+    private User user;
 
     private Toast toast;
     private long backKeyPressedTime = 0;
@@ -52,7 +54,10 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_select_menu);
 
         selectMenuIntent = new Intent(this.getIntent());
+        user = (User) selectMenuIntent.getSerializableExtra("user");
+
         backPressCloseHandler = new BackPressCloseHandler(this);
+        btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_selectmenu);
 
         linearPlanAdd = (LinearLayout)findViewById(R.id.linear_plan_add);
         linearPlanDelete = (LinearLayout)findViewById(R.id.linear_plan_delete);
@@ -69,10 +74,13 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         frameSelectMenu = (FrameLayout)findViewById(R.id.select_menu_frame);
         frameSelectMenu.bringChildToFront(slideLayout);
 
+        btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
+
        linearPlanAdd.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
                Intent buildingSelectIntent = new Intent(getApplicationContext(), SelectBuildingActivity.class);
+               buildingSelectIntent.putExtra("user",user);
                startActivity(buildingSelectIntent);
            }
        });
@@ -80,8 +88,9 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
        linearPlanUpdate.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Intent to_update_plan_intent = new Intent(getApplicationContext(), UpdatePlanActivity.class);
-               startActivity(to_update_plan_intent);
+               Intent toUpdatePlanIntent = new Intent(getApplicationContext(), UpdatePlanActivity.class);
+               toUpdatePlanIntent.putExtra("user",user);
+               startActivity(toUpdatePlanIntent);
            }
        });
 

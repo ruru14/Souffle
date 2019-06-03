@@ -2,12 +2,12 @@ package com.seoultech.lesson.souffle.ui.login;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editId, editPW;
     private Intent toFloorSelectIntent;
     private long timeChecker;
+    private ContactsContract.Contacts.Data userData;
 
     @BindView(R.id.chkAutoLogin)
     private CheckBox chkAutoLogin;
@@ -115,7 +116,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private class AutoLoginTask extends AsyncTask {
 
-
         ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
 
         // 실행중 (Progress Bar)
@@ -143,15 +143,12 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(ToSelectMenuIntent);
             }else{ // 로그인 실패
                 //메세지박스 다이얼로그 띄우삼
-//                while(true){
 //                    if(System.currentTimeMillis() >  timeChecker + 5000) {
 //                        AlertDialog.Builder failLoginDlg = new AlertDialog.Builder(LoginActivity.this);
 //                        failLoginDlg.setMessage("로그인에 실패하였습니다.\n다시 로그인해주세요");
 //                        failLoginDlg.setPositiveButton("알겠습니다",null);
 //                        failLoginDlg.show();
-//                        break;
 //                    }
-//                }
             }
         }
     }
@@ -186,8 +183,12 @@ public class LoginActivity extends AppCompatActivity {
                     appController.setAutoLogin(true, user);
                 }
                 appController.setAutoLogin(false, user);
-                Intent To_select_intent = new Intent(getApplicationContext(), SelectMenuActivity.class);
-                startActivity(To_select_intent);
+                Intent toSelectMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
+                toSelectMenuIntent.putExtra("user",user);
+                toSelectMenuIntent.putExtra("user_name",user.getName());
+                toSelectMenuIntent.putExtra("user_stNumber",user.getStudentNumber());
+                toSelectMenuIntent.putExtra("user_major",user.getMajor());
+                startActivity(toSelectMenuIntent);
             }else{ // 로그인 실패
 
             }

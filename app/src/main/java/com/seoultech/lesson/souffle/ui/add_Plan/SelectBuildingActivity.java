@@ -10,9 +10,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.data.model.User;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 
 import butterknife.ButterKnife;
@@ -23,13 +23,17 @@ public class SelectBuildingActivity extends AppCompatActivity implements View.On
     private Button btnBuilding1;
     private Button btnBuilding2;
     private Button btnBuilding3;
+    private String user_name, user_major;
+    private int user_stNumber;
 
     private Animation pullFromRight, pushToRight;
     private Boolean isFabOpen = false;
     private FloatingActionButton fabMenu;
     private LinearLayout slideLayout;
     private FrameLayout frameSelectMenu;
-    private Button btnToMain;
+    private Button btnToMain, btnUserInfo;
+    private User user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +45,13 @@ public class SelectBuildingActivity extends AppCompatActivity implements View.On
         catch (NullPointerException e){}
         setContentView(R.layout.activity_select_building);
 
-        Intent toGetIntent = new Intent(this.getIntent());
+        Intent selectBuildingIntent = new Intent(this.getIntent());
+        user = (User) selectBuildingIntent.getSerializableExtra("user");
 
         ButterKnife.bind(this);
 
         btnToMain = (Button)findViewById(R.id.btn_to_main_in_select_building);
+        btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_selectbuilding);
         fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_select_building);
 
         pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
@@ -57,12 +63,14 @@ public class SelectBuildingActivity extends AppCompatActivity implements View.On
 
         btnMirae = (Button)findViewById(R.id.btn_mirae);
 
+        btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
+
         btnMirae.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toRoomSelectIntent = new Intent(getApplicationContext(),SelectRoomActivity.class);
-                toRoomSelectIntent.putExtra("building_name","미래관");
-                startActivity(toRoomSelectIntent);
+                Intent toMiraeRoomSelectIntent = new Intent(getApplicationContext(),SelectRoomActivity.class);
+                toMiraeRoomSelectIntent.putExtra("building_name","미래관");
+                startActivity(toMiraeRoomSelectIntent);
             }
         });
 

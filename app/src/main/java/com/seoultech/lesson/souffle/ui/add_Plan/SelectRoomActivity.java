@@ -37,7 +37,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
 
     private Button btnLayerSelect;
     private Button btnPlan;
-    private Intent FirstFloorIntent;
+    private Intent selectRoomIntent;
     private Button btnReturnMain;
     private Spinner spinnerLayer;
     private String[] floorLayer;
@@ -66,7 +66,11 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
         setContentView(R.layout.activity_select_room);
 
         backPressCloseHandler = new BackPressCloseHandler(this);
-        FirstFloorIntent = new Intent(this.getIntent());
+        selectRoomIntent = new Intent(this.getIntent());
+        selectRoomIntent.getExtras().getString("user_name");
+        selectRoomIntent.getExtras().getString("user_major");
+        selectRoomIntent.getExtras().getInt("user_stNumber");
+
         spinnerLayer = (Spinner) findViewById(R.id.spinner_layer);
 
         btnToMain = (Button)findViewById(R.id.btn_to_main_in_select_room) ;
@@ -79,7 +83,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
         frameSelectMenu = (FrameLayout)findViewById(R.id.select_room_frame);
         frameSelectMenu.bringChildToFront(slideLayout);
 
-        building_name = FirstFloorIntent.getExtras().getString("building_name");
+        building_name = selectRoomIntent.getExtras().getString("building_name");
 
         btnLayerSelect = (Button) findViewById(R.id.btn_layer_select);
         btnReturnMain = (Button) findViewById(R.id.btn_Return_Main);
