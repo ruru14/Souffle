@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.data.model.User;
 import com.seoultech.lesson.souffle.ui.login.LoginActivity;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
@@ -53,7 +54,8 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
     private CheckBox chk_am9, chk_am10, chk_am11, chk_pm12, chk_pm2, chk_pm3, chk_pm4, chk_pm5;
     private  CheckBox chk_pm6, chk_pm7, chk_pm8, chk_pm9, chk_pm10, chk_pm11;
     private TextView txtAm9, txtAm10, txtAm11, txtPm12, txtPm2, txtPm3, txtPm4, txtPm5;
-    private Button btnToMain, btnSetting, btnLogout;
+    private Button btnToMain, btnSetting, btnLogout, btnUserInfo;
+    private User user;
     private DatePickerDialog dateDlg;
     private FrameLayout timeReserveFrame;
     private int dYear = -1;
@@ -81,20 +83,12 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
         }
         setContentView(R.layout.activity_time_reserve);
 
-   /*    chk_list = findViewById(R.id.chk_list);
+        Intent timeReserveIntent = new Intent(this.getIntent());
+        user = (User) timeReserveIntent.getSerializableExtra("user");
 
-        chkArrList = new ArrayList();
-        chkArrList.add(new CheckData(R.id.chk_am9,true));
-        chkArrList.add(new CheckData(R.id.chk_am10,true));
-        chkArrList.add(new CheckData(R.id.chk_am11,true));
-        chkArrList.add(new CheckData(R.id.chk_pm12,true));
-        chkArrList.add(new CheckData(R.id.chk_pm2,true));
-        chkArrList.add(new CheckData(R.id.chk_pm3,true));
-        chkArrList.add(new CheckData(R.id.chk_pm4,true));
-        chkArrList.add(new CheckData(R.id.chk_pm5,true));
+        btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_timereserve);
+        btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
 
-        chkAdapter = new CheckAdapter(chkArrList);
-        chkAdapter.setOnItemClickListener(this);*/
         fabMain = (FloatingActionButton) findViewById(R.id.fab_in_time_reserve);
         slideLayout = (LinearLayout)findViewById(R.id.slide_layout_in_time_reserve);
         scrollView = (NestedScrollView)findViewById(R.id.ScrollView01);
@@ -117,7 +111,6 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
 
         backPressCloseHandler = new BackPressCloseHandler(this);
 
-        Intent time_intent = new Intent(this.getIntent());
 
         txtRoomDlg = (TextView) findViewById(R.id.txt_room_dlg);
         txtYearDlg = (TextView) findViewById(R.id.txt_year_dlg);
@@ -147,7 +140,6 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
         txtPm3 = (TextView) findViewById(R.id.txt_pm3);
         txtPm4 = (TextView) findViewById(R.id.txt_pm4);
         txtPm5 = (TextView) findViewById(R.id.txt_pm5);
-
 
         chk_am9.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -183,7 +175,7 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
-        roomNumber = time_intent.getExtras().getString("room_number");
+        roomNumber = timeReserveIntent.getExtras().getString("room_number");
         txtRoomDlg.setText(roomNumber + "호");
         final int room_num_int = Integer.parseInt(roomNumber);
 
@@ -204,8 +196,9 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
         btnToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent to_main_intent = new Intent(getApplicationContext(),SelectMenuActivity.class);
-                startActivity(to_main_intent);
+                Intent toMainMenuIntent = new Intent(getApplicationContext(),SelectMenuActivity.class);
+                toMainMenuIntent.putExtra("user",user);
+                startActivity(toMainMenuIntent);
             }
         });
 
@@ -276,14 +269,15 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
                             tYear = getReturn(dYear);
                             tMonth = getReturn(dMonth);
                             tDay = getReturn(dDay);
-                            Intent to_option_intent = new Intent(getApplicationContext(), AddOptionActivity.class);
-                            to_option_intent.putExtra("reserve_year", tYear);
-                            to_option_intent.putExtra("reserve_month", tMonth);
-                            to_option_intent.putExtra("reserve_day", tDay);
-                            to_option_intent.putExtra("reserve_hour", tHour);
-                            to_option_intent.putExtra("reserve_minute", tMinute);
-                            to_option_intent.putExtra("room_numbers", roomNumber);
-                            startActivity(to_option_intent);
+                            Intent toAddOptionIntent = new Intent(getApplicationContext(), AddOptionActivity.class);
+                            toAddOptionIntent.putExtra("reserve_year", tYear);
+                            toAddOptionIntent.putExtra("reserve_month", tMonth);
+                            toAddOptionIntent.putExtra("reserve_day", tDay);
+                            toAddOptionIntent.putExtra("reserve_hour", tHour);
+                            toAddOptionIntent.putExtra("reserve_minute", tMinute);
+                            toAddOptionIntent.putExtra("room_numbers", roomNumber);
+                            toAddOptionIntent.putExtra("user",user);
+                            startActivity(toAddOptionIntent);
                         }
                     });
                     dlg.setNegativeButton("취소", null);

@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.data.model.User;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 
@@ -30,6 +31,8 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
     private LinearLayout slideLayout;
     private FrameLayout frameSelectMenu;
     private Button btnToMain;
+    private User user;
+    private Button btnUserInfo;
 
     private BackPressCloseHandler backPressCloseHandler;
 
@@ -42,6 +45,14 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
         }
         catch (NullPointerException e){}
         setContentView(R.layout.activity_add_option);
+        Intent AddOptionIntent = new Intent(this.getIntent());
+
+        user = (User) AddOptionIntent.getSerializableExtra("user");
+        btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_addoption);
+        btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
+
+        btnCommitReserve = (Button)findViewById(R.id.btn_commit_reserve);
+
         backPressCloseHandler = new BackPressCloseHandler(this);
 
         btnToMain = (Button)findViewById(R.id.btn_to_main_in_add_option);
@@ -54,8 +65,7 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
         frameSelectMenu = (FrameLayout)findViewById(R.id.add_option_frame);
         frameSelectMenu.bringChildToFront(slideLayout);
 
-        Intent intent = new Intent(this.getIntent());
-        roomNum = intent.getExtras().getString("room_numbers");
+        roomNum = AddOptionIntent.getExtras().getString("room_numbers");
 
         editName = (EditText)findViewById(R.id.edit_name);
         editNumber = (EditText)findViewById(R.id.edit_number);
@@ -65,13 +75,12 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
         editRoomNum = (EditText)findViewById(R.id.edit_room);
 
         btnBackToTimeReserve = (Button)findViewById(R.id.btn_back_to_time_reserve);
-        btnCommitReserve = (Button)findViewById(R.id.btn_commit_reserve);
 
-        int year = intent.getExtras().getInt("reserve_year");
-        int month = intent.getExtras().getInt("reserve_month");
-        int day = intent.getExtras().getInt("reserve_day");
-        int hour = intent.getExtras().getInt("reserve_hour");
-        int minute = intent.getExtras().getInt("reserve_minute");
+        int year = AddOptionIntent.getExtras().getInt("reserve_year");
+        int month = AddOptionIntent.getExtras().getInt("reserve_month");
+        int day = AddOptionIntent.getExtras().getInt("reserve_day");
+        int hour = AddOptionIntent.getExtras().getInt("reserve_hour");
+        int minute = AddOptionIntent.getExtras().getInt("reserve_minute");
 
         editTime.setText(year + "년 " + month + "월 " +
                 day + "일\n" + hour + "시 " + minute + "분");
@@ -87,26 +96,31 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
         btnCommitReserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder commit_dlg =  new AlertDialog.Builder(AddOptionActivity.this);
-                commit_dlg.setTitle("최종 확인");
-                commit_dlg.setIcon(R.drawable.ic_launcher_foreground);
-                commit_dlg.setMessage("해당 내용으로 예약하시겠습니까?");
-                commit_dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                AlertDialog.Builder reserveCommitDlg =  new AlertDialog.Builder(AddOptionActivity.this);
+                reserveCommitDlg.setTitle("최종 확인");
+                reserveCommitDlg.setIcon(R.drawable.ic_launcher_foreground);
+                reserveCommitDlg.setMessage("해당 내용으로 예약하시겠습니까?");
+                reserveCommitDlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getApplicationContext(),"예약되었습니다",Toast.LENGTH_SHORT).show();
-                        Intent to_menu_intent = new Intent(getApplicationContext(), SelectMenuActivity.class);
-                        startActivity(to_menu_intent);
+                        Intent toMainMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
+                        toMainMenuIntent.putExtra("user",user);
+                        Intent toUpdatePlanIntent = new Intent(getApplicationContext(), UpdatePlanActivity.class);
+                        toUpdatePlanIntent.putExtra("user",user);
+                        startActivity(toMainMenuIntent);
                     }
                 });
+                reserveCommitDlg.show();
             }
         });
 
         btnToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent to_main_intent = new Intent(getApplicationContext(), SelectMenuActivity.class);
-                startActivity(to_main_intent);
+                Intent toMainMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
+                toMainMenuIntent.putExtra("user",user);
+                startActivity(toMainMenuIntent);
             }
         });
 

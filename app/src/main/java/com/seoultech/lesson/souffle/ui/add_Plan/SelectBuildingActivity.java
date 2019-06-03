@@ -70,6 +70,7 @@ public class SelectBuildingActivity extends AppCompatActivity implements View.On
             public void onClick(View v) {
                 Intent toMiraeRoomSelectIntent = new Intent(getApplicationContext(),SelectRoomActivity.class);
                 toMiraeRoomSelectIntent.putExtra("building_name","미래관");
+                toMiraeRoomSelectIntent.putExtra("user",user);
                 startActivity(toMiraeRoomSelectIntent);
             }
         });
@@ -77,8 +78,9 @@ public class SelectBuildingActivity extends AppCompatActivity implements View.On
         btnToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent to_main_intent = new Intent(getApplicationContext(), SelectMenuActivity.class);
-                startActivity(to_main_intent);
+                Intent toMainMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
+                toMainMenuIntent.putExtra("user",user);
+                startActivity(toMainMenuIntent);
             }
         });
 

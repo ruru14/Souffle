@@ -2,6 +2,7 @@ package com.seoultech.lesson.souffle.ui.login;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -94,17 +95,16 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
         btnExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finishAffinity();
                 System.runFinalization();
                 System.exit(0);
-
             }
         });
 
+        btnTest.setVisibility(View.GONE);
         btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -190,7 +190,10 @@ public class LoginActivity extends AppCompatActivity {
                 toSelectMenuIntent.putExtra("user_major",user.getMajor());
                 startActivity(toSelectMenuIntent);
             }else{ // 로그인 실패
-
+//                AlertDialog.Builder logInFailDlg= new AlertDialog.Builder(LoginActivity.this);
+//                logInFailDlg.setMessage("로그인에 실패하였습니다");
+//                logInFailDlg.setTitle("로그인 실패");
+//                logInFailDlg.setPositiveButton("확인", null);
             }
         }
     }

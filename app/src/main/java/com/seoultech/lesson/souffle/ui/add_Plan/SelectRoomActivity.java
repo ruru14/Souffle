@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.data.model.User;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.viewing.FloorPlanActivity;
@@ -52,7 +53,8 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
     private FloatingActionButton fabMenu;
     private LinearLayout slideLayout;
     private FrameLayout frameSelectMenu;
-    private Button btnToMain;
+    private Button btnToMain, btnUserInfo;
+    private User user;
 
 
     @Override
@@ -67,9 +69,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
 
         backPressCloseHandler = new BackPressCloseHandler(this);
         selectRoomIntent = new Intent(this.getIntent());
-        selectRoomIntent.getExtras().getString("user_name");
-        selectRoomIntent.getExtras().getString("user_major");
-        selectRoomIntent.getExtras().getInt("user_stNumber");
+        user = (User) selectRoomIntent.getSerializableExtra("user");
 
         spinnerLayer = (Spinner) findViewById(R.id.spinner_layer);
 
@@ -84,6 +84,9 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
         frameSelectMenu.bringChildToFront(slideLayout);
 
         building_name = selectRoomIntent.getExtras().getString("building_name");
+
+        btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_selectroom);
+        btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
 
         btnLayerSelect = (Button) findViewById(R.id.btn_layer_select);
         btnReturnMain = (Button) findViewById(R.id.btn_Return_Main);
@@ -134,6 +137,8 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerLayer.setAdapter(adapter);
 
+
+
         btnReturnMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,8 +168,9 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
         btnToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent to_main_intent = new Intent(getApplicationContext(), SelectMenuActivity.class);
-                startActivity(to_main_intent);
+                Intent toMainMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
+                toMainMenuIntent.putExtra("user",user);
+                startActivity(toMainMenuIntent);
             }
         });
 
@@ -257,6 +263,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                 toTimeReserveIntent.putExtra("room_number","b109");
                 break;
         }
+        toTimeReserveIntent.putExtra("user",user);
         startActivity(toTimeReserveIntent);
     }
 
@@ -289,6 +296,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                     public void onClick(View view) {
                         toFloorPlanIntent.putExtra("floor_number",0);
                         toFloorPlanIntent.putExtra("floor_plan",1);
+                        toFloorPlanIntent.putExtra("user",user);
                         startActivity(toFloorPlanIntent);
                     }
                 });
@@ -305,6 +313,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                     public void onClick(View view) {
                         toFloorPlanIntent.putExtra("floor_number",1);
                         toFloorPlanIntent.putExtra("floor_plan",1);
+                        toFloorPlanIntent.putExtra("user",user);
                         startActivity(toFloorPlanIntent);
                     }
                 });
@@ -321,6 +330,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                     public void onClick(View view) {
                         toFloorPlanIntent.putExtra("floor_number",2);
                         toFloorPlanIntent.putExtra("floor_plan",1);
+                        toFloorPlanIntent.putExtra("user",user);
                         startActivity(toFloorPlanIntent);
                     }
                 });
@@ -337,6 +347,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                     public void onClick(View view) {
                         toFloorPlanIntent.putExtra("floor_number",3);
                         toFloorPlanIntent.putExtra("floor_plan",1);
+                        toFloorPlanIntent.putExtra("user",user);
                         startActivity(toFloorPlanIntent);
                     }
                 });
@@ -353,6 +364,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                     public void onClick(View view) {
                         toFloorPlanIntent.putExtra("floor_number",4);
                         toFloorPlanIntent.putExtra("floor_plan",1);
+                        toFloorPlanIntent.putExtra("user",user);
                         startActivity(toFloorPlanIntent);
                     }
                 });
@@ -369,6 +381,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                     public void onClick(View view) {
                         toFloorPlanIntent.putExtra("floor_number",5);
                         toFloorPlanIntent.putExtra("floor_plan",1);
+                        toFloorPlanIntent.putExtra("user",user);
                         startActivity(toFloorPlanIntent);
                     }
                 });

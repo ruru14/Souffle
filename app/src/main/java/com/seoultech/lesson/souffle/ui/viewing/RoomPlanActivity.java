@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.data.model.User;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 
@@ -28,6 +29,8 @@ public class RoomPlanActivity extends AppCompatActivity implements View.OnClickL
     private LinearLayout slideLayout;
     private FrameLayout frameSelectMenu;
     private Button btnToMain;
+    private Button btnUserInfo;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,10 @@ public class RoomPlanActivity extends AppCompatActivity implements View.OnClickL
         }
         catch (NullPointerException e){}
         setContentView(R.layout.activity_room_plan);
+        Intent roomPlanIntent = new Intent(this.getIntent());
+        user = (User) roomPlanIntent.getSerializableExtra("user");
+        btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_roomplan);
+        btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
 
         backPressCloseHandler = new BackPressCloseHandler(this);
 //
@@ -53,9 +60,9 @@ public class RoomPlanActivity extends AppCompatActivity implements View.OnClickL
 //
         txtRoomGuide = (TextView)findViewById(R.id.txt_room_guide);
     btnBackToRoomSelect = (Button)findViewById(R.id.btn_back_to_room_select);
-    Intent get_intent = new Intent(this.getIntent());
 
-    txtRoomGuide.setText(get_intent.getExtras().getString("room_number_to_plan") + "호 강의실 사진");
+
+    txtRoomGuide.setText(roomPlanIntent.getExtras().getString("room_number_to_plan") + "호 강의실 사진");
 
     btnBackToRoomSelect.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -67,8 +74,9 @@ public class RoomPlanActivity extends AppCompatActivity implements View.OnClickL
         btnToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent to_main_intent = new Intent(getApplicationContext(), SelectMenuActivity.class);
-                startActivity(to_main_intent);
+                Intent toMainMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
+                toMainMenuIntent.putExtra("user",user);
+                startActivity(toMainMenuIntent);
             }
         });
 

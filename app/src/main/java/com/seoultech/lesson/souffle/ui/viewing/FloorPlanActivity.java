@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.data.model.User;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 
@@ -39,6 +40,8 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
     private LinearLayout slideLayout;
     private FrameLayout frameSelectMenu;
     private Button btnToMain;
+    private Button btnUserInfo;
+    private User user;
 
 
 
@@ -52,6 +55,10 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
         }
         catch (NullPointerException e){}
         setContentView(R.layout.activity_floor_plan);
+        Intent FloorPlanIntent = new Intent(this.getIntent());
+        user = (User) FloorPlanIntent.getSerializableExtra("user");
+        btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_floorplan);
+        btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
 
         backPressCloseHandler = new BackPressCloseHandler(this);
 
@@ -76,12 +83,12 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
 
         btnBack = (Button) findViewById(R.id.btn_back);
         guide = (TextView) findViewById(R.id.txt_guide);
-        Intent Reserve_intent = new Intent(this.getIntent());
+
         ImageView image_floor_plan = (ImageView) findViewById(R.id.image_floor_plan);
-        boolFloorPlan = Reserve_intent.getExtras().getInt("floor_plan");
-        boolRoomPlan = Reserve_intent.getExtras().getInt("room_plan");
-        floorNumber = Reserve_intent.getExtras().getInt("floorNumber");
-        int room_num_int = Reserve_intent.getExtras().getInt("room_num_int");
+        boolFloorPlan = FloorPlanIntent.getExtras().getInt("floor_plan");
+        boolRoomPlan = FloorPlanIntent.getExtras().getInt("room_plan");
+        floorNumber = FloorPlanIntent.getExtras().getInt("floorNumber");
+        int room_num_int = FloorPlanIntent.getExtras().getInt("room_num_int");
 
         btn109Room = (Button)findViewById(R.id.btn_109_plan);
         btn111Room = (Button)findViewById(R.id.btn_111_plan);
@@ -208,8 +215,9 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
         btnToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent to_main_intent = new Intent(getApplicationContext(), SelectMenuActivity.class);
-                startActivity(to_main_intent);
+                Intent toMainMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
+                toMainMenuIntent.putExtra("user",user);
+                startActivity(toMainMenuIntent);
             }
         });
 
@@ -236,92 +244,112 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
 
     @Override
     public void onClick(View v){
-        Intent intent_to_room_plan = new Intent(getApplicationContext(),RoomPlanActivity.class);
+        Intent toRoomPlanIntent = new Intent(getApplicationContext(),RoomPlanActivity.class);
         switch(v.getId()) {
             case R.id.btn_109_plan:
-                intent_to_room_plan.putExtra("room_number_to_plan","109");
-                startActivity(intent_to_room_plan);
+                toRoomPlanIntent.putExtra("room_number_to_plan","109");
+                toRoomPlanIntent.putExtra("user",user);
+                startActivity(toRoomPlanIntent);
                 break;
             case R.id.btn_111_plan:
-                intent_to_room_plan.putExtra("room_number_to_plan","111");
-                startActivity(intent_to_room_plan);
+                toRoomPlanIntent.putExtra("room_number_to_plan","111");
+                toRoomPlanIntent.putExtra("user",user);
+                startActivity(toRoomPlanIntent);
                 break;
             case R.id.btn_113_plan:
-                intent_to_room_plan.putExtra("room_number_to_plan","113");
-                startActivity(intent_to_room_plan);
+                toRoomPlanIntent.putExtra("room_number_to_plan","113");
+                toRoomPlanIntent.putExtra("user",user);
+                startActivity(toRoomPlanIntent);
                 break;
             case R.id.btn_115_plan:
-                intent_to_room_plan.putExtra("room_number_to_plan","115");
-                startActivity(intent_to_room_plan);
+                toRoomPlanIntent.putExtra("room_number_to_plan","115");
+                toRoomPlanIntent.putExtra("user",user);
+                startActivity(toRoomPlanIntent);
                 break;
 
             case R.id.btn_209_plan:
-                intent_to_room_plan.putExtra("room_number_to_plan","209");
-                startActivity(intent_to_room_plan);
+                toRoomPlanIntent.putExtra("room_number_to_plan","209");
+                toRoomPlanIntent.putExtra("user",user);
+                startActivity(toRoomPlanIntent);
                 break;
             case R.id.btn_211_plan:
-                intent_to_room_plan.putExtra("room_number_to_plan","211");
-                startActivity(intent_to_room_plan);
+                toRoomPlanIntent.putExtra("room_number_to_plan","211");
+                toRoomPlanIntent.putExtra("user",user);
+                startActivity(toRoomPlanIntent);
                 break;
             case R.id.btn_213_plan:
-                intent_to_room_plan.putExtra("room_number_to_plan","213");
-                startActivity(intent_to_room_plan);
+                toRoomPlanIntent.putExtra("room_number_to_plan","213");
+                toRoomPlanIntent.putExtra("user",user);
+                startActivity(toRoomPlanIntent);
                 break;
             case R.id.btn_215_plan:
-                intent_to_room_plan.putExtra("room_number_to_plan","215");
-                startActivity(intent_to_room_plan);
+                toRoomPlanIntent.putExtra("room_number_to_plan","215");
+                toRoomPlanIntent.putExtra("user",user);
+                startActivity(toRoomPlanIntent);
                 break;
 
             case R.id.btn_301_plan:
-                intent_to_room_plan.putExtra("room_number_to_plan","301");
-                startActivity(intent_to_room_plan);
+                toRoomPlanIntent.putExtra("room_number_to_plan","301");
+                toRoomPlanIntent.putExtra("user",user);
+                startActivity(toRoomPlanIntent);
                 break;
             case R.id.btn_305_plan:
-                intent_to_room_plan.putExtra("room_number_to_plan","305");
-                startActivity(intent_to_room_plan);
+                toRoomPlanIntent.putExtra("room_number_to_plan","305");
+                toRoomPlanIntent.putExtra("user",user);
+                startActivity(toRoomPlanIntent);
                 break;
             case R.id.btn_309_plan:
-                intent_to_room_plan.putExtra("room_number_to_plan","309");
-                startActivity(intent_to_room_plan);
+                toRoomPlanIntent.putExtra("room_number_to_plan","309");
+                toRoomPlanIntent.putExtra("user",user);
+                startActivity(toRoomPlanIntent);
                 break;
 
             case R.id.btn_401_plan:
-                intent_to_room_plan.putExtra("room_number_to_plan","401");
-                startActivity(intent_to_room_plan);
+                toRoomPlanIntent.putExtra("room_number_to_plan","401");
+                toRoomPlanIntent.putExtra("user",user);
+                startActivity(toRoomPlanIntent);
                 break;
             case R.id.btn_403_plan:
-                intent_to_room_plan.putExtra("room_number_to_plan","403");
-                startActivity(intent_to_room_plan);
+                toRoomPlanIntent.putExtra("room_number_to_plan","403");
+                toRoomPlanIntent.putExtra("user",user);
+                startActivity(toRoomPlanIntent);
                 break;
             case R.id.btn_405_plan:
-                intent_to_room_plan.putExtra("room_number_to_plan","405");
-                startActivity(intent_to_room_plan);
+                toRoomPlanIntent.putExtra("room_number_to_plan","405");
+                toRoomPlanIntent.putExtra("user",user);
+                startActivity(toRoomPlanIntent);
                 break;
 
             case R.id.btn_501_plan:
-                intent_to_room_plan.putExtra("room_number_to_plan","501");
-                startActivity(intent_to_room_plan);
+                toRoomPlanIntent.putExtra("room_number_to_plan","501");
+                toRoomPlanIntent.putExtra("user",user);
+                startActivity(toRoomPlanIntent);
                 break;
             case R.id.btn_505_plan:
-                intent_to_room_plan.putExtra("room_number_to_plan","505");
-                startActivity(intent_to_room_plan);
+                toRoomPlanIntent.putExtra("room_number_to_plan","505");
+                toRoomPlanIntent.putExtra("user",user);
+                startActivity(toRoomPlanIntent);
                 break;
             case R.id.btn_509_plan:
-                intent_to_room_plan.putExtra("room_number_to_plan","509");
-                startActivity(intent_to_room_plan);
+                toRoomPlanIntent.putExtra("room_number_to_plan","509");
+                toRoomPlanIntent.putExtra("user",user);
+                startActivity(toRoomPlanIntent);
                 break;
 
             case R.id.btn_b101_plan:
-                intent_to_room_plan.putExtra("room_number_to_plan","b101");
-                startActivity(intent_to_room_plan);
+                toRoomPlanIntent.putExtra("room_number_to_plan","b101");
+                toRoomPlanIntent.putExtra("user",user);
+                startActivity(toRoomPlanIntent);
                 break;
             case R.id.btn_b105_plan:
-                intent_to_room_plan.putExtra("room_number_to_plan","b105");
-                startActivity(intent_to_room_plan);
+                toRoomPlanIntent.putExtra("room_number_to_plan","b105");
+                toRoomPlanIntent.putExtra("user",user);
+                startActivity(toRoomPlanIntent);
                 break;
             case R.id.btn_b109_plan:
-                intent_to_room_plan.putExtra("room_number_to_plan","b109");
-                startActivity(intent_to_room_plan);
+                toRoomPlanIntent.putExtra("room_number_to_plan","b109");
+                toRoomPlanIntent.putExtra("user",user);
+                startActivity(toRoomPlanIntent);
                 break;
             }
     }

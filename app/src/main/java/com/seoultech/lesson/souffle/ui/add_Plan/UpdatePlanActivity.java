@@ -10,8 +10,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.data.model.User;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 
@@ -28,9 +30,11 @@ public class UpdatePlanActivity extends AppCompatActivity implements View.OnClic
     private LinearLayout slideLayout;
     private FrameLayout frameSelectMenu;
     private Button btnToMain;
+    private User user;
+    private Button btnUserInfo;
     Button btnBackToMain;
-
     private BackPressCloseHandler backPressCloseHandler;
+    private TextView txtName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +46,17 @@ public class UpdatePlanActivity extends AppCompatActivity implements View.OnClic
         }
         catch (NullPointerException e){}
         setContentView(R.layout.activity_update_plan);
+        Intent updatePlanIntent = new Intent(this.getIntent());
+        user = (User) updatePlanIntent.getSerializableExtra("user");
+
+        txtName = (TextView)findViewById(R.id.txt_name);
+        txtName.setText(user.getName());
 
         btnToMain = (Button)findViewById(R.id.btn_to_main_in_update_plan);
         fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_update_plan);
+
+        btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_updateplan);
+        btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
 
         pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
         pullFromRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pullfromright);
@@ -54,23 +66,26 @@ public class UpdatePlanActivity extends AppCompatActivity implements View.OnClic
         frameSelectMenu.bringChildToFront(slideLayout);
 
         backPressCloseHandler = new BackPressCloseHandler(this);
-        Intent intent = new Intent(this.getIntent());
+
+
 
         btnBackToMain = (Button)findViewById(R.id.btn_back_main);
 
         btnBackToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent to_main_menu = new Intent(getApplicationContext(), SelectMenuActivity.class);
-                startActivity(to_main_menu);
+                Intent toMainMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
+                toMainMenuIntent.putExtra("user",user);
+                startActivity(toMainMenuIntent);
             }
         });
 
         btnToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent to_main_intent = new Intent(getApplicationContext(), SelectMenuActivity.class);
-                startActivity(to_main_intent);
+                Intent toMainMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
+                toMainMenuIntent.putExtra("user",user);
+                startActivity(toMainMenuIntent);
             }
         });
 
