@@ -11,28 +11,35 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.data.model.Reservation;
 import com.seoultech.lesson.souffle.data.model.User;
 import com.seoultech.lesson.souffle.ui.login.LoginActivity;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.option.CheckAdapter;
 import com.seoultech.lesson.souffle.ui.option.CheckData;
+import com.seoultech.lesson.souffle.ui.option.ItemData;
+import com.seoultech.lesson.souffle.ui.option.TimeListAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 
 
@@ -40,8 +47,6 @@ import java.util.Date;
 
 public class TimeReserveActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private ArrayList<CheckData> chkArrList;
-    private CheckAdapter chkAdapter;
     private BackPressCloseHandler backPressCloseHandler;
     private ListView chk_list;
     private CoordinatorLayout layout_cor;
@@ -51,9 +56,6 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
     private String roomNumber;
     private Button btnDate, btnPlanInTime, btnSelectDate;
     private Date currentTime;
-    private CheckBox chk_am9, chk_am10, chk_am11, chk_pm12, chk_pm2, chk_pm3, chk_pm4, chk_pm5;
-    private  CheckBox chk_pm6, chk_pm7, chk_pm8, chk_pm9, chk_pm10, chk_pm11;
-    private TextView txtAm9, txtAm10, txtAm11, txtPm12, txtPm2, txtPm3, txtPm4, txtPm5;
     private Button btnToMain, btnSetting, btnLogout, btnUserInfo;
     private User user;
     private DatePickerDialog dateDlg;
@@ -65,13 +67,24 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
     private int tYear = 0;
     private int tMonth = 0;
     private int tDay = 0;
-    private int tHour = 0;
-    private int tMinute = 0;
+    private int fromTime = -1;
+    private int toTime = -1;
+    private String buildingName;
     private final int TIME_INTERVAL = 30;
     private FloatingActionButton fabMain;
     private Animation pullFromRight, pushToRight;
     private Animation pullFromLeft, pushToLeft;
     private Boolean isFabOpen = false;
+    private ScrollView scrollView_timereserve;
+
+    private ListView listview = null;
+    private Button btnInIt, btnTimeReserve;
+    private ArrayList<Integer> linearArr = new ArrayList<>();
+
+    private Reservation reservation;
+
+    // Date 선택시 화면 Refresh
+    // Refresh 내용 : Reservation 받아와서 (임시로 생성) + 예약된 시간들 enable
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,17 +94,35 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
             this.getSupportActionBar().hide();
         } catch (NullPointerException e) {
         }
-        setContentView(R.layout.activity_time_reserve);
 
+
+        setContentView(R.layout.activity_time_reserve);
         Intent timeReserveIntent = new Intent(this.getIntent());
         user = (User) timeReserveIntent.getSerializableExtra("user");
+        buildingName = timeReserveIntent.getExtras().getString("building_name_to_time_reserve");
+        scrollView_timereserve = (ScrollView)findViewById(R.id.scrollView_timereserve);
+        ArrayList<ItemData> timeList = new ArrayList<>();
+        listview = (ListView)findViewById(R.id.timeListView);
+        for (int i=0; i<15; ++i)
+        {
+            ItemData timeItem = new ItemData();
+            timeItem.time = (i+9) + "~" + (i+10) + "시";
+            timeItem.isEnable = true;
+            timeList.add(timeItem);
+        }
+        final TimeListAdapter oAdapter = new TimeListAdapter(timeList);
+        listview.setAdapter(oAdapter);
+
+
+
+        btnInIt = findViewById(R.id.btnInIt);
+        btnTimeReserve = findViewById(R.id.btnTimeReserve);
 
         btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_timereserve);
         btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
 
         fabMain = (FloatingActionButton) findViewById(R.id.fab_in_time_reserve);
         slideLayout = (LinearLayout)findViewById(R.id.slide_layout_in_time_reserve);
-        scrollView = (NestedScrollView)findViewById(R.id.ScrollView01);
 
         btnToMain = (Button)findViewById(R.id.btn_to_main_in_time_reserve);
         btnSetting = (Button)findViewById(R.id.btn_setting_in_time_reserve);
@@ -111,69 +142,10 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
 
         backPressCloseHandler = new BackPressCloseHandler(this);
 
-
         txtRoomDlg = (TextView) findViewById(R.id.txt_room_dlg);
         txtYearDlg = (TextView) findViewById(R.id.txt_year_dlg);
         txtMonthDlg = (TextView) findViewById(R.id.txt_month_dlg);
         txtDayDlg = (TextView) findViewById(R.id.txt_day_dlg);
-
-        chk_am9 = (CheckBox) findViewById(R.id.chk_am9);
-        chk_am10 = (CheckBox) findViewById(R.id.chk_am10);
-        chk_am11 = (CheckBox) findViewById(R.id.chk_am11);
-        chk_pm12 = (CheckBox) findViewById(R.id.chk_pm12);
-        chk_pm2 = (CheckBox) findViewById(R.id.chk_pm2);
-        chk_pm3 = (CheckBox) findViewById(R.id.chk_pm3);
-        chk_pm4 = (CheckBox) findViewById(R.id.chk_pm4);
-        chk_pm5 = (CheckBox) findViewById(R.id.chk_pm5);
-        chk_pm6 = (CheckBox) findViewById(R.id.chk_pm6);
-        chk_pm7 = (CheckBox) findViewById(R.id.chk_pm7);
-        chk_pm8 = (CheckBox) findViewById(R.id.chk_pm8);
-        chk_pm9 = (CheckBox) findViewById(R.id.chk_pm9);
-        chk_pm10 = (CheckBox) findViewById(R.id.chk_pm10);
-        chk_pm11 = (CheckBox) findViewById(R.id.chk_pm11);
-
-        txtAm9 = (TextView) findViewById(R.id.txt_am9);
-        txtAm10 = (TextView) findViewById(R.id.txt_am10);
-        txtAm11 = (TextView) findViewById(R.id.txt_am11);
-        txtPm12 = (TextView) findViewById(R.id.txt_pm12);
-        txtPm2 = (TextView) findViewById(R.id.txt_pm2);
-        txtPm3 = (TextView) findViewById(R.id.txt_pm3);
-        txtPm4 = (TextView) findViewById(R.id.txt_pm4);
-        txtPm5 = (TextView) findViewById(R.id.txt_pm5);
-
-        chk_am9.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(chk_am9.isChecked()){
-                    chk_am10.setEnabled(true);                    chk_am11.setEnabled(false);
-                    chk_pm12.setEnabled(false);                    chk_pm2.setEnabled(false);
-                    chk_pm3.setEnabled(false);                    chk_pm4.setEnabled(false);
-                    chk_pm5.setEnabled(false);
-                }
-                if(!chk_am9.isChecked()){
-                    chk_am11.setEnabled(true);                    chk_pm12.setEnabled(true);
-                    chk_pm2.setEnabled(true);                    chk_pm3.setEnabled(true);
-                    chk_pm4.setEnabled(true);                    chk_pm5.setEnabled(true);
-                }
-            }
-        });
-
-        chk_am10.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(chk_am10.isChecked()){
-                    chk_am9.setEnabled(true);                    chk_am11.setEnabled(true);
-                    chk_pm12.setEnabled(false);                    chk_pm2.setEnabled(false);
-                    chk_pm3.setEnabled(false);                    chk_pm4.setEnabled(false);
-                    chk_pm5.setEnabled(false);
-                }
-                if(!chk_am10.isChecked()){
-                    chk_pm12.setEnabled(true);
-                    chk_pm2.setEnabled(true);                    chk_pm3.setEnabled(true);
-                    chk_pm4.setEnabled(true);                    chk_pm5.setEnabled(true);
-                }
-            }
-        });
 
         roomNumber = timeReserveIntent.getExtras().getString("room_number");
         txtRoomDlg.setText(roomNumber + "호");
@@ -192,6 +164,67 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
         sdf.format(currentTime.getTime());
         sdf_date.format(currentTime.getTime());
         String today = sdf.format(currentTime);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                CheckBox checkBox = view.findViewById(R.id.customCheckbox);
+                if(!checkBox.isEnabled()) return; // 비활성화 리스트일경우 반응안함
+                checkBox.setChecked(!checkBox.isChecked()); // 체크 (체크 -> 해제 / 해제 -> 체크)
+                linearArr.add(position); // 연속성 판단을 위한 변수
+            }
+        });
+
+
+        btnInIt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for(int i=0; i<10; i++){
+                    ItemData data = (ItemData) oAdapter.getItem(i);
+                    data.isChecked = false;
+                }
+                oAdapter.notifyDataSetChanged();
+            }
+        });
+
+
+
+        btnTimeReserve.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                for(int i=0;i<15;i++){
+                    boolean boolChk = timeList.get(i).isChecked;
+                    if(boolChk){
+                        fromTime = (i+9);
+                        break;
+                    }
+                }
+                for(int i=15;i>1;i--){
+                    boolean boolChk = timeList.get(i-1).isChecked;
+                    if(boolChk) {
+                        toTime = (i + 9);
+                        Toast.makeText(getApplicationContext(),"fromTime : " + fromTime + "\n"
+                                + "toTime : " + toTime, Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                }
+
+                if(isLinear(linearArr)){ // 연속성 판단 (연속)
+                    Toast.makeText(TimeReserveActivity.this, "GOOOOOOD", Toast.LENGTH_SHORT).show();
+                    oAdapter.notifyDataSetChanged(); // 리스트뷰 refresh
+                }else{ // 연속성 판단 (비연속)
+                    Toast.makeText(TimeReserveActivity.this, "NOOOOOOOP", Toast.LENGTH_SHORT).show();
+                    ArrayList<ItemData> data = (ArrayList<ItemData>) oAdapter.getItemList();
+                    for(ItemData iterater : data){ // 리스트뷰 체크 해제상태로 변경
+                        iterater.isChecked = false;
+                    }
+                    oAdapter.notifyDataSetChanged(); // 리스트뷰 refresh
+                }
+                linearArr.clear(); // 연속성 판단 변수 초기화
+            }
+        });
+
 
         btnToMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -254,18 +287,17 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
                 AlertDialog.Builder dlg = new AlertDialog.Builder(TimeReserveActivity.this);
                 dlg.setTitle("예약 화면");
                 dlg.setIcon(R.mipmap.ic_launcher);
-                if (dYear == -1 || dHour == -1)
+                if (dYear == -1 || fromTime == -1 || toTime == -1)
                     Toast.makeText(getApplicationContext(), "날짜나 시간을 제대로 입력해 주십시오", Toast.LENGTH_SHORT).show();
                 else {
-                    dlg.setMessage(dYear + "년 " + dMonth + "월 " + dDay + "일\n" + dHour + "시 " + dMinute + "분 예약이 맞습니까?");
+                    dlg.setMessage(dYear + "년 " + dMonth + "월 " + dDay + "일\n" +
+                            fromTime + "시부터 " + toTime + "시까지 예약이 맞습니까?");
                     dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //확인 누르면 해당 시간, 날짜정보를 DB에 저장하면 됨. dHour, dMinute, dYear, dMonth, dDay 정보
                             Toast.makeText(getApplicationContext(), dYear + "년 " + dMonth + "월 " +
-                                    dDay + "일\n" + dHour + "시 " + dMinute + "분 으로 예약하였습니다.", Toast.LENGTH_SHORT).show();
-                            tHour = getReturn(dHour);
-                            tMinute = getReturn(dMinute);
+                                    dDay + "일\n" +  fromTime + "시부터 " + toTime + "시까지로 예약하였습니다.", Toast.LENGTH_SHORT).show();
                             tYear = getReturn(dYear);
                             tMonth = getReturn(dMonth);
                             tDay = getReturn(dDay);
@@ -273,10 +305,11 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
                             toAddOptionIntent.putExtra("reserve_year", tYear);
                             toAddOptionIntent.putExtra("reserve_month", tMonth);
                             toAddOptionIntent.putExtra("reserve_day", tDay);
-                            toAddOptionIntent.putExtra("reserve_hour", tHour);
-                            toAddOptionIntent.putExtra("reserve_minute", tMinute);
                             toAddOptionIntent.putExtra("room_numbers", roomNumber);
+                            toAddOptionIntent.putExtra("fromTime",fromTime);
+                            toAddOptionIntent.putExtra("toTime",toTime);
                             toAddOptionIntent.putExtra("user",user);
+                            toAddOptionIntent.putExtra("building_name",buildingName);
                             startActivity(toAddOptionIntent);
                         }
                     });
@@ -288,6 +321,23 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
 
     }
         //OnCreate end
+
+    public boolean isLinear(ArrayList<Integer> arr){
+        try{
+            Collections.sort(arr);
+            int temp = arr.get(0);
+            for(int i=1; i<arr.size(); i++){
+                if(arr.get(i) == temp+1) {
+                    temp = arr.get(i);
+                    continue;
+                }
+                return false;
+            }
+        }catch (IndexOutOfBoundsException e){
+            e.printStackTrace();
+        }
+        return true;
+    }
 
     DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
         @Override

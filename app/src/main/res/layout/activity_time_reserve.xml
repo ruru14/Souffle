@@ -82,6 +82,9 @@
         </LinearLayout>
     </LinearLayout>
 
+
+
+
     <LinearLayout
         android:layout_margin="20dp"
         android:layout_width="fill_parent"
@@ -98,21 +101,15 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:id="@+id/layout_cor"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/ScrollView01"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        >
-
     <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
 <TextView
@@ -165,182 +162,71 @@
             android:text = "날짜 선택"/>
     </LinearLayout>
 
+        <ScrollView
+            android:fillViewport="true"
+            android:id = "@+id/scrollView_timereserve"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent">
+
+            <ListView
+                android:id="@+id/timeListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:choiceMode="multipleChoice" />
+        </ScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-        <TableLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="시간 선택"
-                android:textSize="20dp"/>
-            </TableRow>
-         <TableRow>
-         <TextView
-             android:id = "@+id/txt_am9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="09:00 ~ 10:00"
-            android:layout_marginRight="20dp"
-            android:textSize="20dp"/>
-            <CheckBox
-                android:id = "@+id/chk_am9"/>
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:id = "@+id/txt_am10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10:00 ~ 11:00"
-            android:layout_marginRight="20dp"
-            android:textSize="20dp"/>
-            <CheckBox
-                android:id = "@+id/chk_am10"/>
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:id = "@+id/txt_am11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="11:00 ~ 12:00"
-            android:textSize="20dp"/>
-            <CheckBox
-                android:id = "@+id/chk_am11"/>
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:id = "@+id/txt_pm12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="12:00 ~ 13:00"
-            android:textSize="20dp"/>
-            <CheckBox
-                android:id = "@+id/chk_pm12"/>
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:id = "@+id/txt_pm2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="14:00 ~ 15:00"
-            android:textSize="20dp"/>
-            <CheckBox
-                android:id = "@+id/chk_pm2"/>
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:id = "@+id/txt_pm3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="15:00 ~ 16:00"
-            android:textSize="20dp"/>
-            <CheckBox
-                android:id = "@+id/chk_pm3"/>
-            </TableRow>
-        <TableRow>
-        <TextView
-            android:id = "@+id/txt_pm4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="16:00 ~ 17:00"
-            android:textSize="20dp"/>
-            <CheckBox
-                android:id = "@+id/chk_pm4"/>
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:id = "@+id/txt_pm5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="17:00 ~ 18:00"
-            android:textSize="20dp"/>
-            <CheckBox
-                android:id = "@+id/chk_pm5"/>
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="18:00 ~ 19:00"
-                android:textSize="20dp"/>
-            <CheckBox
-            android:id = "@+id/chk_pm6"/>
-        </TableRow>
+            android:orientation="vertical">
 
-            <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="19:00 ~ 20:00"
-                android:textSize="20dp"/>
-            <CheckBox
-                android:id = "@+id/chk_pm7"/>
-            </TableRow>
 
-            <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="20:00 ~ 21:00"
-                android:textSize="20dp"/>
-            <CheckBox
-                android:id = "@+id/chk_pm8"/>
-            </TableRow>
 
-            <TableRow>
-                <TextView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnInIt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="21:00 ~ 20:00"
-                    android:textSize="20dp"/>
-                <CheckBox
-                    android:id = "@+id/chk_pm9"/>
-            </TableRow>
+                    android:layout_weight="1"
+                    android:text="inIt" />
 
-            <TableRow>
-                <TextView
+                <Button
+                    android:id="@+id/btnTimeReserve"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="22:00 ~ 23:00"
-                    android:textSize="20dp"/>
-                <CheckBox
-                    android:id = "@+id/chk_pm10"/>
-            </TableRow>
+                    android:layout_weight="1"
+                    android:text="Send" />
 
-            <TableRow>
-                <TextView
+                <Button
+                    android:id="@+id/btnSelectAll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="23:00 ~ 24:00"
-                    android:textSize="20dp"/>
-                <CheckBox
-                    android:id = "@+id/chk_pm11"/>
-            </TableRow>
-        </TableLayout>
+                    android:layout_weight="1"
+                    android:text="Select All" />
+
+            </LinearLayout>
 
             <TextView
+                android:id="@+id/text_test"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="시간 테스트"
                 android:layout_gravity="center"
-                android:id="@+id/text_test"/>
+                android:text="시간 테스트" />
+
             <Button
                 android:id="@+id/btn_date_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
-                android:text="최종 확인 테스트"
-                />
+                android:text="최종 확인 테스트" />
 
         </LinearLayout>
     </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-
 
 </android.support.design.widget.CoordinatorLayout>
     </LinearLayout>

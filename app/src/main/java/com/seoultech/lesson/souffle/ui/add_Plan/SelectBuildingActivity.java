@@ -71,6 +71,8 @@ public class SelectBuildingActivity extends AppCompatActivity implements View.On
                 Intent toMiraeRoomSelectIntent = new Intent(getApplicationContext(),SelectRoomActivity.class);
                 toMiraeRoomSelectIntent.putExtra("building_name","미래관");
                 toMiraeRoomSelectIntent.putExtra("user",user);
+                Intent toAddOptionIntent = new Intent(getApplicationContext(),AddOptionActivity.class);
+                toAddOptionIntent.putExtra("building_name","미래관");
                 startActivity(toMiraeRoomSelectIntent);
             }
         });

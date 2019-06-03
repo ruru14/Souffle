@@ -94,59 +94,34 @@
         android:textSize="20dp"
         android:layout_marginBottom="50dp"/>
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id = "@+id/reserve_layer">
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="match_parent"
+        <ListView
+            android:id = "@+id/listView_time"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id = "@+id/layer_1"
-            android:textSize="20dp"
-            android:text = "이름 : "
-            />
-        <TextView
-            android:layout_weight="9"
-            android:id = "@+id/txt_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint = "이름"/>
-    </TableRow>
+            android:choiceMode="multipleChoice"
+            android:layout_weight="1">
 
-        <TableRow
+        </ListView>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id = "@+id/layer_2"
-            android:textSize="20dp"
-            android:text = "test2"
-            />
-        </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="match_parent"
+            <Button
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id = "@+id/layer_3"
-                android:textSize="20dp"
-                android:text = "test2"
-                />
-        </TableRow>
-
-    </TableLayout>
+                android:id = "@+id/btnInIt"
+                android:text = "초기화"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id = "@+id/btn_check_time"
+                android:text = "시간 예약"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id = "@+id/btn_back_main"
         android:text = "뒤로 가기"/>
+        </LinearLayout>
     </LinearLayout>
     </FrameLayout>
 </LinearLayout>

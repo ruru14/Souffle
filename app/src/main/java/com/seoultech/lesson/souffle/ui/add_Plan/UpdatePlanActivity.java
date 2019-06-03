@@ -10,17 +10,19 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.ListView;
 
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.controller.AppController;
+import com.seoultech.lesson.souffle.data.model.Reservation;
 import com.seoultech.lesson.souffle.data.model.User;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 
-public class UpdatePlanActivity extends AppCompatActivity implements View.OnClickListener{
+import java.util.List;
 
-    public int rHour;
-    public int rMinute;
+public class UpdatePlanActivity extends AppCompatActivity implements View.OnClickListener{
+    private ListView listView = null;
     public int rYear;
     public int rMonth;
     public int rDay;
@@ -31,10 +33,14 @@ public class UpdatePlanActivity extends AppCompatActivity implements View.OnClic
     private FrameLayout frameSelectMenu;
     private Button btnToMain;
     private User user;
-    private Button btnUserInfo;
+    private Button btnUserInfo, btnInIt, btnCheckTime;
     Button btnBackToMain;
     private BackPressCloseHandler backPressCloseHandler;
-    private TextView txtName;
+    private ListView listViewTime;
+    private int phoneNumber, peopleNumber, fromTime, toTime,  roomNumber;
+    private String buildingName, objective, etc;
+    private List<Reservation> reservationsList;
+    private AppController appController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +51,37 @@ public class UpdatePlanActivity extends AppCompatActivity implements View.OnClic
             this.getSupportActionBar().hide();
         }
         catch (NullPointerException e){}
+        appController = AppController.getInstance();
+        reservationsList = appController.readReservationByStudentNumber(1234);
+        appController.deleteReservation(reservationsList.get(1));
         setContentView(R.layout.activity_update_plan);
         Intent updatePlanIntent = new Intent(this.getIntent());
         user = (User) updatePlanIntent.getSerializableExtra("user");
 
-        txtName = (TextView)findViewById(R.id.txt_name);
-        txtName.setText(user.getName());
+        rYear = updatePlanIntent.getExtras().getInt("reserve_year");
+        rMonth = updatePlanIntent.getExtras().getInt("reserve_month");
+        rDay = updatePlanIntent.getExtras().getInt("reserve_day");
+        phoneNumber = updatePlanIntent.getExtras().getInt("phone_number");
+        peopleNumber = updatePlanIntent.getExtras().getInt("people_number");
+        fromTime = updatePlanIntent.getExtras().getInt("fromTime");
+        toTime = updatePlanIntent.getExtras().getInt("toTime");
+        roomNumber = updatePlanIntent.getExtras().getInt("room_num");
+        buildingName = updatePlanIntent.getExtras().getString("building_name");
+        objective = updatePlanIntent.getExtras().getString("objective");
+        etc = updatePlanIntent.getExtras().getString("etc");
+
+        String reserve_date = rYear + "-" + rMonth + "-" + rDay;
+        String fromTimeString = fromTime + ":00";
+        String toTimeString = toTime + ":00";
+
+        Reservation reservationObject = new Reservation(roomNumber, reserve_date, user.getStudentNumber(),
+                user.getName(), objective, peopleNumber, fromTimeString, toTimeString, buildingName);
+
+        System.out.println(reservationObject.toString());
+
+        listViewTime = (ListView)findViewById(R.id.listView_time);
+        btnInIt = (Button)findViewById(R.id.btnInIt);
+        btnCheckTime = (Button)findViewById(R.id.btn_check_time);
 
         btnToMain = (Button)findViewById(R.id.btn_to_main_in_update_plan);
         fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_update_plan);

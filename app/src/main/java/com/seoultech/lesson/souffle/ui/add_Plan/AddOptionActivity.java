@@ -2,6 +2,7 @@ package com.seoultech.lesson.souffle.ui.add_Plan;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -16,14 +17,17 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.controller.AppController;
+import com.seoultech.lesson.souffle.data.model.Reservation;
 import com.seoultech.lesson.souffle.data.model.User;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 
 public class AddOptionActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private EditText editName, editNumber, editTime, editObjective, editPeopleNumber, editRoomNum;
+    private EditText editName, editStudentNumber, editTime, editObjective, editPeopleNumber, editRoomNum, editBuilding, editPhoneNumber, editETC;
     private Button btnBackToTimeReserve, btnCommitReserve;
+    private int rYear, rMonth, rDay;
     private String roomNum;
     private Animation pullFromRight, pushToRight;
     private Boolean isFabOpen = false;
@@ -33,12 +37,17 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
     private Button btnToMain;
     private User user;
     private Button btnUserInfo;
+    private int fromTime, toTime;
+    private String building_name;
+    private AppController appController;
+
 
     private BackPressCloseHandler backPressCloseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        appController = AppController.getInstance();
         try
         {
             this.getSupportActionBar().hide();
@@ -47,9 +56,16 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_add_option);
         Intent AddOptionIntent = new Intent(this.getIntent());
 
+        rYear = AddOptionIntent.getExtras().getInt("reserve_year");
+        rMonth = AddOptionIntent.getExtras().getInt("reserve_month");
+        rDay = AddOptionIntent.getExtras().getInt("reserve_day");
+
         user = (User) AddOptionIntent.getSerializableExtra("user");
         btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_addoption);
-        btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
+
+        building_name = AddOptionIntent.getExtras().getString("building_name");
+        editBuilding = (EditText) findViewById(R.id.txt_building);
+        editBuilding.setText(building_name);
 
         btnCommitReserve = (Button)findViewById(R.id.btn_commit_reserve);
 
@@ -68,11 +84,16 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
         roomNum = AddOptionIntent.getExtras().getString("room_numbers");
 
         editName = (EditText)findViewById(R.id.edit_name);
-        editNumber = (EditText)findViewById(R.id.edit_number);
+        editStudentNumber = (EditText)findViewById(R.id.edit_student_number);
         editTime = (EditText)findViewById(R.id.edit_time);
         editObjective = (EditText)findViewById(R.id.edit_object);
         editPeopleNumber = (EditText)findViewById(R.id.edit_people_number);
         editRoomNum = (EditText)findViewById(R.id.edit_room);
+        editPhoneNumber = (EditText)findViewById(R.id.edit_phone_number);
+        editETC = (EditText)findViewById(R.id.edit_etc);
+        editName.setText(user.getName());
+
+        editStudentNumber.setText(Integer.toString(user.getStudentNumber()));
 
         btnBackToTimeReserve = (Button)findViewById(R.id.btn_back_to_time_reserve);
 
@@ -82,8 +103,11 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
         int hour = AddOptionIntent.getExtras().getInt("reserve_hour");
         int minute = AddOptionIntent.getExtras().getInt("reserve_minute");
 
+        btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
+        fromTime = AddOptionIntent.getExtras().getInt("fromTime");
+        toTime = AddOptionIntent.getExtras().getInt("toTime");
         editTime.setText(year + "년 " + month + "월 " +
-                day + "일\n" + hour + "시 " + minute + "분");
+                day + "일\n" + fromTime + "시 ~ " + toTime + "시");
         editRoomNum.setText(roomNum + "호");
 
         btnBackToTimeReserve.setOnClickListener(new View.OnClickListener() {
@@ -93,9 +117,21 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
+
+
         btnCommitReserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Reservation reservation = new Reservation(Integer.parseInt(roomNum),
+                        year+"-"+month+"-"+day,
+                        user.getStudentNumber(),
+                        user.getName(),
+                        editObjective.getText().toString(),
+                        Integer.parseInt(editPeopleNumber.getText().toString()),
+                        "09:00", "14:00",
+                        editBuilding.getText().toString());
+                appController.createReservation(reservation);
+
                 AlertDialog.Builder reserveCommitDlg =  new AlertDialog.Builder(AddOptionActivity.this);
                 reserveCommitDlg.setTitle("최종 확인");
                 reserveCommitDlg.setIcon(R.drawable.ic_launcher_foreground);
@@ -106,8 +142,6 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
                         Toast.makeText(getApplicationContext(),"예약되었습니다",Toast.LENGTH_SHORT).show();
                         Intent toMainMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
                         toMainMenuIntent.putExtra("user",user);
-                        Intent toUpdatePlanIntent = new Intent(getApplicationContext(), UpdatePlanActivity.class);
-                        toUpdatePlanIntent.putExtra("user",user);
                         startActivity(toMainMenuIntent);
                     }
                 });
@@ -125,6 +159,7 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
         });
 
         fabMenu.setOnClickListener(this);
+
 
 
     }
