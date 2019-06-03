@@ -3,6 +3,8 @@ package com.seoultech.lesson.souffle.data.model;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +15,7 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @ToString
-public class Reservation {
+public class Reservation implements Serializable {
 
     @SerializedName("id")
     private Long id;

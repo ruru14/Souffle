@@ -1,5 +1,7 @@
 package com.seoultech.lesson.souffle.data.model;
 
+import java.io.Serializable;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +12,7 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @ToString
-public class Option {
+public class Option implements Serializable {
 
     private boolean autoLogin = false;
 
