@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="time_reserve">
-        <item>am9</item>
-        <item>am10</item>
-        <item>am11</item>
-        <item>pm12</item>
-        <item>pm2</item>
-        <item>pm3</item>
-        <item>pm4</item>
-        <item>pm5</item>
-    </string>
+
 
 </resources>

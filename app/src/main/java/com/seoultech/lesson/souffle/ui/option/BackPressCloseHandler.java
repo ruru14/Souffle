@@ -1,31 +1,32 @@
 package com.seoultech.lesson.souffle.ui.option;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
-public class BackPressCloseHandler extends AppCompatActivity {
+import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.ui.login.LoginActivity;
+import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
+
+import java.util.List;
+
+public class BackPressCloseHandler extends AppCompatActivity{
     private long backKeyPressedTime = 0;
     private Toast toast;
     private Activity activity;
+    private Context contexts;
+
 
     public BackPressCloseHandler(Activity context) {
         this.activity = context;
     }
 
     public void onBackPressed() {
-        if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
-            backKeyPressedTime = System.currentTimeMillis();
-            showGuide();
-            return;
-        }
-        if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
-            //int pid = android.os.Process.myPid();
-            //android.os.Process.killProcess(pid);
-            //finishAffinity();
-            activity.finish();
-            toast.cancel();
-        }
+        activity.finish();
     }
 
     public void showGuide() {

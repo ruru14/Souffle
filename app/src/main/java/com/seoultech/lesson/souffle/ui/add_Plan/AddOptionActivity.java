@@ -3,22 +3,33 @@ package com.seoultech.lesson.souffle.ui.add_Plan;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 
-public class AddOptionActivity extends AppCompatActivity {
+public class AddOptionActivity extends AppCompatActivity implements View.OnClickListener{
 
-    EditText edit_name, edit_number, edit_time, edit_objective, edit_people_number, edit_room_num;
-    Button btn_back_to_time_reserve, btn_commit_reserve;
-    String room_num;
+    private EditText editName, editNumber, editTime, editObjective, editPeopleNumber, editRoomNum;
+    private Button btnBackToTimeReserve, btnCommitReserve;
+    private String roomNum;
+    private Animation pullFromRight, pushToRight;
+    private Boolean isFabOpen = false;
+    private FloatingActionButton fabMenu;
+    private LinearLayout slideLayout;
+    private FrameLayout frameSelectMenu;
+    private Button btnToMain;
 
     private BackPressCloseHandler backPressCloseHandler;
 
@@ -33,18 +44,28 @@ public class AddOptionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_option);
         backPressCloseHandler = new BackPressCloseHandler(this);
 
+        btnToMain = (Button)findViewById(R.id.btn_to_main_in_add_option);
+        fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_add_option);
+
+        pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
+        pullFromRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pullfromright);
+
+        slideLayout = (LinearLayout)findViewById(R.id.slide_layout_in_add_option);
+        frameSelectMenu = (FrameLayout)findViewById(R.id.add_option_frame);
+        frameSelectMenu.bringChildToFront(slideLayout);
+
         Intent intent = new Intent(this.getIntent());
-        room_num = intent.getExtras().getString("room_numbers");
+        roomNum = intent.getExtras().getString("room_numbers");
 
-        edit_name = (EditText)findViewById(R.id.edit_name);
-        edit_number = (EditText)findViewById(R.id.edit_number);
-        edit_time = (EditText)findViewById(R.id.edit_time);
-        edit_objective = (EditText)findViewById(R.id.edit_object);
-        edit_people_number = (EditText)findViewById(R.id.edit_people_number);
-        edit_room_num = (EditText)findViewById(R.id.edit_room);
+        editName = (EditText)findViewById(R.id.edit_name);
+        editNumber = (EditText)findViewById(R.id.edit_number);
+        editTime = (EditText)findViewById(R.id.edit_time);
+        editObjective = (EditText)findViewById(R.id.edit_object);
+        editPeopleNumber = (EditText)findViewById(R.id.edit_people_number);
+        editRoomNum = (EditText)findViewById(R.id.edit_room);
 
-        btn_back_to_time_reserve = (Button)findViewById(R.id.btn_back_to_time_reserve);
-        btn_commit_reserve = (Button)findViewById(R.id.btn_commit_reserve);
+        btnBackToTimeReserve = (Button)findViewById(R.id.btn_back_to_time_reserve);
+        btnCommitReserve = (Button)findViewById(R.id.btn_commit_reserve);
 
         int year = intent.getExtras().getInt("reserve_year");
         int month = intent.getExtras().getInt("reserve_month");
@@ -52,19 +73,18 @@ public class AddOptionActivity extends AppCompatActivity {
         int hour = intent.getExtras().getInt("reserve_hour");
         int minute = intent.getExtras().getInt("reserve_minute");
 
-        edit_time.setText(year + "년 " + month + "월 " +
+        editTime.setText(year + "년 " + month + "월 " +
                 day + "일\n" + hour + "시 " + minute + "분");
-        edit_room_num.setText(room_num + "호");
+        editRoomNum.setText(roomNum + "호");
 
-        btn_back_to_time_reserve.setOnClickListener(new View.OnClickListener() {
+        btnBackToTimeReserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AddOptionActivity.super.onBackPressed();
             }
         });
 
-
-        btn_commit_reserve.setOnClickListener(new View.OnClickListener() {
+        btnCommitReserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder commit_dlg =  new AlertDialog.Builder(AddOptionActivity.this);
@@ -82,7 +102,39 @@ public class AddOptionActivity extends AppCompatActivity {
             }
         });
 
+        btnToMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent to_main_intent = new Intent(getApplicationContext(), SelectMenuActivity.class);
+                startActivity(to_main_intent);
+            }
+        });
 
+        fabMenu.setOnClickListener(this);
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.fab_in_add_option:
+                anim();
+                break;
+        }
+    }
+
+    public void anim() {
+        if (isFabOpen) {
+            slideLayout.startAnimation(pushToRight);
+            slideLayout.setVisibility(View.INVISIBLE);
+            isFabOpen = false;
+        } else {
+            slideLayout.startAnimation(pullFromRight);
+            slideLayout.setVisibility(View.VISIBLE);
+            isFabOpen = true;
+        }
     }
 
     @Override

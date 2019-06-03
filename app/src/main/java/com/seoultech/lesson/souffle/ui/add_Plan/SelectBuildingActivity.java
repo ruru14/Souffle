@@ -1,4 +1,4 @@
-package com.seoultech.lesson.souffle.ui.viewing;
+package com.seoultech.lesson.souffle.ui.add_Plan;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,17 +10,19 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
-import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 
-public class RoomPlanActivity extends AppCompatActivity implements View.OnClickListener {
+import butterknife.ButterKnife;
 
-    Button btnBackToRoomSelect;
-    TextView txtRoomGuide;
-    private BackPressCloseHandler backPressCloseHandler;
+public class SelectBuildingActivity extends AppCompatActivity implements View.OnClickListener{
+
+    private Button btnMirae;
+    private Button btnBuilding1;
+    private Button btnBuilding2;
+    private Button btnBuilding3;
 
     private Animation pullFromRight, pushToRight;
     private Boolean isFabOpen = false;
@@ -37,32 +39,32 @@ public class RoomPlanActivity extends AppCompatActivity implements View.OnClickL
             this.getSupportActionBar().hide();
         }
         catch (NullPointerException e){}
-        setContentView(R.layout.activity_room_plan);
+        setContentView(R.layout.activity_select_building);
 
-        backPressCloseHandler = new BackPressCloseHandler(this);
-//
-        btnToMain = (Button)findViewById(R.id.btn_to_main_in_room_plan);
-        fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_room_plan);
+        Intent toGetIntent = new Intent(this.getIntent());
+
+        ButterKnife.bind(this);
+
+        btnToMain = (Button)findViewById(R.id.btn_to_main_in_select_building);
+        fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_select_building);
 
         pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
         pullFromRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pullfromright);
 
-        slideLayout = (LinearLayout)findViewById(R.id.slide_layout_in_room_plan);
-        frameSelectMenu = (FrameLayout)findViewById(R.id.room_plan_frame);
+        slideLayout = (LinearLayout)findViewById(R.id.slide_layout_in_select_building);
+        frameSelectMenu = (FrameLayout)findViewById(R.id.select_building_frame);
         frameSelectMenu.bringChildToFront(slideLayout);
-//
-        txtRoomGuide = (TextView)findViewById(R.id.txt_room_guide);
-    btnBackToRoomSelect = (Button)findViewById(R.id.btn_back_to_room_select);
-    Intent get_intent = new Intent(this.getIntent());
 
-    txtRoomGuide.setText(get_intent.getExtras().getString("room_number_to_plan") + "호 강의실 사진");
+        btnMirae = (Button)findViewById(R.id.btn_mirae);
 
-    btnBackToRoomSelect.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            finish();
-        }
-    });
+        btnMirae.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toRoomSelectIntent = new Intent(getApplicationContext(),SelectRoomActivity.class);
+                toRoomSelectIntent.putExtra("building_name","미래관");
+                startActivity(toRoomSelectIntent);
+            }
+        });
 
         btnToMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,17 +76,17 @@ public class RoomPlanActivity extends AppCompatActivity implements View.OnClickL
 
         fabMenu.setOnClickListener(this);
     }
-    //Oncreate End
 
     @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.fab_in_room_plan:
+            case R.id.fab_in_select_building:
                 anim();
                 break;
         }
     }
+
     public void anim() {
         if (isFabOpen) {
             slideLayout.startAnimation(pushToRight);
@@ -95,11 +97,5 @@ public class RoomPlanActivity extends AppCompatActivity implements View.OnClickL
             slideLayout.setVisibility(View.VISIBLE);
             isFabOpen = true;
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        //super.onBackPressed();
-        backPressCloseHandler.onBackPressed();
     }
 }

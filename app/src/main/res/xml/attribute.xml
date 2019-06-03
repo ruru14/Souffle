@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><resources>
     <login>
-        <autoLogin>true</autoLogin>
+        <autoLogin>false</autoLogin>
         <studentNumber>-1</studentNumber>
         <password>-1</password>
     </login>

@@ -4,14 +4,12 @@ package com.seoultech.lesson.souffle.ui.add_Plan;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -19,12 +17,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.NumberPicker;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.ui.login.LoginActivity;
@@ -33,50 +29,46 @@ import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.option.CheckAdapter;
 import com.seoultech.lesson.souffle.ui.option.CheckData;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-
-import static android.widget.Toast.LENGTH_SHORT;
 
 
 //해당 강의실을 예약할 날짜와 시간을 고르는 액티비티
 
 public class TimeReserveActivity extends AppCompatActivity implements View.OnClickListener{
 
-    ArrayList<CheckData> chkArrList;
-    CheckAdapter chkAdapter;
+    private ArrayList<CheckData> chkArrList;
+    private CheckAdapter chkAdapter;
     private BackPressCloseHandler backPressCloseHandler;
-    ListView chk_list;
-    CoordinatorLayout layout_cor;
-    NestedScrollView scrollView;
-    LinearLayout slide_layout;
-    TimePicker time;
-    TextView txt_year_dlg, txt_month_dlg, txt_day_dlg, txt_room_dlg;
-    String room_nums;
-    Button btn_date, btn_plan_in_time, btn_select_date;
-    Date current_time;
-    CheckBox chk_am9, chk_am10, chk_am11, chk_pm12, chk_pm2, chk_pm3, chk_pm4, chk_pm5;
-    TextView txt_am9, txt_am10, txt_am11, txt_pm12, txt_pm2, txt_pm3, txt_pm4, txt_pm5;
-    Button btn_to_main, btn_setting, btn_logout;
-    DatePickerDialog dateDlg;
-    int dYear = -1;
-    int dMonth, dDay;
-    int dHour = -1;
-    int dMinute;
-    int tYear = 0;
-    int tMonth = 0;
-    int tDay = 0;
-    int tHour = 0;
-    int tMinute = 0;
-    NumberPicker numberPicker;
+    private ListView chk_list;
+    private CoordinatorLayout layout_cor;
+    private NestedScrollView scrollView;
+    private LinearLayout slideLayout;
+    private TextView txtYearDlg, txtMonthDlg, txtDayDlg, txtRoomDlg;
+    private String roomNumber;
+    private Button btnDate, btnPlanInTime, btnSelectDate;
+    private Date currentTime;
+    private CheckBox chk_am9, chk_am10, chk_am11, chk_pm12, chk_pm2, chk_pm3, chk_pm4, chk_pm5;
+    private  CheckBox chk_pm6, chk_pm7, chk_pm8, chk_pm9, chk_pm10, chk_pm11;
+    private TextView txtAm9, txtAm10, txtAm11, txtPm12, txtPm2, txtPm3, txtPm4, txtPm5;
+    private Button btnToMain, btnSetting, btnLogout;
+    private DatePickerDialog dateDlg;
+    private FrameLayout timeReserveFrame;
+    private int dYear = -1;
+    private int dMonth, dDay;
+    private int dHour = 12;
+    private int dMinute;
+    private int tYear = 0;
+    private int tMonth = 0;
+    private int tDay = 0;
+    private int tHour = 0;
+    private int tMinute = 0;
     private final int TIME_INTERVAL = 30;
-    FloatingActionButton fab_main, fab_menu1, fab_menu2;
-    private Animation pull_from_right, push_to_right;
-    private Animation pull_from_left, push_to_left;
+    private FloatingActionButton fabMain;
+    private Animation pullFromRight, pushToRight;
+    private Animation pullFromLeft, pushToLeft;
     private Boolean isFabOpen = false;
 
     @Override
@@ -103,31 +95,34 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
 
         chkAdapter = new CheckAdapter(chkArrList);
         chkAdapter.setOnItemClickListener(this);*/
-        fab_main = (FloatingActionButton) findViewById(R.id.fab);
-        slide_layout = (LinearLayout)findViewById(R.id.layout_slide);
+        fabMain = (FloatingActionButton) findViewById(R.id.fab_in_time_reserve);
+        slideLayout = (LinearLayout)findViewById(R.id.slide_layout_in_time_reserve);
         scrollView = (NestedScrollView)findViewById(R.id.ScrollView01);
 
-        btn_to_main = (Button)findViewById(R.id.btn_to_main);
-        btn_setting = (Button)findViewById(R.id.btn_setting);
-        btn_logout = (Button)findViewById(R.id.btn_logout);
+        btnToMain = (Button)findViewById(R.id.btn_to_main_in_time_reserve);
+        btnSetting = (Button)findViewById(R.id.btn_setting_in_time_reserve);
+        btnLogout = (Button)findViewById(R.id.btn_logout_in_time_reserve);
 
         TextView txt_test = (TextView) findViewById(R.id.text_test);
 
-        pull_from_right = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pullfromright);
-        push_to_right = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
-        pull_from_left = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pullfromleft);
-        push_to_left = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoleft);
+        pullFromRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pullfromright);
+        pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
+//        pullFromLeft = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pullfromleft);
+//        pushToLeft = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoleft);
 
-        fab_main.setOnClickListener(this);
+        timeReserveFrame = (FrameLayout)findViewById(R.id.time_reserve_frame);
+        timeReserveFrame.bringChildToFront(slideLayout);
+
+        fabMain.setOnClickListener(this);
 
         backPressCloseHandler = new BackPressCloseHandler(this);
 
         Intent time_intent = new Intent(this.getIntent());
 
-        txt_room_dlg = (TextView) findViewById(R.id.txt_room_dlg);
-        txt_year_dlg = (TextView) findViewById(R.id.txt_year_dlg);
-        txt_month_dlg = (TextView) findViewById(R.id.txt_month_dlg);
-        txt_day_dlg = (TextView) findViewById(R.id.txt_day_dlg);
+        txtRoomDlg = (TextView) findViewById(R.id.txt_room_dlg);
+        txtYearDlg = (TextView) findViewById(R.id.txt_year_dlg);
+        txtMonthDlg = (TextView) findViewById(R.id.txt_month_dlg);
+        txtDayDlg = (TextView) findViewById(R.id.txt_day_dlg);
 
         chk_am9 = (CheckBox) findViewById(R.id.chk_am9);
         chk_am10 = (CheckBox) findViewById(R.id.chk_am10);
@@ -137,15 +132,21 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
         chk_pm3 = (CheckBox) findViewById(R.id.chk_pm3);
         chk_pm4 = (CheckBox) findViewById(R.id.chk_pm4);
         chk_pm5 = (CheckBox) findViewById(R.id.chk_pm5);
+        chk_pm6 = (CheckBox) findViewById(R.id.chk_pm6);
+        chk_pm7 = (CheckBox) findViewById(R.id.chk_pm7);
+        chk_pm8 = (CheckBox) findViewById(R.id.chk_pm8);
+        chk_pm9 = (CheckBox) findViewById(R.id.chk_pm9);
+        chk_pm10 = (CheckBox) findViewById(R.id.chk_pm10);
+        chk_pm11 = (CheckBox) findViewById(R.id.chk_pm11);
 
-        txt_am9 = (TextView) findViewById(R.id.txt_am9);
-        txt_am10 = (TextView) findViewById(R.id.txt_am10);
-        txt_am11 = (TextView) findViewById(R.id.txt_am11);
-        txt_pm12 = (TextView) findViewById(R.id.txt_pm12);
-        txt_pm2 = (TextView) findViewById(R.id.txt_pm2);
-        txt_pm3 = (TextView) findViewById(R.id.txt_pm3);
-        txt_pm4 = (TextView) findViewById(R.id.txt_pm4);
-        txt_pm5 = (TextView) findViewById(R.id.txt_pm5);
+        txtAm9 = (TextView) findViewById(R.id.txt_am9);
+        txtAm10 = (TextView) findViewById(R.id.txt_am10);
+        txtAm11 = (TextView) findViewById(R.id.txt_am11);
+        txtPm12 = (TextView) findViewById(R.id.txt_pm12);
+        txtPm2 = (TextView) findViewById(R.id.txt_pm2);
+        txtPm3 = (TextView) findViewById(R.id.txt_pm3);
+        txtPm4 = (TextView) findViewById(R.id.txt_pm4);
+        txtPm5 = (TextView) findViewById(R.id.txt_pm5);
 
 
         chk_am9.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -182,35 +183,25 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
-        room_nums = time_intent.getExtras().getString("room_number");
-        txt_room_dlg.setText(room_nums + "호");
-        final int room_num_int = Integer.parseInt(room_nums);
+        roomNumber = time_intent.getExtras().getString("room_number");
+        txtRoomDlg.setText(roomNumber + "호");
+        final int room_num_int = Integer.parseInt(roomNumber);
 
-        btn_date = (Button) findViewById(R.id.btn_date_time);
-        time = (TimePicker) findViewById(R.id.time_pick);
-        btn_select_date = (Button) findViewById(R.id.btn_select_date);
+        btnDate = (Button) findViewById(R.id.btn_date_time);
+        btnSelectDate = (Button) findViewById(R.id.btn_select_date);
 
-        numberPicker = (NumberPicker) time.findViewById(Resources.getSystem().getIdentifier("minute", "id", "android"));
-        numberPicker.setMinValue(0);
-        numberPicker.setMaxValue((60 / TIME_INTERVAL) - 1);
-        List<String> minuteVal = new ArrayList<String>();
-        for (int i = 0; i < 60; i += 30) {
-            minuteVal.add(String.format("%2d", i));
-        }
-        numberPicker.setDisplayedValues(minuteVal.toArray(new String[0]));
-
-        current_time = Calendar.getInstance().getTime();
+        currentTime = Calendar.getInstance().getTime();
         final int mYear = Calendar.getInstance().get(Calendar.YEAR);
         final int mMonth = Calendar.getInstance().get(Calendar.MONTH);
         final int mDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM dd hh mm");
         SimpleDateFormat sdf_date = new SimpleDateFormat("yy MM dd");
-        sdf.format(current_time.getTime());
-        sdf_date.format(current_time.getTime());
-        String today = sdf.format(current_time);
+        sdf.format(currentTime.getTime());
+        sdf_date.format(currentTime.getTime());
+        String today = sdf.format(currentTime);
 
-        btn_to_main.setOnClickListener(new View.OnClickListener() {
+        btnToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent to_main_intent = new Intent(getApplicationContext(),SelectMenuActivity.class);
@@ -218,7 +209,7 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
-        btn_logout.setOnClickListener(new View.OnClickListener() {
+        btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder logout_dlg = new AlertDialog.Builder(TimeReserveActivity.this);
@@ -236,7 +227,7 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
-        btn_select_date.setOnClickListener(new View.OnClickListener() {
+        btnSelectDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dateDlg = new DatePickerDialog(TimeReserveActivity.this, listener, mYear, mMonth, mDay);
@@ -254,9 +245,9 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == DialogInterface.BUTTON_POSITIVE) {
-                            txt_year_dlg.setText(dYear + "년 ");
-                            txt_month_dlg.setText(dMonth + "월 ");
-                            txt_day_dlg.setText(dDay + "일 ");
+                            txtYearDlg.setText(dYear + "년 ");
+                            txtMonthDlg.setText(dMonth + "월 ");
+                            txtDayDlg.setText(dDay + "일 ");
                         }
                     }
                 });
@@ -264,7 +255,7 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
-        btn_date.setOnClickListener(new View.OnClickListener() {
+        btnDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder dlg = new AlertDialog.Builder(TimeReserveActivity.this);
@@ -291,7 +282,7 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
                             to_option_intent.putExtra("reserve_day", tDay);
                             to_option_intent.putExtra("reserve_hour", tHour);
                             to_option_intent.putExtra("reserve_minute", tMinute);
-                            to_option_intent.putExtra("room_numbers", room_nums);
+                            to_option_intent.putExtra("room_numbers", roomNumber);
                             startActivity(to_option_intent);
                         }
                     });
@@ -301,13 +292,6 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
-        time.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-            @Override
-            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                dHour = hourOfDay;
-                dMinute = minute * 30;       //15분 단위로설정
-            }
-        });
     }
         //OnCreate end
 
@@ -322,16 +306,12 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
 
     public void anim() {
         if (isFabOpen) {
-            slide_layout.startAnimation(push_to_right);
-            slide_layout.setVisibility(View.INVISIBLE);
-            scrollView.startAnimation(pull_from_left);
-            scrollView.setVisibility(View.VISIBLE);
+            slideLayout.startAnimation(pushToRight);
+            slideLayout.setVisibility(View.INVISIBLE);
             isFabOpen = false;
         } else {
-            slide_layout.startAnimation(pull_from_right);
-            slide_layout.setVisibility(View.VISIBLE);
-            scrollView.startAnimation(push_to_left);
-            scrollView.setVisibility(View.INVISIBLE);
+            slideLayout.startAnimation(pullFromRight);
+            slideLayout.setVisibility(View.VISIBLE);
             isFabOpen = true;
         }
     }
@@ -341,21 +321,10 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.fab:
+            case R.id.fab_in_time_reserve:
                 anim();
 
-                Toast.makeText(this, "Floating Action Button", Toast.LENGTH_SHORT).show();
                 break;
-           /* case R.id.fab1:
-                anim();
-                Toast.makeText(this, "Button1", Toast.LENGTH_SHORT).show();
-                Intent to_main_menu_intent = new Intent(getApplicationContext(), SelectMenuActivity.class);
-                startActivity(to_main_menu_intent);
-                break;
-            case R.id.fab2:
-                anim();
-                Toast.makeText(this, "Button2", Toast.LENGTH_SHORT).show();
-                break;*/
         }
     }
 
