@@ -27,7 +27,7 @@ public interface ReservationAPI {
     Call<List<Reservation>> readReservationByBuildingAndRoomNumberAndDate(@Query("building") String building, @Query("roomNumber") int roomNumber, @Query("date") String date);
 
     @GET("reserve/stnumber")
-    Call<List<Reservation>> readReservationByStudentNumber(@Query("studentNumber") int studentNumber);
+    Call<List<Reservation>> readReservationByStudentNumber(@Query("student_number") int studentNumber);
 
     @GET("reserve/stnumber_date")
     Call<List<Reservation>> readReservationByStudentNumberAndDate(@Query("studentNumber") int studentNumber, @Query("date") String date);
