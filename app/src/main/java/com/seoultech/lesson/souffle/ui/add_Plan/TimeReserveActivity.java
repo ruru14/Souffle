@@ -274,6 +274,39 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
                             txtYearDlg.setText(dYear + "년 ");
                             txtMonthDlg.setText(dMonth + "월 ");
                             txtDayDlg.setText(dDay + "일 ");
+                            new AsyncTask<Integer, Integer, List<Reservation>>() {
+                                @Override
+                                protected void onPreExecute() {
+                                    // Loading
+                                    progressDialogInTRA.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                                    progressDialogInTRA.setMessage("Logining");
+                                    progressDialogInTRA.show();
+                                    super.onPreExecute();
+                                }
+
+                                @Override
+                                protected List<Reservation> doInBackground(Integer... integers) {
+                                    // 예약목록 불러옴
+                                    System.out.println(integers[0]);
+                                    return appController.readReservationByBuildingAndRoomNumberAndDate(
+                                            buildingName,
+                                            Integer.parseInt(roomNumber),
+                                            dYear+"-"+dMonth+"-"+dDay);
+//                                    return appController.readReservation();
+                                }
+
+                                @Override
+                                protected void onPostExecute(List<Reservation> reservations) {
+                                    // 시간 지우기
+                                    for(Reservation temp : reservations){
+                                        String timeStart = temp.getTimeStart();
+                                        String timeEnd = temp.getTimeEnd();
+                                        System.out.println(temp.toString());
+                                    }
+                                    // appController.readReservationByBuildingAndRoomNumberAndDate(buildingName,Integer.parseInt(roomNumber),tYear+"-"+tMonth+"-"+tDay);
+                                    progressDialogInTRA.dismiss();
+                                }
+                            }.execute(user.getStudentNumber());
                         }
                     }
                 });
@@ -319,32 +352,7 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
-        new AsyncTask<Integer, Integer, List<Reservation>>() {
-            @Override
-            protected void onPreExecute() {
-                // Loading
-                progressDialogInTRA.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressDialogInTRA.setMessage("Logining");
-                progressDialogInTRA.show();
-                super.onPreExecute();
-            }
 
-            @Override
-            protected List<Reservation> doInBackground(Integer... integers) {
-                // 예약목록 불러옴
-                System.out.println(integers[0]);
-                return appController.readReservationByBuildingAndRoomNumberAndDate(buildingName,Integer.parseInt(roomNumber),tYear+"-"+tMonth+"-"+tDay);
-                //return appController.readReservationByStudentNumber(integers[0]);
-            }
-
-            @Override
-            protected void onPostExecute(List<Reservation> reservations) {
-                // 시간 지우기
-               // appController.readReservationByBuildingAndRoomNumberAndDate(buildingName,Integer.parseInt(roomNumber),tYear+"-"+tMonth+"-"+tDay);
-                progressDialogInTRA.dismiss();
-                listview.getChildAt(0).setEnabled(false);
-            }
-        }.execute(user.getStudentNumber());
 
     }
         //OnCreate end

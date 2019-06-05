@@ -31,7 +31,7 @@ import java.util.List;
 
 import butterknife.OnItemClick;
 
-public class DeletePlanActivity extends AppCompatActivity implements View.OnClickListener{
+public class DeletePlanActivity extends AppCompatActivity implements View.OnClickListener {
     private AppController appController;
     private User user;
     private Animation pullFromRight, pushToRight;
@@ -44,6 +44,7 @@ public class DeletePlanActivity extends AppCompatActivity implements View.OnClic
     private ListView listView_delete;
     private Button btnBackToMain;
     private BackPressCloseHandler backPressCloseHandler;
+    private ReservationDeleteAdapter reservationDeleteAdapter;
 
 
     @Override
@@ -97,26 +98,29 @@ public class DeletePlanActivity extends AppCompatActivity implements View.OnClic
             @Override
             protected List<Reservation> doInBackground(Integer... integers) {
                 // 예약목록 불러옴
-                System.out.println(integers[0]);
                 return appController.readReservationByStudentNumber(integers[0]);
             }
 
             @Override
             protected void onPostExecute(List<Reservation> reservations) {
                 // 예약목록 뿌리기
-                System.out.println(reservations.get(0).toString());
-                final ReservationDeleteAdapter tempAdapter = new ReservationDeleteAdapter(reservations);
-                progressDialogInDO.dismiss();
-                listView_delete.setAdapter(tempAdapter);
+                try{
+                    final ReservationDeleteAdapter tempAdapter = new ReservationDeleteAdapter(reservations);
+                    listView_delete.setAdapter(tempAdapter);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }finally {
+                    progressDialogInDO.dismiss();
+                }
             }
         }.execute(user.getStudentNumber());
 
-        ReservationDeleteAdapter reservationDeleteAdapter = (ReservationDeleteAdapter) listView_delete.getAdapter();
+        reservationDeleteAdapter = (ReservationDeleteAdapter) listView_delete.getAdapter();
 
         listView_delete.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                reservationDeleteAdapter.notifyDataSetChanged();
+                System.out.println(reservationDeleteAdapter.getItemList().get(position).toString());
             }
         });
 

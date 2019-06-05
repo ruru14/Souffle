@@ -38,7 +38,7 @@ public class ReservationDeleteAdapter extends BaseAdapter {
         return reservationDeleteList.get(position);
     }
 
-    public Object getItemList() { return reservationDeleteList; }
+    public List<Reservation> getItemList() { return reservationDeleteList; }
 
     @Override
     public long getItemId(int position) {
@@ -56,6 +56,7 @@ public class ReservationDeleteAdapter extends BaseAdapter {
             }
             convertView = inflater.inflate(R.layout.list_delete_reservation, parent, false);
         }
+        List<Reservation> reservationDeleteList = this.getItemList();
 
         TextView date = convertView.findViewById(R.id.txt_date_delete);
         TextView buildingName = convertView.findViewById(R.id.txt_buildingName_delete);

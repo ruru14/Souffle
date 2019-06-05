@@ -76,17 +76,20 @@ public class UpdatePlanActivity extends AppCompatActivity implements View.OnClic
             @Override
             protected List<Reservation> doInBackground(Integer... integers) {
                 // 예약목록 불러옴
-                System.out.println(integers[0]);
                 return appController.readReservationByStudentNumber(integers[0]);
             }
 
             @Override
             protected void onPostExecute(List<Reservation> reservations) {
                 // 예약목록 뿌리기
-                System.out.println(reservations.get(0).toString());
-                final ReservationListAdapter reservationListAdapter = new ReservationListAdapter(reservations);
-                progressDialogInAO.dismiss();
-                listViewReservation.setAdapter(reservationListAdapter);
+                try{
+                    final ReservationListAdapter reservationListAdapter = new ReservationListAdapter(reservations);
+                    listViewReservation.setAdapter(reservationListAdapter);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }finally {
+                    progressDialogInAO.dismiss();
+                }
             }
         }.execute(user.getStudentNumber());
 
