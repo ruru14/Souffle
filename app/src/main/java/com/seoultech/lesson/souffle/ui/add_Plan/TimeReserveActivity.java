@@ -298,9 +298,39 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
                                 @Override
                                 protected void onPostExecute(List<Reservation> reservations) {
                                     // 시간 지우기
+                                    CheckBox checkBox = listview.findViewById(R.id.customCheckbox);
+                                    listview.getChildAt(0).setEnabled(false);
                                     for(Reservation temp : reservations){
                                         String timeStart = temp.getTimeStart();
                                         String timeEnd = temp.getTimeEnd();
+                                        int tempStartTime_1 = Integer.parseInt(String.valueOf(temp.getTimeStart().charAt(0)));
+                                        int tempStartTime_2 = 0;
+                                        if(tempStartTime_1 == 9) {
+                                           tempStartTime_2 = 0;
+                                        }else{
+                                            tempStartTime_2 = Integer.parseInt(String.valueOf(temp.getTimeStart().charAt(1)));
+                                        }
+                                        int tempEndTime_1 = Integer.parseInt(String.valueOf(temp.getTimeEnd().charAt(0)));
+                                        int tempEndTime_2 = Integer.parseInt(String.valueOf(temp.getTimeEnd().charAt(0)));
+                                        int temp_fromIndex = 0;
+                                        int temp_toIndex = 0;
+
+                                        if(tempStartTime_1 == 9) {
+                                            temp_fromIndex = (((tempStartTime_1) + (tempStartTime_2)) -9);
+                                        }else {
+                                            temp_fromIndex = ((((tempStartTime_1) * 10) + (tempStartTime_2)) - 9);
+                                            temp_toIndex = (((tempEndTime_1) * 10) + (tempEndTime_2) - 9);
+                                    }
+                                        System.out.println("test start time : " + tempStartTime_1 + "  " + tempStartTime_2 + "  " +
+                                                tempEndTime_1 + "  " + tempEndTime_2);
+                                        System.out.println("test timer " + temp_fromIndex + " : " + temp_toIndex);
+
+                                        for(int i = temp_fromIndex ; i < temp_toIndex ; i++){
+                                            listview.getChildAt(i).findViewById(R.id.timeListView).setEnabled(false);
+                                            System.out.println("test timer " + temp_fromIndex + " : " + temp_toIndex);
+                                        }
+
+
                                         System.out.println(temp.toString());
                                     }
                                     // appController.readReservationByBuildingAndRoomNumberAndDate(buildingName,Integer.parseInt(roomNumber),tYear+"-"+tMonth+"-"+tDay);

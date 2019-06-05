@@ -91,7 +91,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="예약 내용 확인"
+                android:text="예약 내용 삭제"
                 android:textSize="20dp"
                 android:layout_marginBottom="50dp"/>
 
