@@ -1,6 +1,8 @@
 package com.seoultech.lesson.souffle.ui.PlanUpdate;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -20,9 +23,9 @@ import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.controller.AppController;
 import com.seoultech.lesson.souffle.data.model.Reservation;
 import com.seoultech.lesson.souffle.data.model.User;
+import com.seoultech.lesson.souffle.ui.adapter.DeleteListener;
 import com.seoultech.lesson.souffle.ui.adapter.ItemData;
 import com.seoultech.lesson.souffle.ui.adapter.ReservationDeleteAdapter;
-import com.seoultech.lesson.souffle.ui.adapter.ReservationListAdapter;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 
@@ -31,7 +34,7 @@ import java.util.List;
 
 import butterknife.OnItemClick;
 
-public class DeletePlanActivity extends AppCompatActivity implements View.OnClickListener {
+public class DeletePlanActivity extends AppCompatActivity implements View.OnClickListener, DeleteListener {
     private AppController appController;
     private User user;
     private Animation pullFromRight, pushToRight;
@@ -45,6 +48,7 @@ public class DeletePlanActivity extends AppCompatActivity implements View.OnClic
     private Button btnBackToMain;
     private BackPressCloseHandler backPressCloseHandler;
     private ReservationDeleteAdapter reservationDeleteAdapter;
+    private List<Reservation> reservations;
 
 
     @Override
@@ -59,7 +63,6 @@ public class DeletePlanActivity extends AppCompatActivity implements View.OnClic
         appController = AppController.getInstance();
         Intent deletePlanIntent = new Intent(this.getIntent());
         user = (User)deletePlanIntent.getSerializableExtra("user");
-        ArrayList<ItemData> deleteList = new ArrayList<>();
 
         btnToMain = (Button)findViewById(R.id.btn_to_main_in_delete_plan);
         fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_delete_plan);
@@ -79,9 +82,10 @@ public class DeletePlanActivity extends AppCompatActivity implements View.OnClic
         btnBackToMain = (Button)findViewById(R.id.btn_back_main);
 
 
-        ArrayList<ItemData> reservationList = new ArrayList<>();
         listView_delete = (ListView)findViewById(R.id.listView_reservation_delete);
-
+        reservations = new ArrayList<>();
+        reservationDeleteAdapter = new ReservationDeleteAdapter(reservations, this);
+        listView_delete.setAdapter(reservationDeleteAdapter);
 
         ProgressDialog progressDialogInDO = new ProgressDialog(DeletePlanActivity.this);
 
@@ -104,18 +108,12 @@ public class DeletePlanActivity extends AppCompatActivity implements View.OnClic
             @Override
             protected void onPostExecute(List<Reservation> reservations) {
                 // 예약목록 뿌리기
-                try{
-                    final ReservationDeleteAdapter tempAdapter = new ReservationDeleteAdapter(reservations);
-                    listView_delete.setAdapter(tempAdapter);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }finally {
-                    progressDialogInDO.dismiss();
-                }
+                DeletePlanActivity.this.reservations.clear();
+                DeletePlanActivity.this.reservations.addAll(reservations);
+                reservationDeleteAdapter.notifyDataSetChanged();
+                progressDialogInDO.dismiss();
             }
         }.execute(user.getStudentNumber());
-
-        reservationDeleteAdapter = (ReservationDeleteAdapter) listView_delete.getAdapter();
 
         listView_delete.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
@@ -173,4 +171,8 @@ public class DeletePlanActivity extends AppCompatActivity implements View.OnClic
         backPressCloseHandler.onBackPressed();
     }
 
+    @Override
+    public void onDelete() {
+        reservationDeleteAdapter.notifyDataSetChanged();
+    }
 }

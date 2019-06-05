@@ -104,6 +104,7 @@ public class ReservationManager {
         boolean isSuccess = false;
         try{
             isSuccess = delete.execute().isSuccessful();
+            System.out.println(isSuccess);
         } catch (IOException e) {
             e.printStackTrace();
         }
