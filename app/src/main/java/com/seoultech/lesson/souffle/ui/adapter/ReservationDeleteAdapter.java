@@ -20,17 +20,18 @@ public class ReservationDeleteAdapter extends BaseAdapter {
 
     LayoutInflater inflater = null;
     private List<Reservation> reservationDeleteList;
-    private int listSize;
     private AppController appController;
+    private DeleteListener deleteListener;
 
-    public ReservationDeleteAdapter(List<Reservation> list) {
+    public ReservationDeleteAdapter(List<Reservation> list, DeleteListener listener) {
+        this.deleteListener = listener;
         this.reservationDeleteList = list;
-        listSize = reservationDeleteList.size();
+        appController = AppController.getInstance();
     }
 
     @Override
     public int getCount() {
-        return listSize;
+        return reservationDeleteList.size();
     }
 
     @Override
@@ -85,7 +86,15 @@ public class ReservationDeleteAdapter extends BaseAdapter {
                 infoDlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        new AsyncTask<Reservation, Integer, Boolean>() {
+                        new AsyncTask<Object, Integer, Boolean>() {
+
+                            @Override
+                            protected Boolean doInBackground(Object... objects) {
+                                Reservation temp = (Reservation) objects[0];
+                                System.out.println(temp.toString());
+                                return appController.deleteReservation((Reservation) objects[0]);
+                            }
+
                             @Override
                             protected void onPreExecute() {
                                 // 로딩
@@ -93,18 +102,14 @@ public class ReservationDeleteAdapter extends BaseAdapter {
                             }
 
                             @Override
-                            protected Boolean doInBackground(Reservation... reservations) {
-                                return appController.deleteReservation(reservations[0]);
-                            }
-
-                            @Override
                             protected void onPostExecute(Boolean aBoolean) {
                                 if(aBoolean){ // 삭제 성공시 (로딩 없애기도 해줘야함) + 새로고침
                                     reservationDeleteList.remove(position);
+                                    deleteListener.onDelete();
                                 }else{ // 삭제 실패시 (로딩 ~~~ (후략))
                                 }
                             }
-                        }.execute((Reservation) reservationDeleteList.get(position));
+                        }.execute(reservationDeleteList.get(position));
                     }
                 });
                 infoDlg.setNegativeButton("취소",null);
