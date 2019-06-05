@@ -38,6 +38,8 @@ public class AppController {
         return loginManager.login(studentNumber, password);
     }
 
+
+    //자동로그인 설정
     public void setAutoLogin(boolean attr, User user){
         optionManager.setAutoLogin(attr, user);
     }
@@ -72,6 +74,8 @@ public class AppController {
         return reservationManager.readReservationByBuilding(building);
     }
 
+
+    //해당 건물의 해당 시간, 해당 날짜의 예약된 시간 받아오기 요거쓰면됨
     public List<Reservation> readReservationByBuildingAndRoomNumberAndDate(String building, int roomNumber, String date){
         return reservationManager.readReservationByBuildingAndRoomNumberAndDate(building, roomNumber, date);
     }

@@ -1,4 +1,4 @@
-package com.seoultech.lesson.souffle.ui.option;
+package com.seoultech.lesson.souffle.ui.adapter;
 
 public class ItemData {
     public String time;

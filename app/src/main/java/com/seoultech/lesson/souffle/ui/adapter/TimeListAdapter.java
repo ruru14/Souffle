@@ -1,4 +1,4 @@
-package com.seoultech.lesson.souffle.ui.option;
+package com.seoultech.lesson.souffle.ui.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.seoultech.lesson.souffle.R;
-import com.seoultech.lesson.souffle.ui.option.ItemData;
 
 import java.util.ArrayList;
 

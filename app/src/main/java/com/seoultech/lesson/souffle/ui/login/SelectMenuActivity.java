@@ -16,8 +16,9 @@ import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.data.model.User;
+import com.seoultech.lesson.souffle.ui.PlanUpdate.DeletePlanActivity;
 import com.seoultech.lesson.souffle.ui.add_Plan.SelectBuildingActivity;
-import com.seoultech.lesson.souffle.ui.add_Plan.UpdatePlanActivity;
+import com.seoultech.lesson.souffle.ui.PlanUpdate.UpdatePlanActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 
 public class SelectMenuActivity extends AppCompatActivity implements View.OnClickListener{
@@ -82,6 +83,15 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
                Intent buildingSelectIntent = new Intent(getApplicationContext(), SelectBuildingActivity.class);
                buildingSelectIntent.putExtra("user",user);
                startActivity(buildingSelectIntent);
+           }
+       });
+
+       linearPlanDelete.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent toDeletePlanIntent = new Intent(getApplicationContext(), DeletePlanActivity.class);
+               toDeletePlanIntent.putExtra("user",user);
+               startActivity(toDeletePlanIntent);
            }
        });
 

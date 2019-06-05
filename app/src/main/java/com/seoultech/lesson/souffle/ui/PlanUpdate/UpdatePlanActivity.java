@@ -1,6 +1,8 @@
-package com.seoultech.lesson.souffle.ui.add_Plan;
+package com.seoultech.lesson.souffle.ui.PlanUpdate;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -16,13 +18,15 @@ import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.controller.AppController;
 import com.seoultech.lesson.souffle.data.model.Reservation;
 import com.seoultech.lesson.souffle.data.model.User;
+import com.seoultech.lesson.souffle.ui.adapter.ReservationListAdapter;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
+import com.seoultech.lesson.souffle.ui.adapter.ItemData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UpdatePlanActivity extends AppCompatActivity implements View.OnClickListener{
-    private ListView listView = null;
     public int rYear;
     public int rMonth;
     public int rDay;
@@ -36,11 +40,10 @@ public class UpdatePlanActivity extends AppCompatActivity implements View.OnClic
     private Button btnUserInfo, btnInIt, btnCheckTime;
     Button btnBackToMain;
     private BackPressCloseHandler backPressCloseHandler;
-    private ListView listViewTime;
     private int phoneNumber, peopleNumber, fromTime, toTime,  roomNumber;
     private String buildingName, objective, etc;
-    private List<Reservation> reservationsList;
     private AppController appController;
+    private ListView listViewReservation = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,23 +55,40 @@ public class UpdatePlanActivity extends AppCompatActivity implements View.OnClic
         }
         catch (NullPointerException e){}
         appController = AppController.getInstance();
-        reservationsList = appController.readReservationByStudentNumber(1234);
-        appController.deleteReservation(reservationsList.get(1));
         setContentView(R.layout.activity_update_plan);
         Intent updatePlanIntent = new Intent(this.getIntent());
         user = (User) updatePlanIntent.getSerializableExtra("user");
+        ArrayList<ItemData> reservationList = new ArrayList<>();
+        listViewReservation = (ListView)findViewById(R.id.listView_reservation);
 
-        rYear = updatePlanIntent.getExtras().getInt("reserve_year");
-        rMonth = updatePlanIntent.getExtras().getInt("reserve_month");
-        rDay = updatePlanIntent.getExtras().getInt("reserve_day");
-        phoneNumber = updatePlanIntent.getExtras().getInt("phone_number");
-        peopleNumber = updatePlanIntent.getExtras().getInt("people_number");
-        fromTime = updatePlanIntent.getExtras().getInt("fromTime");
-        toTime = updatePlanIntent.getExtras().getInt("toTime");
-        roomNumber = updatePlanIntent.getExtras().getInt("room_num");
-        buildingName = updatePlanIntent.getExtras().getString("building_name");
-        objective = updatePlanIntent.getExtras().getString("objective");
-        etc = updatePlanIntent.getExtras().getString("etc");
+        ProgressDialog progressDialogInAO = new ProgressDialog(UpdatePlanActivity.this);
+
+        new AsyncTask<Integer, Integer, List<Reservation>>() {
+            @Override
+            protected void onPreExecute() {
+                // Loading
+                progressDialogInAO.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialogInAO.setMessage("Logining");
+                progressDialogInAO.show();
+                super.onPreExecute();
+            }
+
+            @Override
+            protected List<Reservation> doInBackground(Integer... integers) {
+                // 예약목록 불러옴
+                System.out.println(integers[0]);
+                return appController.readReservationByStudentNumber(integers[0]);
+            }
+
+            @Override
+            protected void onPostExecute(List<Reservation> reservations) {
+                // 예약목록 뿌리기
+                System.out.println(reservations.get(0).toString());
+                final ReservationListAdapter reservationListAdapter = new ReservationListAdapter(reservations);
+                progressDialogInAO.dismiss();
+                listViewReservation.setAdapter(reservationListAdapter);
+            }
+        }.execute(user.getStudentNumber());
 
         String reserve_date = rYear + "-" + rMonth + "-" + rDay;
         String fromTimeString = fromTime + ":00";
@@ -77,16 +97,13 @@ public class UpdatePlanActivity extends AppCompatActivity implements View.OnClic
         Reservation reservationObject = new Reservation(roomNumber, reserve_date, user.getStudentNumber(),
                 user.getName(), objective, peopleNumber, fromTimeString, toTimeString, buildingName);
 
-        System.out.println(reservationObject.toString());
-
-        listViewTime = (ListView)findViewById(R.id.listView_time);
         btnInIt = (Button)findViewById(R.id.btnInIt);
         btnCheckTime = (Button)findViewById(R.id.btn_check_time);
 
         btnToMain = (Button)findViewById(R.id.btn_to_main_in_update_plan);
         fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_update_plan);
 
-        btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_updateplan);
+        btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_update_plan);
         btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
 
         pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
@@ -97,8 +114,6 @@ public class UpdatePlanActivity extends AppCompatActivity implements View.OnClic
         frameSelectMenu.bringChildToFront(slideLayout);
 
         backPressCloseHandler = new BackPressCloseHandler(this);
-
-
 
         btnBackToMain = (Button)findViewById(R.id.btn_back_main);
 

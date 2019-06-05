@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background = "@color/colorPrimary"
-        android:id = "@+id/layout_toolbar_in_select_building">
+        android:id = "@+id/layout_toolbar_in_delete_plan">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <android.support.design.widget.FloatingActionButton
                 android:layout_alignParentRight="true"
-                android:id="@+id/fab_in_select_building"
+                android:id="@+id/fab_in_delete_plan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -29,10 +30,10 @@
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id = "@+id/select_building_frame">
+        android:id = "@+id/delete_plan_frame">
         <LinearLayout
             android:background ="#90000000"
-            android:id ="@+id/slide_layout_in_select_building"
+            android:id ="@+id/slide_layout_in_delete_plan"
             android:visibility="gone"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
@@ -48,7 +49,7 @@
                 android:layout_height="fill_parent"
                 android:orientation="vertical">
                 <Button
-                    android:id = "@+id/btn_userInfo_in_selectbuilding"
+                    android:id = "@+id/btn_userInfo_in_delete_plan"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="left"
@@ -57,102 +58,61 @@
                     android:text = "***님\n***과"
                     android:layout_weight="1"/>
                 <Button
-                    android:id ="@+id/btn_to_main_in_select_building"
+                    android:id ="@+id/btn_to_main_in_delete_plan"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:textSize="25dp"
                     android:text ="처음으로"/>
                 <Button
-                    android:id = "@+id/btn_setting_in_selectbuilding"
+                    android:id = "@+id/btn_setting_in_delete_plan"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text = "설정"
                     android:textSize="25dp"
                     android:layout_weight="1"/>
                 <Button
-                    android:id = "@+id/btn_logout_in_select_building"
+                    android:id = "@+id/btn_logout_in_delete_plan"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="로그아웃"
                     android:textSize="25dp"
                     android:layout_weight="1"/>
-
             </LinearLayout>
         </LinearLayout>
-    <LinearLayout
+
+
+        <LinearLayout
+            android:layout_margin="20dp"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical">
-        <TextView
-        android:layout_margin = "20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:text = "건물 선택"/>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:background="#00FF00"/>
-    <ScrollView
-        android:padding = "30dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:id="@+id/spinner_building"
-                android:layout_margin="20dp"/>
             <TextView
+                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="예약 내용 확인"
                 android:textSize="20dp"
-                android:text = "직접 선택하기"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:id = "@+id/btn_mirae"
-        android:text = "미래관"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id = "@+id/btn_building1"
-        android:layout_weight="1"
-        android:text = "건물A"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id = "@+id/btn_building2"
-        android:layout_weight="1"
-        android:text = "건물B"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id = "@+id/btn_building3"
-        android:layout_weight="1"
-        android:text = "건물C"
-        />
+                android:layout_marginBottom="50dp"/>
+
+            <ListView
+                android:id = "@+id/listView_reservation_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:choiceMode="multipleChoice"
+                android:layout_weight="1">
+
+            </ListView>
+
             <LinearLayout
-                android:gravity="right"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <Button
-                android:text = "확인"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id = "@+id/btn_selectBuilding"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id = "@+id/btn_back_main"
+                    android:text = "뒤로 가기"/>
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
     </FrameLayout>
 </LinearLayout>

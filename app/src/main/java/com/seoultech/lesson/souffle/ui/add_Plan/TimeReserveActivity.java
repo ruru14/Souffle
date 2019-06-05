@@ -2,16 +2,15 @@ package com.seoultech.lesson.souffle.ui.add_Plan;
 
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
@@ -20,27 +19,27 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.controller.AppController;
 import com.seoultech.lesson.souffle.data.model.Reservation;
 import com.seoultech.lesson.souffle.data.model.User;
+import com.seoultech.lesson.souffle.ui.adapter.ReservationListAdapter;
 import com.seoultech.lesson.souffle.ui.login.LoginActivity;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
-import com.seoultech.lesson.souffle.ui.option.CheckAdapter;
-import com.seoultech.lesson.souffle.ui.option.CheckData;
-import com.seoultech.lesson.souffle.ui.option.ItemData;
-import com.seoultech.lesson.souffle.ui.option.TimeListAdapter;
+import com.seoultech.lesson.souffle.ui.adapter.ItemData;
+import com.seoultech.lesson.souffle.ui.adapter.TimeListAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 
 //해당 강의실을 예약할 날짜와 시간을 고르는 액티비티
@@ -48,9 +47,6 @@ import java.util.Date;
 public class TimeReserveActivity extends AppCompatActivity implements View.OnClickListener{
 
     private BackPressCloseHandler backPressCloseHandler;
-    private ListView chk_list;
-    private CoordinatorLayout layout_cor;
-    private NestedScrollView scrollView;
     private LinearLayout slideLayout;
     private TextView txtYearDlg, txtMonthDlg, txtDayDlg, txtRoomDlg;
     private String roomNumber;
@@ -80,11 +76,9 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
     private ListView listview = null;
     private Button btnInIt, btnTimeReserve;
     private ArrayList<Integer> linearArr = new ArrayList<>();
+    private AppController appController;
 
     private Reservation reservation;
-
-    // Date 선택시 화면 Refresh
-    // Refresh 내용 : Reservation 받아와서 (임시로 생성) + 예약된 시간들 enable
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +88,7 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
             this.getSupportActionBar().hide();
         } catch (NullPointerException e) {
         }
+
 
 
         setContentView(R.layout.activity_time_reserve);
@@ -112,6 +107,11 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
         }
         final TimeListAdapter oAdapter = new TimeListAdapter(timeList);
         listview.setAdapter(oAdapter);
+
+        ProgressDialog progressDialogInTRA = new ProgressDialog(TimeReserveActivity.this);
+        appController = AppController.getInstance();
+
+
 
 
 
@@ -318,6 +318,33 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
                 }
             }
         });
+
+        new AsyncTask<Integer, Integer, List<Reservation>>() {
+            @Override
+            protected void onPreExecute() {
+                // Loading
+                progressDialogInTRA.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialogInTRA.setMessage("Logining");
+                progressDialogInTRA.show();
+                super.onPreExecute();
+            }
+
+            @Override
+            protected List<Reservation> doInBackground(Integer... integers) {
+                // 예약목록 불러옴
+                System.out.println(integers[0]);
+                return appController.readReservationByBuildingAndRoomNumberAndDate(buildingName,Integer.parseInt(roomNumber),tYear+"-"+tMonth+"-"+tDay);
+                //return appController.readReservationByStudentNumber(integers[0]);
+            }
+
+            @Override
+            protected void onPostExecute(List<Reservation> reservations) {
+                // 시간 지우기
+               // appController.readReservationByBuildingAndRoomNumberAndDate(buildingName,Integer.parseInt(roomNumber),tYear+"-"+tMonth+"-"+tDay);
+                progressDialogInTRA.dismiss();
+                listview.getChildAt(0).setEnabled(false);
+            }
+        }.execute(user.getStudentNumber());
 
     }
         //OnCreate end

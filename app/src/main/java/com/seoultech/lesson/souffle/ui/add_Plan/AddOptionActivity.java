@@ -1,8 +1,9 @@
 package com.seoultech.lesson.souffle.ui.add_Plan;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -37,7 +38,7 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
     private Button btnToMain;
     private User user;
     private Button btnUserInfo;
-    private int fromTime, toTime;
+    private String fromTime, toTime;
     private String building_name;
     private AppController appController;
 
@@ -104,10 +105,10 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
         int minute = AddOptionIntent.getExtras().getInt("reserve_minute");
 
         btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
-        fromTime = AddOptionIntent.getExtras().getInt("fromTime");
-        toTime = AddOptionIntent.getExtras().getInt("toTime");
+        fromTime = String.valueOf(AddOptionIntent.getExtras().getInt("fromTime")) + ":00";
+        toTime = String.valueOf(AddOptionIntent.getExtras().getInt("toTime")) + ":00";
         editTime.setText(year + "년 " + month + "월 " +
-                day + "일\n" + fromTime + "시 ~ " + toTime + "시");
+                day + "일\n" + fromTime + " ~ " + toTime);
         editRoomNum.setText(roomNum + "호");
 
         btnBackToTimeReserve.setOnClickListener(new View.OnClickListener() {
@@ -128,9 +129,9 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
                         user.getName(),
                         editObjective.getText().toString(),
                         Integer.parseInt(editPeopleNumber.getText().toString()),
-                        "09:00", "14:00",
+                        fromTime,
+                        toTime,
                         editBuilding.getText().toString());
-                appController.createReservation(reservation);
 
                 AlertDialog.Builder reserveCommitDlg =  new AlertDialog.Builder(AddOptionActivity.this);
                 reserveCommitDlg.setTitle("최종 확인");
@@ -139,10 +140,43 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
                 reserveCommitDlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(),"예약되었습니다",Toast.LENGTH_SHORT).show();
-                        Intent toMainMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
-                        toMainMenuIntent.putExtra("user",user);
-                        startActivity(toMainMenuIntent);
+
+                        ProgressDialog progressDialogInAO = new ProgressDialog(AddOptionActivity.this);
+                        new AsyncTask<Object, Integer, Boolean>() {
+
+                            @Override
+                            protected void onPreExecute() {
+                                // 전송중...
+                                progressDialogInAO.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                                progressDialogInAO.setMessage("Logining");
+                                progressDialogInAO.show();
+                                super.onPreExecute();
+                            }
+
+                            @Override
+                            protected Boolean doInBackground(Object... objects) {
+                                // 예약 (성공여부 bool)
+                                return appController.createReservation((Reservation) objects[0]);
+                            }
+
+                            @Override
+                            protected void onPostExecute(Boolean aBoolean) {
+                                // 예약 후 실행됨
+                                if(aBoolean){
+                                    Toast.makeText(getApplicationContext(),"예약되었습니다",Toast.LENGTH_SHORT).show();
+                                    Intent toMainMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
+                                    toMainMenuIntent.putExtra("user",user);
+                                    startActivity(toMainMenuIntent);
+                                }
+                                else{
+                                    AlertDialog.Builder logInFailDlg = new AlertDialog.Builder(AddOptionActivity.this);
+                                    logInFailDlg.setMessage("예약에 실패하였습니다.");
+                                    logInFailDlg.setPositiveButton("확인",null);
+                                    logInFailDlg.show();
+                                }
+                            }
+                        }.execute(reservation);
+
                     }
                 });
                 reserveCommitDlg.show();
