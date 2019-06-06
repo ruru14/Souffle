@@ -124,6 +124,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -147,12 +156,8 @@
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:text="  일"/>
-        <TextView
-            android:id = "@+id/txt_room_dlg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="    호"/>
+        </LinearLayout>
+    </LinearLayout>
         <Button
             android:id = "@+id/btn_select_date"
             android:layout_gravity="right"
@@ -163,6 +168,8 @@
     </LinearLayout>
 
         <ScrollView
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:fillViewport="true"
             android:id = "@+id/scrollView_timereserve"
             android:layout_weight="1"
@@ -189,41 +196,25 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnInIt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="inIt" />
-
-                <Button
                     android:id="@+id/btnTimeReserve"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:text="Send" />
 
-                <Button
-                    android:id="@+id/btnSelectAll"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select All" />
+
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/text_test"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="시간 테스트" />
+
 
             <Button
                 android:id="@+id/btn_date_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
-                android:text="최종 확인 테스트" />
+                android:text="날짜 입력 완료" />
 
         </LinearLayout>
     </LinearLayout>

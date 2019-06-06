@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -70,8 +71,8 @@ public class LoginActivity extends AppCompatActivity {
 
         chkAutoLogin = (CheckBox)findViewById(R.id.chkAutoLogin);
         toFloorSelectIntent = new Intent(this.getIntent());
-        testId = (TextView) findViewById(R.id.test_ID);
-        testPW = (TextView) findViewById(R.id.test_PW);
+//        testId = (TextView) findViewById(R.id.test_ID);
+//        testPW = (TextView) findViewById(R.id.test_PW);
         textId = (TextView) findViewById(R.id.text_id);
         textPw = (TextView) findViewById(R.id.text_pw);
         textView = (TextView) findViewById(R.id.textView);
@@ -88,8 +89,6 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                testId.setText(editId.getText());
-                testPW.setText(editPW.getText());
                 LoginTask task = new LoginTask();
                 task.execute();
             }
@@ -123,7 +122,6 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPreExecute() {
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progressDialog.setMessage("Logining");
-
             progressDialog.show();
             super.onPreExecute();
         }
@@ -160,9 +158,11 @@ public class LoginActivity extends AppCompatActivity {
         // 실행중 (Progress Bar)
         @Override
         protected void onPreExecute() {
+
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progressDialog.setMessage("Logining");
             progressDialog.show();
+
             super.onPreExecute();
         }
 
@@ -170,7 +170,9 @@ public class LoginActivity extends AppCompatActivity {
         @SuppressLint("WrongThread")
         @Override
         protected Object doInBackground(Object[] objects) {
+            if(!(editId.getText() == null || editPW.getText() == null))
             user = appController.login(Integer.parseInt(String.valueOf(editId.getText())), String.valueOf(editPW.getText()));
+
             return null;
         }
 
@@ -179,6 +181,7 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(Object o) {
             if(user.isAuthorized()){
                 // 자동로그인 체크여부 설정 -> 체크박스 만들기
+
                 if(chkAutoLogin.isChecked()){
                     appController.setAutoLogin(true, user);
                 }
@@ -188,13 +191,21 @@ public class LoginActivity extends AppCompatActivity {
                 toSelectMenuIntent.putExtra("user_name",user.getName());
                 toSelectMenuIntent.putExtra("user_stNumber",user.getStudentNumber());
                 toSelectMenuIntent.putExtra("user_major",user.getMajor());
+                progressDialog.dismiss();
                 startActivity(toSelectMenuIntent);
             }else{ // 로그인 실패
-//                AlertDialog.Builder logInFailDlg= new AlertDialog.Builder(LoginActivity.this);
-//                logInFailDlg.setMessage("로그인에 실패하였습니다");
-//                logInFailDlg.setTitle("로그인 실패");
-//                logInFailDlg.setPositiveButton("확인", null);
+                AlertDialog.Builder logInFailDlg= new AlertDialog.Builder(LoginActivity.this);
+                logInFailDlg.setMessage("로그인에 실패하였습니다");
+                logInFailDlg.setTitle("로그인 실패");
+                logInFailDlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        progressDialog.dismiss();
+                    }
+                });
+                logInFailDlg.show();
             }
+
         }
     }
 

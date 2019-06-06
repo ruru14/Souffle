@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.data.model.Reservation;
+import com.seoultech.lesson.souffle.util.Changer;
 
 import java.util.List;
 
@@ -19,16 +20,14 @@ public class ReservationListAdapter extends BaseAdapter {
 
     LayoutInflater inflater = null;
     private List<Reservation> reservationList;
-    private int listSize;
 
     public ReservationListAdapter(List<Reservation> list) {
         this.reservationList = list;
-        listSize = reservationList.size();
     }
 
     @Override
     public int getCount() {
-        return listSize;
+        return reservationList.size();
     }
 
     @Override
@@ -55,12 +54,14 @@ public class ReservationListAdapter extends BaseAdapter {
 
         TextView date = convertView.findViewById(R.id.txt_date_reservation);
         TextView buildingName = convertView.findViewById(R.id.txt_buildingName_reservation);
-        TextView studentNumber = convertView.findViewById(R.id.txt_stNumber_reservation);
+        TextView roomNumber = convertView.findViewById(R.id.txt_roomNumber_reservation);
+        TextView time = convertView.findViewById(R.id.txt_time_reservation);
         Button btnReservation = convertView.findViewById(R.id.btn_reservation_list);
 
         date.setText(reservationList.get(position).getDate());
-        buildingName.setText(reservationList.get(position).getBuilding());
-        studentNumber.setText(Integer.toString(reservationList.get(position).getStudentNumber()));
+        buildingName.setText(Changer.buildingChange(reservationList.get(position).getBuilding()));
+        roomNumber.setText(Integer.toString(reservationList.get(position).getStudentNumber()));
+        time.setText(reservationList.get(position).getTimeStart() + "~" + reservationList.get(position).getTimeEnd());
 
         btnReservation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,8 +70,8 @@ public class ReservationListAdapter extends BaseAdapter {
                 infoDlg.setTitle("상세 정보");
                 infoDlg.setMessage("학번 : " + reservationList.get(position).getStudentNumber()+
                                     "\n이름 : " + reservationList.get(position).getName() +
-                                    "\n예약 시간 : " + reservationList.get(position).getDate() + "\t\n " +
-                                                reservationList.get(position).getTimeStart() + "~" +
+                                    "\n예약 날짜 : " + reservationList.get(position).getDate() + "\n " +
+                                    "\n예약 시간 : " + reservationList.get(position).getTimeStart() + "~" +
                                                 reservationList.get(position).getTimeEnd() +
                                     "\n건물명 : " + reservationList.get(position).getBuilding() +
                                     "\n사용 인원 : " + reservationList.get(position).getTotalMember() +

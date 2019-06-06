@@ -89,12 +89,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=" *** 호 강의실 도면"
-        android:textSize="20dp"/>
+        android:textSize="25dp"/>
 
     <ImageView
+        android:layout_weight="1"
         android:id = "@+id/img_room"
-        android:layout_width="wrap_content"
-        android:layout_height="451dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:src="@drawable/floor_mirae_1st" />
     <Button
         android:layout_width="wrap_content"

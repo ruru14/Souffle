@@ -72,9 +72,10 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
     private Animation pullFromLeft, pushToLeft;
     private Boolean isFabOpen = false;
     private ScrollView scrollView_timereserve;
+    private boolean boolUnderground;
 
     private ListView listview = null;
-    private Button btnInIt, btnTimeReserve;
+    private Button btnTimeReserve;
     private ArrayList<Integer> linearArr = new ArrayList<>();
     private AppController appController;
 
@@ -94,11 +95,17 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_time_reserve);
         Intent timeReserveIntent = new Intent(this.getIntent());
         user = (User) timeReserveIntent.getSerializableExtra("user");
+        boolUnderground = false;
         buildingName = timeReserveIntent.getExtras().getString("building_name_to_time_reserve");
         scrollView_timereserve = (ScrollView)findViewById(R.id.scrollView_timereserve);
         ArrayList<ItemData> timeList = new ArrayList<>();
         listview = (ListView)findViewById(R.id.timeListView);
-        for (int i=0; i<15; ++i)
+        String timeAm9 = "09~10시";
+        ItemData itemAm9 = new ItemData();
+        itemAm9.time = timeAm9;
+        itemAm9.isEnable = true;
+        timeList.add(itemAm9);
+        for (int i=1; i<15; ++i)
         {
             ItemData timeItem = new ItemData();
             timeItem.time = (i+9) + "~" + (i+10) + "시";
@@ -111,11 +118,6 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
         ProgressDialog progressDialogInTRA = new ProgressDialog(TimeReserveActivity.this);
         appController = AppController.getInstance();
 
-
-
-
-
-        btnInIt = findViewById(R.id.btnInIt);
         btnTimeReserve = findViewById(R.id.btnTimeReserve);
 
         btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_timereserve);
@@ -127,9 +129,6 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
         btnToMain = (Button)findViewById(R.id.btn_to_main_in_time_reserve);
         btnSetting = (Button)findViewById(R.id.btn_setting_in_time_reserve);
         btnLogout = (Button)findViewById(R.id.btn_logout_in_time_reserve);
-
-        TextView txt_test = (TextView) findViewById(R.id.text_test);
-
         pullFromRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pullfromright);
         pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
 //        pullFromLeft = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pullfromleft);
@@ -142,14 +141,14 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
 
         backPressCloseHandler = new BackPressCloseHandler(this);
 
-        txtRoomDlg = (TextView) findViewById(R.id.txt_room_dlg);
         txtYearDlg = (TextView) findViewById(R.id.txt_year_dlg);
         txtMonthDlg = (TextView) findViewById(R.id.txt_month_dlg);
         txtDayDlg = (TextView) findViewById(R.id.txt_day_dlg);
 
         roomNumber = timeReserveIntent.getExtras().getString("room_number");
-        txtRoomDlg.setText(roomNumber + "호");
-        final int room_num_int = Integer.parseInt(roomNumber);
+
+
+        //final int room_num_int = Integer.parseInt(roomNumber);
 
         btnDate = (Button) findViewById(R.id.btn_date_time);
         btnSelectDate = (Button) findViewById(R.id.btn_select_date);
@@ -174,19 +173,6 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
                 linearArr.add(position); // 연속성 판단을 위한 변수
             }
         });
-
-
-        btnInIt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                for(int i=0; i<10; i++){
-                    ItemData data = (ItemData) oAdapter.getItem(i);
-                    data.isChecked = false;
-                }
-                oAdapter.notifyDataSetChanged();
-            }
-        });
-
 
 
         btnTimeReserve.setOnClickListener(new View.OnClickListener() {
@@ -226,6 +212,8 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
         });
 
 
+
+
         btnToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -259,9 +247,44 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
                 dateDlg = new DatePickerDialog(TimeReserveActivity.this, listener, mYear, mMonth, mDay);
                 dateDlg.getDatePicker().setMaxDate(System.currentTimeMillis() + 3600000 * 168 * 2);   //날짜선택은 오늘~2주 후까지만 가능
                 dateDlg.getDatePicker().setMinDate(System.currentTimeMillis());
+                for(int i=0;i<15;i++){
+                    boolean boolChk = timeList.get(i).isChecked;
+                    if(boolChk){
+                        fromTime = (i+9);
+                        break;
+                    }
+                }
+                for(int i=15;i>1;i--){
+                    boolean boolChk = timeList.get(i-1).isChecked;
+                    if(boolChk) {
+                        toTime = (i + 9);
+//                        Toast.makeText(getApplicationContext(),"fromTime : " + fromTime + "\n"
+//                                + "toTime : " + toTime, Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                }
+
+                if(isLinear(linearArr)){ // 연속성 판단 (연속)
+//                    Toast.makeText(TimeReserveActivity.this, "GOOOOOOD", Toast.LENGTH_SHORT).show();
+                    oAdapter.notifyDataSetChanged(); // 리스트뷰 refresh
+                }else{ // 연속성 판단 (비연속)
+
+                    Toast.makeText(TimeReserveActivity.this, "시간은 연속적으로 선택해주세요.", Toast.LENGTH_SHORT).show();
+                    ArrayList<ItemData> data = (ArrayList<ItemData>) oAdapter.getItemList();
+                    for(ItemData iterater : data){ // 리스트뷰 체크 해제상태로 변경
+                        iterater.isChecked = false;
+                    }
+                    oAdapter.notifyDataSetChanged(); // 리스트뷰 refresh
+                }
+                linearArr.clear(); // 연속성 판단 변수 초기화
+
+
                 dateDlg.getDatePicker().setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
                     @Override
                     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        for(int i = 0; i < timeList.size() ; i++)
+                        timeList.get(i).isEnable = true;
+                        oAdapter.notifyDataSetChanged();
                         dYear = year;
                         dMonth = monthOfYear + 1;
                         dDay = dayOfMonth;
@@ -274,6 +297,7 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
                             txtYearDlg.setText(dYear + "년 ");
                             txtMonthDlg.setText(dMonth + "월 ");
                             txtDayDlg.setText(dDay + "일 ");
+
                             new AsyncTask<Integer, Integer, List<Reservation>>() {
                                 @Override
                                 protected void onPreExecute() {
@@ -281,6 +305,8 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
                                     progressDialogInTRA.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                                     progressDialogInTRA.setMessage("Logining");
                                     progressDialogInTRA.show();
+//                                    for(int i=0;i < 15 ; i++)
+//                                    listview.getChildAt(i).findViewById(R.id.customCheckbox).setEnabled(true);
                                     super.onPreExecute();
                                 }
 
@@ -298,42 +324,51 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
                                 @Override
                                 protected void onPostExecute(List<Reservation> reservations) {
                                     // 시간 지우기
+                                    progressDialogInTRA.dismiss();
                                     CheckBox checkBox = listview.findViewById(R.id.customCheckbox);
-                                    listview.getChildAt(0).setEnabled(false);
+//                                    for(int i=0 ; i<reservations.size() ; i++) {
+//                                        listview.getChildAt(i).findViewById(R.id.customCheckbox).setEnabled(true);
+//                                    }
+                                    System.out.println("size_test : " + timeList.size());
+//                                    for(int i=0;i<timeList.size();++i) {
+//                                        listview.getChildAt(i).findViewById(R.id.customCheckbox).setEnabled(false);
+//                                    }
                                     for(Reservation temp : reservations){
                                         String timeStart = temp.getTimeStart();
                                         String timeEnd = temp.getTimeEnd();
                                         int tempStartTime_1 = Integer.parseInt(String.valueOf(temp.getTimeStart().charAt(0)));
                                         int tempStartTime_2 = 0;
-                                        if(tempStartTime_1 == 9) {
-                                           tempStartTime_2 = 0;
-                                        }else{
-                                            tempStartTime_2 = Integer.parseInt(String.valueOf(temp.getTimeStart().charAt(1)));
+
+                                        for(int i=0;i<timeList.size();i++){
+                                            System.out.println("abcd test : " + timeList.get(i).time + " : " +
+                                                    Integer.parseInt(String.valueOf(timeList.get(i).time.charAt(0))));
                                         }
+
+                                        if(tempStartTime_1 == 9) {
+//
+                                        }else
+                                            tempStartTime_2 = Integer.parseInt(String.valueOf(temp.getTimeStart().charAt(1)));
+
+
                                         int tempEndTime_1 = Integer.parseInt(String.valueOf(temp.getTimeEnd().charAt(0)));
-                                        int tempEndTime_2 = Integer.parseInt(String.valueOf(temp.getTimeEnd().charAt(0)));
+                                        int tempEndTime_2 = Integer.parseInt(String.valueOf(temp.getTimeEnd().charAt(1)));
                                         int temp_fromIndex = 0;
                                         int temp_toIndex = 0;
 
-                                        if(tempStartTime_1 == 9) {
-                                            temp_fromIndex = (((tempStartTime_1) + (tempStartTime_2)) -9);
-                                        }else {
-                                            temp_fromIndex = ((((tempStartTime_1) * 10) + (tempStartTime_2)) - 9);
-                                            temp_toIndex = (((tempEndTime_1) * 10) + (tempEndTime_2) - 9);
-                                    }
-                                        System.out.println("test start time : " + tempStartTime_1 + "  " + tempStartTime_2 + "  " +
-                                                tempEndTime_1 + "  " + tempEndTime_2);
-                                        System.out.println("test timer " + temp_fromIndex + " : " + temp_toIndex);
+                                        if(tempStartTime_1 == 9){
+                                            temp_fromIndex = 0;
+                                        }else
+                                        temp_fromIndex = ((((tempStartTime_1) * 10) + (tempStartTime_2)) - 9);
 
-                                        for(int i = temp_fromIndex ; i < temp_toIndex ; i++){
-                                            listview.getChildAt(i).findViewById(R.id.timeListView).setEnabled(false);
-                                            System.out.println("test timer " + temp_fromIndex + " : " + temp_toIndex);
+                                        temp_toIndex = (((tempEndTime_1) * 10) + (tempEndTime_2) - 9);
+
+                                        for(int i = temp_fromIndex ; i < temp_toIndex ; ++i){
+                                              timeList.get(i).isEnable = false;
+//
                                         }
-
-
+                                        oAdapter.notifyDataSetChanged();
                                         System.out.println(temp.toString());
                                     }
-                                    // appController.readReservationByBuildingAndRoomNumberAndDate(buildingName,Integer.parseInt(roomNumber),tYear+"-"+tMonth+"-"+tDay);
                                     progressDialogInTRA.dismiss();
                                 }
                             }.execute(user.getStudentNumber());
@@ -344,12 +379,18 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
+
+
         btnDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder dlg = new AlertDialog.Builder(TimeReserveActivity.this);
                 dlg.setTitle("예약 화면");
                 dlg.setIcon(R.mipmap.ic_launcher);
+
+                btnSelectDate.callOnClick();
+                dateDlg.dismiss();
+
                 if (dYear == -1 || fromTime == -1 || toTime == -1)
                     Toast.makeText(getApplicationContext(), "날짜나 시간을 제대로 입력해 주십시오", Toast.LENGTH_SHORT).show();
                 else {
@@ -365,6 +406,7 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
                             tMonth = getReturn(dMonth);
                             tDay = getReturn(dDay);
                             Intent toAddOptionIntent = new Intent(getApplicationContext(), AddOptionActivity.class);
+                            toAddOptionIntent.putExtra("bool_underground",boolUnderground);
                             toAddOptionIntent.putExtra("reserve_year", tYear);
                             toAddOptionIntent.putExtra("reserve_month", tMonth);
                             toAddOptionIntent.putExtra("reserve_day", tDay);
@@ -373,6 +415,7 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
                             toAddOptionIntent.putExtra("toTime",toTime);
                             toAddOptionIntent.putExtra("user",user);
                             toAddOptionIntent.putExtra("building_name",buildingName);
+                            toAddOptionIntent.putExtra("bool_modify",false);
                             startActivity(toAddOptionIntent);
                         }
                     });

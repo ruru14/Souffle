@@ -34,7 +34,7 @@
         <LinearLayout
             android:background ="#90000000"
             android:id ="@+id/slide_layout_in_select_menu"
-            android:visibility="gone"
+            android:visibility="visible"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
@@ -43,44 +43,57 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:background="#00000000"/>
-            <LinearLayout
+            <FrameLayout
                 android:layout_weight="1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="#99000000"/>
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:orientation="vertical">
-                <Button
+                <TextView
+                    android:background="#FFFFFF"
                 android:id = "@+id/btn_userInfo_in_selectmenu"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:textSize="25dp"
                 android:enabled="false"
-                android:text = "***님\n***과"
-                    android:layout_weight="1"/>
-                <Button
+                    android:layout_marginBottom="10dp"
+                android:text = "***님\n***과" />
+                <TextView
+                    android:background="#FFFFFF"
+                    android:layout_marginBottom="10dp"
                     android:id ="@+id/btn_to_main_in_selectmenu"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:textSize="25dp"
                     android:text ="처음으로"/>
-                <Button
+                <TextView
+                    android:background="#FFFFFF"
+                    android:layout_marginBottom="10dp"
                     android:id = "@+id/btn_setting_in_selectmenu"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:text = "설정"
-                    android:textSize="25dp"
-                    android:layout_weight="1"/>
-                <Button
+                    android:textSize="25dp" />
+                <TextView
+                    android:background="#FFFFFF"
+                    android:layout_marginBottom="10dp"
                     android:id = "@+id/btn_logout_in_selectmenu"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="로그아웃"
-                    android:textSize="25dp"
-                    android:layout_weight="1"/>
-
+                    android:textSize="25dp"/>
             </LinearLayout>
+            </FrameLayout>
         </LinearLayout>
+
+
     <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">

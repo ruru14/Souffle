@@ -137,7 +137,7 @@ public class SelectBuildingActivity extends AppCompatActivity implements View.On
     public void onItemSelected(AdapterView<?> adapterView, View v, int i, long l) {
             switch(i){
                 case 0:
-                    Toast.makeText(getApplicationContext(),"건물을 선택해주세요.",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),"건물을 선택해주세요.",Toast.LENGTH_SHORT).show();
                     break;
                 case 1:
                     buildingName = "Building_Mirae";

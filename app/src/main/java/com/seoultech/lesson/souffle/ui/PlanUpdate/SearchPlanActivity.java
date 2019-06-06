@@ -26,7 +26,7 @@ import com.seoultech.lesson.souffle.ui.adapter.ItemData;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpdatePlanActivity extends AppCompatActivity implements View.OnClickListener{
+public class SearchPlanActivity extends AppCompatActivity implements View.OnClickListener{
     public int rYear;
     public int rMonth;
     public int rDay;
@@ -61,7 +61,7 @@ public class UpdatePlanActivity extends AppCompatActivity implements View.OnClic
         ArrayList<ItemData> reservationList = new ArrayList<>();
         listViewReservation = (ListView)findViewById(R.id.listView_reservation);
 
-        ProgressDialog progressDialogInAO = new ProgressDialog(UpdatePlanActivity.this);
+        ProgressDialog progressDialogInAO = new ProgressDialog(SearchPlanActivity.this);
 
         new AsyncTask<Integer, Integer, List<Reservation>>() {
             @Override

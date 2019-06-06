@@ -26,10 +26,12 @@ import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 
 public class AddOptionActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private EditText editName, editStudentNumber, editTime, editObjective, editPeopleNumber, editRoomNum, editBuilding, editPhoneNumber, editETC;
-    private Button btnBackToTimeReserve, btnCommitReserve;
+    private EditText editName, editStudentNumber, editTime, editObjective, editPeopleNumber, editRoomNum, editBuilding, editPhoneNumber;
+    private Button btnCommitReserve;
     private int rYear, rMonth, rDay;
+    private int rYearModify, rMonthModify, rDayModify;
     private String roomNum;
+    private String getRoomNumModify;
     private Animation pullFromRight, pushToRight;
     private Boolean isFabOpen = false;
     private FloatingActionButton fabMenu;
@@ -39,8 +41,17 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
     private User user;
     private Button btnUserInfo;
     private String fromTime, toTime;
+    private String fromTimeModify, toTimeModify;
     private String building_name;
+    private String building_nameModify;
     private AppController appController;
+    private Boolean boolUnderground;
+    private Boolean boolModify = false;
+    private int year, month, day, hour, minute;
+    private String roomNumModify;
+    private Reservation reservation;
+    private String reserveDate;
+
 
 
     private BackPressCloseHandler backPressCloseHandler;
@@ -57,16 +68,31 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_add_option);
         Intent AddOptionIntent = new Intent(this.getIntent());
 
+        Reservation reservation_modify = (Reservation) AddOptionIntent.getExtras().getSerializable("reservation_modify");
+
         rYear = AddOptionIntent.getExtras().getInt("reserve_year");
         rMonth = AddOptionIntent.getExtras().getInt("reserve_month");
         rDay = AddOptionIntent.getExtras().getInt("reserve_day");
+
+        AlertDialog.Builder ReservationFailDlg = new AlertDialog.Builder(AddOptionActivity.this);
+
+        boolUnderground = AddOptionIntent.getExtras().getBoolean("bool_underground");
+        boolModify = AddOptionIntent.getExtras().getBoolean("bool_modify");
 
         user = (User) AddOptionIntent.getSerializableExtra("user");
         btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_addoption);
 
         building_name = AddOptionIntent.getExtras().getString("building_name");
+
         editBuilding = (EditText) findViewById(R.id.txt_building);
+
+        if(boolModify == false)
         editBuilding.setText(building_name);
+        else {
+            building_nameModify = reservation_modify.getBuilding();
+            editBuilding.setText(building_nameModify);
+//            editBuilding.setText(Changer.buildingChange(reservation_modify.getBuilding()));
+        }
 
         btnCommitReserve = (Button)findViewById(R.id.btn_commit_reserve);
 
@@ -84,6 +110,10 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
 
         roomNum = AddOptionIntent.getExtras().getString("room_numbers");
 
+        if(boolModify == true)
+        roomNumModify = reservation_modify.getRoomNumber() + "호";
+
+
         editName = (EditText)findViewById(R.id.edit_name);
         editStudentNumber = (EditText)findViewById(R.id.edit_student_number);
         editTime = (EditText)findViewById(R.id.edit_time);
@@ -91,47 +121,83 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
         editPeopleNumber = (EditText)findViewById(R.id.edit_people_number);
         editRoomNum = (EditText)findViewById(R.id.edit_room);
         editPhoneNumber = (EditText)findViewById(R.id.edit_phone_number);
-        editETC = (EditText)findViewById(R.id.edit_etc);
         editName.setText(user.getName());
+
+
+
 
         editStudentNumber.setText(Integer.toString(user.getStudentNumber()));
 
-        btnBackToTimeReserve = (Button)findViewById(R.id.btn_back_to_time_reserve);
 
-        int year = AddOptionIntent.getExtras().getInt("reserve_year");
-        int month = AddOptionIntent.getExtras().getInt("reserve_month");
-        int day = AddOptionIntent.getExtras().getInt("reserve_day");
-        int hour = AddOptionIntent.getExtras().getInt("reserve_hour");
-        int minute = AddOptionIntent.getExtras().getInt("reserve_minute");
+        if(boolModify == false) {
+            year = AddOptionIntent.getExtras().getInt("reserve_year");
+            month = AddOptionIntent.getExtras().getInt("reserve_month");
+            day = AddOptionIntent.getExtras().getInt("reserve_day");
+            hour = AddOptionIntent.getExtras().getInt("reserve_hour");
+            minute = AddOptionIntent.getExtras().getInt("reserve_minute");
+        }
+        else{
+            year = AddOptionIntent.getExtras().getInt("reserve_year");
+            month = AddOptionIntent.getExtras().getInt("reserve_month");
+            day = AddOptionIntent.getExtras().getInt("reserve_day");
+            hour = AddOptionIntent.getExtras().getInt("reserve_hour");
+            minute = AddOptionIntent.getExtras().getInt("reserve_minute");
+        }
 
         btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
         fromTime = String.valueOf(AddOptionIntent.getExtras().getInt("fromTime")) + ":00";
         toTime = String.valueOf(AddOptionIntent.getExtras().getInt("toTime")) + ":00";
-        editTime.setText(year + "년 " + month + "월 " +
-                day + "일\n" + fromTime + " ~ " + toTime);
-        editRoomNum.setText(roomNum + "호");
+        if(boolModify == true) {
+            fromTimeModify = reservation_modify.getTimeStart();
+            toTimeModify = reservation_modify.getTimeEnd();
+        }
 
-        btnBackToTimeReserve.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddOptionActivity.super.onBackPressed();
-            }
-        });
+        if(boolModify == false)
+        editTime.setText(year + " - " + month + " - " +
+                day + "\n" + fromTime + " ~ " + toTime);
+        else
+                editTime.setText(reservation_modify.getDate() +"\n" +  reservation_modify.getTimeStart() +
+                        " ~ " +reservation_modify.getTimeEnd());
+
+        if(boolUnderground == false)
+        editRoomNum.setText(roomNum + "호");
+        else
+            editRoomNum.setText("b" + roomNum + "호");
+
+        if(boolModify == true){
+             editObjective.setText(reservation_modify.getPurpose());
+             editPeopleNumber.setText(Integer.toString(reservation_modify.getTotalMember()));
+        }
+
+
+        if(boolModify == false)
+            editRoomNum.setText(roomNum + "호");
+        else
+            editRoomNum.setText(reservation_modify.getRoomNumber() + "호");
 
 
 
         btnCommitReserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Reservation reservation = new Reservation(Integer.parseInt(roomNum),
-                        year+"-"+month+"-"+day,
-                        user.getStudentNumber(),
-                        user.getName(),
-                        editObjective.getText().toString(),
-                        Integer.parseInt(editPeopleNumber.getText().toString()),
-                        fromTime,
-                        toTime,
-                        editBuilding.getText().toString());
+
+                if(boolModify == false) {
+                    reservation = new Reservation(Integer.parseInt(roomNum),
+                            year + " - " + month +  " - " + day,
+                            user.getStudentNumber(),
+                            user.getName(),
+                            editObjective.getText().toString(),
+                            Integer.parseInt(editPeopleNumber.getText().toString()),
+                            fromTime,
+                            toTime,
+                            editBuilding.getText().toString());
+                }
+                else{
+                    reservation = (Reservation) AddOptionIntent.getSerializableExtra("reservation_modify");
+                    reservation.setTotalMember(Integer.parseInt(editPeopleNumber.getText().toString()));
+                    reservation.setPurpose(editObjective.getText().toString());
+                }
+
 
                 AlertDialog.Builder reserveCommitDlg =  new AlertDialog.Builder(AddOptionActivity.this);
                 reserveCommitDlg.setTitle("최종 확인");
@@ -156,27 +222,44 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
                             @Override
                             protected Boolean doInBackground(Object... objects) {
                                 // 예약 (성공여부 bool)
-                                return appController.createReservation((Reservation) objects[0]);
+                                if(!boolModify){
+                                    System.out.println("생성");
+                                    return appController.createReservation((Reservation)objects[0]);
+                                }
+                                else{
+                                    System.out.println("수정");
+                                    System.out.println(((Reservation)objects[0]).toString());
+                                    return appController.updateReservation((Reservation)objects[0]);
+                                }
                             }
 
                             @Override
                             protected void onPostExecute(Boolean aBoolean) {
                                 // 예약 후 실행됨
                                 if(aBoolean){
-                                    Toast.makeText(getApplicationContext(),"예약되었습니다",Toast.LENGTH_SHORT).show();
+                                    if(boolModify){
+                                        Toast.makeText(getApplicationContext(),"수정되었습니다",Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        Toast.makeText(getApplicationContext(),"예약되었습니다",Toast.LENGTH_SHORT).show();
+                                    }
                                     Intent toMainMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
                                     toMainMenuIntent.putExtra("user",user);
                                     startActivity(toMainMenuIntent);
+                                    finishActivity(0);
                                 }
                                 else{
-                                    AlertDialog.Builder logInFailDlg = new AlertDialog.Builder(AddOptionActivity.this);
-                                    logInFailDlg.setMessage("예약에 실패하였습니다.");
-                                    logInFailDlg.setPositiveButton("확인",null);
-                                    logInFailDlg.show();
+                                    ReservationFailDlg.setMessage("예약에 실패하였습니다.");
+                                    ReservationFailDlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                        }
+                                    });
+                                    ReservationFailDlg.show();
                                 }
+                                progressDialogInAO.dismiss();
                             }
-                        }.execute(reservation);
 
+                        }.execute(reservation);
                     }
                 });
                 reserveCommitDlg.show();

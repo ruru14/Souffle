@@ -100,8 +100,9 @@
 
     <ImageView
         android:id="@+id/image_floor_plan"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:layout_below="@+id/txt_guide"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="55dp"

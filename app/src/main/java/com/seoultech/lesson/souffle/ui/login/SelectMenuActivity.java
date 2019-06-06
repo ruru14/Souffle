@@ -12,13 +12,15 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.data.model.User;
 import com.seoultech.lesson.souffle.ui.PlanUpdate.DeletePlanActivity;
+import com.seoultech.lesson.souffle.ui.PlanUpdate.ModifyPlanActivity;
 import com.seoultech.lesson.souffle.ui.add_Plan.SelectBuildingActivity;
-import com.seoultech.lesson.souffle.ui.PlanUpdate.UpdatePlanActivity;
+import com.seoultech.lesson.souffle.ui.PlanUpdate.SearchPlanActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 
 public class SelectMenuActivity extends AppCompatActivity implements View.OnClickListener{
@@ -31,10 +33,11 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
     private FloatingActionButton fabMenu;
     private LinearLayout slideLayout;
     private FrameLayout frameSelectMenu;
-    private Button btnToMain;
+    private TextView btnToMain;
     private String user_name, user_major;
     private int user_stNumber;
-    private Button btnUserInfo;
+    private TextView btnUserInfo;
+    private TextView btnSetting;
     private User user;
 
     private Toast toast;
@@ -58,14 +61,15 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         user = (User) selectMenuIntent.getSerializableExtra("user");
 
         backPressCloseHandler = new BackPressCloseHandler(this);
-        btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_selectmenu);
+        btnUserInfo = (TextView)findViewById(R.id.btn_userInfo_in_selectmenu);
+        btnSetting = (TextView)findViewById(R.id.btn_setting_in_selectmenu);
 
         linearPlanAdd = (LinearLayout)findViewById(R.id.linear_plan_add);
         linearPlanDelete = (LinearLayout)findViewById(R.id.linear_plan_delete);
         linearPlanModify = (LinearLayout)findViewById(R.id.linear_plan_modify);
         linearPlanUpdate = (LinearLayout)findViewById(R.id.linear_plan_update);
 
-        btnToMain = (Button)findViewById(R.id.btn_to_main_in_selectmenu) ;
+        btnToMain = (TextView)findViewById(R.id.btn_to_main_in_selectmenu) ;
         fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_selectMenu);
 
         pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
@@ -75,7 +79,16 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         frameSelectMenu = (FrameLayout)findViewById(R.id.select_menu_frame);
         frameSelectMenu.bringChildToFront(slideLayout);
 
+
         btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
+
+        btnSetting.setText(R.string.menu_setting);
+        btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
        linearPlanAdd.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -83,6 +96,13 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
                Intent buildingSelectIntent = new Intent(getApplicationContext(), SelectBuildingActivity.class);
                buildingSelectIntent.putExtra("user",user);
                startActivity(buildingSelectIntent);
+           }
+       });
+
+       btnSetting.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+
            }
        });
 
@@ -98,11 +118,20 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
        linearPlanUpdate.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Intent toUpdatePlanIntent = new Intent(getApplicationContext(), UpdatePlanActivity.class);
+               Intent toUpdatePlanIntent = new Intent(getApplicationContext(), SearchPlanActivity.class);
                toUpdatePlanIntent.putExtra("user",user);
                startActivity(toUpdatePlanIntent);
            }
        });
+
+        linearPlanModify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toModifyPlanIntent = new Intent(getApplicationContext(), ModifyPlanActivity.class);
+                toModifyPlanIntent.putExtra("user",user);
+                startActivity(toModifyPlanIntent);
+            }
+        });
 
         btnToMain.setOnClickListener(new View.OnClickListener() {
             @Override

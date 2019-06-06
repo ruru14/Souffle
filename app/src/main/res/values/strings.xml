@@ -3,7 +3,6 @@
 
     <string-array name="language">
         <item>한국어</item>
-        <item>English</item>
     </string-array>
 
     <string name="lecture_room_reserving_title_kr">강의실 예약 프로그램</string>
@@ -14,6 +13,8 @@
 
     <string name="update_reserve_menu_en">Update Reserve</string>
     <string name="update_reserve_menu_kr">예약 </string>
+
+    <string name="menu_setting">메뉴\nSettings</string>
 
 
 </resources>

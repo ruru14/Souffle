@@ -1,8 +1,6 @@
 package com.seoultech.lesson.souffle.ui.PlanUpdate;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,9 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -24,15 +20,13 @@ import com.seoultech.lesson.souffle.controller.AppController;
 import com.seoultech.lesson.souffle.data.model.Reservation;
 import com.seoultech.lesson.souffle.data.model.User;
 import com.seoultech.lesson.souffle.ui.adapter.DeleteListener;
-import com.seoultech.lesson.souffle.ui.adapter.ItemData;
 import com.seoultech.lesson.souffle.ui.adapter.ReservationDeleteAdapter;
+import com.seoultech.lesson.souffle.ui.adapter.ReservationModifyAdapter;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.OnItemClick;
 
 public class DeletePlanActivity extends AppCompatActivity implements View.OnClickListener, DeleteListener {
     private AppController appController;
@@ -49,6 +43,7 @@ public class DeletePlanActivity extends AppCompatActivity implements View.OnClic
     private BackPressCloseHandler backPressCloseHandler;
     private ReservationDeleteAdapter reservationDeleteAdapter;
     private List<Reservation> reservations;
+
 
 
     @Override
@@ -80,7 +75,6 @@ public class DeletePlanActivity extends AppCompatActivity implements View.OnClic
         backPressCloseHandler = new BackPressCloseHandler(this);
 
         btnBackToMain = (Button)findViewById(R.id.btn_back_main);
-
 
         listView_delete = (ListView)findViewById(R.id.listView_reservation_delete);
         reservations = new ArrayList<>();

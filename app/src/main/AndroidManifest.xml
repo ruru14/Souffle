@@ -44,13 +44,16 @@
         <activity android:name=".ui.PlanUpdate.DeletePlanActivity">
 
         </activity>
-        <activity android:name=".ui.PlanUpdate.UpdatePlanActivity">
+        <activity android:name=".ui.PlanUpdate.SearchPlanActivity">
 
         </activity>
         <activity android:name=".ui.add_Plan.AddOptionActivity">
 
         </activity>
         <activity android:name=".ui.viewing.RoomPlanActivity">
+
+    </activity>
+        <activity android:name=".ui.PlanUpdate.ModifyPlanActivity">
 
         </activity>
 

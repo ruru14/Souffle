@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.controller.AppController;
 import com.seoultech.lesson.souffle.data.model.Reservation;
+import com.seoultech.lesson.souffle.util.Changer;
 
 import java.util.List;
 
@@ -61,19 +62,22 @@ public class ReservationDeleteAdapter extends BaseAdapter {
 
         TextView date = convertView.findViewById(R.id.txt_date_delete);
         TextView buildingName = convertView.findViewById(R.id.txt_buildingName_delete);
-        TextView studentNumber = convertView.findViewById(R.id.txt_stNumber_delete);
+        TextView roomNumber = convertView.findViewById(R.id.txt_roomNumber_delete);
+        TextView time = convertView.findViewById(R.id.txt_time_delete);
         Button btnDeleteReservation = convertView.findViewById(R.id.btn_delete_list);
+        Button btnConfirm = convertView.findViewById(R.id.btn_confirm_list);
 
         date.setText(reservationDeleteList.get(position).getDate());
-        buildingName.setText(reservationDeleteList.get(position).getBuilding());
-        studentNumber.setText(Integer.toString(reservationDeleteList.get(position).getStudentNumber()));
+        buildingName.setText(Changer.buildingChange(reservationDeleteList.get(position).getBuilding()));
+        roomNumber.setText(Integer.toString(reservationDeleteList.get(position).getRoomNumber()));
+        time.setText(reservationDeleteList.get(position).getTimeStart() + "~" + reservationDeleteList.get(position).getTimeEnd());
 
-        btnDeleteReservation.setOnClickListener(new View.OnClickListener() {
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder infoDlg = new AlertDialog.Builder(v.getContext());
                 infoDlg.setTitle("상세 정보");
-                infoDlg.setMessage("학번 : " + reservationDeleteList.get(position).getStudentNumber()+
+                infoDlg.setMessage("학번 : " + reservationDeleteList.get(position).getStudentNumber() +
                         "\n이름 : " + reservationDeleteList.get(position).getName() +
                         "\n예약 날짜 : " + reservationDeleteList.get(position).getDate() +
                         "\n예약 시간 : " + reservationDeleteList.get(position).getTimeStart() + "~" +
@@ -81,8 +85,18 @@ public class ReservationDeleteAdapter extends BaseAdapter {
                         "\n건물명 : " + reservationDeleteList.get(position).getBuilding() +
                         "\n사용 인원 : " + reservationDeleteList.get(position).getTotalMember() +
                         "\n강의실 : " + reservationDeleteList.get(position).getRoomNumber() +
-                        "\n목적 : " + reservationDeleteList.get(position).getPurpose() +
-                        "\n\n 정말 해당 예약을 지우시겠습니까?");
+                        "\n목적 : " + reservationDeleteList.get(position).getPurpose());
+                infoDlg.setPositiveButton("확인",null);
+                infoDlg.show();
+            }
+        });
+
+        btnDeleteReservation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder infoDlg = new AlertDialog.Builder(v.getContext());
+                infoDlg.setTitle("삭제 여부");
+                infoDlg.setMessage("다시 복구할 수 없습니다.\n정말 해당 예약을 지우시겠습니까?");
                 infoDlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
