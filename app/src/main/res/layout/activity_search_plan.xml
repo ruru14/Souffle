@@ -10,14 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background = "@color/colorPrimary"
-        android:id = "@+id/layout_toolbar_in_delete_plan">
+        android:id = "@+id/layout_toolbar_in_search_plan">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <android.support.design.widget.FloatingActionButton
                 android:layout_alignParentRight="true"
-                android:id="@+id/fab_in_delete_plan"
+                android:id="@+id/fab_in_search_plan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -30,9 +30,9 @@
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id = "@+id/delete_plan_frame">
+        android:id = "@+id/search_plan_frame">
         <LinearLayout
-            android:id ="@+id/slide_layout_in_delete_plan"
+            android:id ="@+id/slide_layout_in_search_plan"
             android:visibility="gone"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
@@ -60,7 +60,7 @@
                     android:orientation="vertical">
                     <TextView
                         android:background="#FFFFFF"
-                        android:id = "@+id/btn_userInfo_in_delete_plan"
+                        android:id = "@+id/btn_userInfo_in_search_plan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
@@ -74,7 +74,7 @@
                     <TextView
                         android:background="#FFFFFF"
                         android:layout_marginBottom="10dp"
-                        android:id ="@+id/btn_to_main_in_delete_plan"
+                        android:id ="@+id/btn_to_main_in_search_plan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="25dp"
@@ -86,7 +86,7 @@
                     <TextView
                         android:background="#FFFFFF"
                         android:layout_marginBottom="10dp"
-                        android:id = "@+id/btn_setting_in_delete_plan"
+                        android:id = "@+id/btn_setting_in_search_plan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text = "설정"
@@ -98,7 +98,7 @@
                     <TextView
                         android:background="#FFFFFF"
                         android:layout_marginBottom="10dp"
-                        android:id = "@+id/btn_logout_in_delete_plan"
+                        android:id = "@+id/btn_logout_in_search_plan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="로그아웃"
@@ -111,38 +111,38 @@
             </FrameLayout>
         </LinearLayout>
 
+    <LinearLayout
+        android:layout_margin="20dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="예약 내용 확인"
+        android:textSize="20dp"
+        android:layout_marginBottom="50dp"/>
+
+        <ListView
+            android:id = "@+id/listView_reservation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:choiceMode="multipleChoice"
+            android:layout_weight="1">
+
+        </ListView>
 
         <LinearLayout
-            android:layout_margin="20dp"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="예약 내용 삭제"
-                android:textSize="20dp"
-                android:layout_marginBottom="50dp"/>
-
-            <ListView
-                android:id = "@+id/listView_reservation_delete"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:choiceMode="multipleChoice"
-                android:layout_weight="1">
-
-            </ListView>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id = "@+id/btn_back_main"
-                    android:text = "뒤로 가기"/>
-            </LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+    <Button
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id = "@+id/btn_back_main"
+        android:text = "뒤로 가기"/>
         </LinearLayout>
+    </LinearLayout>
     </FrameLayout>
 </LinearLayout>

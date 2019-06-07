@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.controller.AppController;
@@ -28,6 +29,8 @@ import com.seoultech.lesson.souffle.ui.add_Plan.AddOptionActivity;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,13 +42,16 @@ public class ModifyPlanActivity extends AppCompatActivity implements View.OnClic
     private FloatingActionButton fabMenu;
     private LinearLayout slideLayout;
     private FrameLayout frameSelectMenu;
-    private Button btnToMain;
-    private Button btnUserInfo, btnInIt, btnCheckTime;
+    private TextView btnToMain;
+    private TextView btnUserInfo;
+    private Button btnInIt;
+    private Button btnCheckTime;
     private ListView listView_modify;
     private Button btnBackToMain;
     private BackPressCloseHandler backPressCloseHandler;
     private ReservationModifyAdapter reservationModifyAdapter;
     private List<Reservation> reservations;
+    private TextView btnSettings, btnLogout;
 
 
     @Override
@@ -61,10 +67,10 @@ public class ModifyPlanActivity extends AppCompatActivity implements View.OnClic
         Intent deletePlanIntent = new Intent(this.getIntent());
         user = (User)deletePlanIntent.getSerializableExtra("user");
 
-        btnToMain = (Button)findViewById(R.id.btn_to_main_in_modify_plan);
+        btnToMain = (TextView)findViewById(R.id.btn_to_main_in_modify_plan);
         fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_modify_plan);
 
-        btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_modify_plan);
+        btnUserInfo = (TextView)findViewById(R.id.btn_userInfo_in_modify_plan);
         btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
 
         pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
@@ -77,6 +83,8 @@ public class ModifyPlanActivity extends AppCompatActivity implements View.OnClic
         backPressCloseHandler = new BackPressCloseHandler(this);
 
         btnBackToMain = (Button)findViewById(R.id.btn_back_main);
+        btnSettings = (TextView)findViewById(R.id.btn_setting_in_modify_plan);
+        btnLogout = (TextView)findViewById(R.id.btn_logout_in_modify_plan);
 
         listView_modify = (ListView)findViewById(R.id.listView_reservation_modify);
         reservations = new ArrayList<>();
@@ -84,7 +92,6 @@ public class ModifyPlanActivity extends AppCompatActivity implements View.OnClic
         listView_modify.setAdapter(reservationModifyAdapter);
 
         ProgressDialog progressDialogInDO = new ProgressDialog(ModifyPlanActivity.this);
-
 
         new AsyncTask<Integer, Integer, List<Reservation>>() {
             @Override

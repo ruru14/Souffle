@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
@@ -38,7 +39,7 @@ public class SelectBuildingActivity extends AppCompatActivity implements View.On
     private FloatingActionButton fabMenu;
     private LinearLayout slideLayout;
     private FrameLayout frameSelectMenu;
-    private Button btnToMain, btnUserInfo;
+    private TextView btnToMain, btnUserInfo, btnSettings;
     private User user;
     private Spinner buildingSelecter;
 
@@ -59,8 +60,9 @@ public class SelectBuildingActivity extends AppCompatActivity implements View.On
 
         ButterKnife.bind(this);
 
-        btnToMain = (Button)findViewById(R.id.btn_to_main_in_select_building);
-        btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_selectbuilding);
+        btnToMain = (TextView) findViewById(R.id.btn_to_main_in_select_building);
+        btnUserInfo = (TextView) findViewById(R.id.btn_userInfo_in_select_building);
+        btnSettings = (TextView)findViewById(R.id.btn_setting_in_select_building);
         fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_select_building);
         btnSelectBuilding = (Button)findViewById(R.id.btn_selectBuilding);
 

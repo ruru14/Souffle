@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
@@ -37,9 +38,10 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
     private FloatingActionButton fabMenu;
     private LinearLayout slideLayout;
     private FrameLayout frameSelectMenu;
-    private Button btnToMain;
+    private TextView btnToMain;
+    private TextView btnSettings, btnLogout;
     private User user;
-    private Button btnUserInfo;
+    private TextView btnUserInfo;
     private String fromTime, toTime;
     private String fromTimeModify, toTimeModify;
     private String building_name;
@@ -80,7 +82,9 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
         boolModify = AddOptionIntent.getExtras().getBoolean("bool_modify");
 
         user = (User) AddOptionIntent.getSerializableExtra("user");
-        btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_addoption);
+        btnUserInfo = (TextView) findViewById(R.id.btn_userInfo_in_add_option);
+        btnSettings = (TextView)findViewById(R.id.btn_setting_in_add_option);
+        btnLogout = (TextView)findViewById(R.id.btn_logout_in_add_option);
 
         building_name = AddOptionIntent.getExtras().getString("building_name");
 
@@ -98,7 +102,7 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
 
         backPressCloseHandler = new BackPressCloseHandler(this);
 
-        btnToMain = (Button)findViewById(R.id.btn_to_main_in_add_option);
+        btnToMain = (TextView) findViewById(R.id.btn_to_main_in_add_option);
         fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_add_option);
 
         pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);

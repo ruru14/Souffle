@@ -28,8 +28,10 @@ public class RoomPlanActivity extends AppCompatActivity implements View.OnClickL
     private FloatingActionButton fabMenu;
     private LinearLayout slideLayout;
     private FrameLayout frameSelectMenu;
-    private Button btnToMain;
-    private Button btnUserInfo;
+    private TextView btnToMain;
+    private TextView btnUserInfo;
+    private TextView btnSettings;
+    private TextView btnLogout;
     private User user;
 
     @Override
@@ -43,13 +45,15 @@ public class RoomPlanActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_room_plan);
         Intent roomPlanIntent = new Intent(this.getIntent());
         user = (User) roomPlanIntent.getSerializableExtra("user");
-        btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_roomplan);
+        btnUserInfo = (TextView)findViewById(R.id.btn_userInfo_in_room_plan);
         btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
 
         backPressCloseHandler = new BackPressCloseHandler(this);
 //
-        btnToMain = (Button)findViewById(R.id.btn_to_main_in_room_plan);
+        btnToMain = (TextView)findViewById(R.id.btn_to_main_in_room_plan);
         fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_room_plan);
+        btnSettings = (TextView)findViewById(R.id.btn_setting_in_room_plan);
+        btnLogout = (TextView)findViewById(R.id.btn_logout_in_room_plan);
 
         pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
         pullFromRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pullfromright);

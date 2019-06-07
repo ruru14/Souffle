@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
@@ -53,7 +54,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
     private FloatingActionButton fabMenu;
     private LinearLayout slideLayout;
     private FrameLayout frameSelectMenu;
-    private Button btnToMain, btnUserInfo;
+    private TextView btnToMain, btnUserInfo, btnSettings;
     private User user;
 
 
@@ -73,7 +74,8 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
 
         spinnerLayer = (Spinner) findViewById(R.id.spinner_layer);
 
-        btnToMain = (Button)findViewById(R.id.btn_to_main_in_select_room) ;
+        btnToMain = (TextView) findViewById(R.id.btn_to_main_in_select_room);
+
         fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_select_room);
 
         pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
@@ -85,8 +87,10 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
 
         building_name = selectRoomIntent.getExtras().getString("building_name");
 
-        btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_selectroom);
+        btnUserInfo = (TextView) findViewById(R.id.btn_userInfo_in_select_room);
         btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
+
+        btnSettings = (TextView)findViewById(R.id.btn_setting_in_select_room);
 
         btnLayerSelect = (Button) findViewById(R.id.btn_layer_select);
         btnReturnMain = (Button) findViewById(R.id.btn_Return_Main);

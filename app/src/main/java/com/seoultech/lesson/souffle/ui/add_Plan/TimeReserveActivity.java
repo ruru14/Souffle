@@ -52,7 +52,10 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
     private String roomNumber;
     private Button btnDate, btnPlanInTime, btnSelectDate;
     private Date currentTime;
-    private Button btnToMain, btnSetting, btnLogout, btnUserInfo;
+    private TextView btnToMain;
+    private TextView btnSetting;
+    private TextView btnLogout;
+    private TextView btnUserInfo;
     private User user;
     private DatePickerDialog dateDlg;
     private FrameLayout timeReserveFrame;
@@ -120,15 +123,15 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
 
         btnTimeReserve = findViewById(R.id.btnTimeReserve);
 
-        btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_timereserve);
+        btnUserInfo = (TextView)findViewById(R.id.btn_userInfo_in_time_reserve);
         btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
 
         fabMain = (FloatingActionButton) findViewById(R.id.fab_in_time_reserve);
         slideLayout = (LinearLayout)findViewById(R.id.slide_layout_in_time_reserve);
 
-        btnToMain = (Button)findViewById(R.id.btn_to_main_in_time_reserve);
-        btnSetting = (Button)findViewById(R.id.btn_setting_in_time_reserve);
-        btnLogout = (Button)findViewById(R.id.btn_logout_in_time_reserve);
+        btnToMain = (TextView)findViewById(R.id.btn_to_main_in_time_reserve);
+        btnSetting = (TextView)findViewById(R.id.btn_setting_in_time_reserve);
+        btnLogout = (TextView)findViewById(R.id.btn_logout_in_time_reserve);
         pullFromRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pullfromright);
         pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
 //        pullFromLeft = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pullfromleft);

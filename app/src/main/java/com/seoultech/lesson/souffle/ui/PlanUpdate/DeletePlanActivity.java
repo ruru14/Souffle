@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.controller.AppController;
@@ -36,13 +37,16 @@ public class DeletePlanActivity extends AppCompatActivity implements View.OnClic
     private FloatingActionButton fabMenu;
     private LinearLayout slideLayout;
     private FrameLayout frameSelectMenu;
-    private Button btnToMain;
-    private Button btnUserInfo, btnInIt, btnCheckTime;
+    private TextView btnToMain;
+    private TextView btnUserInfo;
+    private Button btnInIt;
+    private Button btnCheckTime;
     private ListView listView_delete;
     private Button btnBackToMain;
     private BackPressCloseHandler backPressCloseHandler;
     private ReservationDeleteAdapter reservationDeleteAdapter;
     private List<Reservation> reservations;
+    private TextView btnSettings, btnLogout;
 
 
 
@@ -59,11 +63,13 @@ public class DeletePlanActivity extends AppCompatActivity implements View.OnClic
         Intent deletePlanIntent = new Intent(this.getIntent());
         user = (User)deletePlanIntent.getSerializableExtra("user");
 
-        btnToMain = (Button)findViewById(R.id.btn_to_main_in_delete_plan);
+        btnToMain = (TextView)findViewById(R.id.btn_to_main_in_delete_plan);
         fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_delete_plan);
 
-        btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_delete_plan);
+        btnUserInfo = (TextView)findViewById(R.id.btn_userInfo_in_delete_plan);
         btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
+        btnSettings = (TextView)findViewById(R.id.btn_setting_in_delete_plan);
+        btnLogout = (TextView)findViewById(R.id.btn_logout_in_delete_plan);
 
         pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
         pullFromRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pullfromright);

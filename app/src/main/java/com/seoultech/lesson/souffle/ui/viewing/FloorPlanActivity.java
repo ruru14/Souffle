@@ -19,6 +19,8 @@ import com.seoultech.lesson.souffle.data.model.User;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 
+import org.w3c.dom.Text;
+
 public class FloorPlanActivity extends AppCompatActivity implements  View.OnClickListener{
 
     private ImageView imageFloorPlan;
@@ -39,8 +41,10 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
     private FloatingActionButton fabMenu;
     private LinearLayout slideLayout;
     private FrameLayout frameSelectMenu;
-    private Button btnToMain;
-    private Button btnUserInfo;
+    private TextView btnToMain;
+    private TextView btnUserInfo;
+    private TextView btnSettings;
+    private TextView btnLogout;
     private User user;
 
 
@@ -57,12 +61,12 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
         setContentView(R.layout.activity_floor_plan);
         Intent FloorPlanIntent = new Intent(this.getIntent());
         user = (User) FloorPlanIntent.getSerializableExtra("user");
-        btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_floorplan);
+        btnUserInfo = (TextView)findViewById(R.id.btn_userInfo_in_floor_plan);
         btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
 
         backPressCloseHandler = new BackPressCloseHandler(this);
 
-        btnToMain = (Button)findViewById(R.id.btn_to_main_in_floor_plan);
+        btnToMain = (TextView)findViewById(R.id.btn_to_main_in_floor_plan);
         fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_floor_plan);
 
         pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
@@ -71,6 +75,8 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
         slideLayout = (LinearLayout)findViewById(R.id.slide_layout_in_floor_plan);
         frameSelectMenu = (FrameLayout)findViewById(R.id.floor_plan_frame);
         frameSelectMenu.bringChildToFront(slideLayout);
+        btnSettings = findViewById(R.id.btn_setting_in_floor_plan);
+        btnLogout = findViewById(R.id.btn_logout_in_floor_plan);
 
 //  해당 층의 도면 보여주는 액티비티
 

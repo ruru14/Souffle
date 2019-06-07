@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.controller.AppController;
@@ -35,14 +36,17 @@ public class SearchPlanActivity extends AppCompatActivity implements View.OnClic
     private FloatingActionButton fabMenu;
     private LinearLayout slideLayout;
     private FrameLayout frameSelectMenu;
-    private Button btnToMain;
+    private TextView btnToMain;
     private User user;
-    private Button btnUserInfo, btnInIt, btnCheckTime;
-    Button btnBackToMain;
+    private TextView btnUserInfo;
+    private Button btnInIt;
+    private Button btnCheckTime;
+    private Button btnBackToMain;
     private BackPressCloseHandler backPressCloseHandler;
     private int phoneNumber, peopleNumber, fromTime, toTime,  roomNumber;
     private String buildingName, objective, etc;
     private AppController appController;
+    private TextView btnSettings, btnLogout;
     private ListView listViewReservation = null;
 
     @Override
@@ -55,7 +59,7 @@ public class SearchPlanActivity extends AppCompatActivity implements View.OnClic
         }
         catch (NullPointerException e){}
         appController = AppController.getInstance();
-        setContentView(R.layout.activity_update_plan);
+        setContentView(R.layout.activity_search_plan);
         Intent updatePlanIntent = new Intent(this.getIntent());
         user = (User) updatePlanIntent.getSerializableExtra("user");
         ArrayList<ItemData> reservationList = new ArrayList<>();
@@ -100,20 +104,19 @@ public class SearchPlanActivity extends AppCompatActivity implements View.OnClic
         Reservation reservationObject = new Reservation(roomNumber, reserve_date, user.getStudentNumber(),
                 user.getName(), objective, peopleNumber, fromTimeString, toTimeString, buildingName);
 
-        btnInIt = (Button)findViewById(R.id.btnInIt);
-        btnCheckTime = (Button)findViewById(R.id.btn_check_time);
+        btnToMain = (TextView)findViewById(R.id.btn_to_main_in_search_plan);
+        fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_search_plan);
+        btnSettings = (TextView)findViewById(R.id.btn_setting_in_search_plan);
+        btnLogout = (TextView)findViewById(R.id.btn_logout_in_search_plan);
 
-        btnToMain = (Button)findViewById(R.id.btn_to_main_in_update_plan);
-        fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_update_plan);
-
-        btnUserInfo = (Button)findViewById(R.id.btn_userInfo_in_update_plan);
+        btnUserInfo = (TextView)findViewById(R.id.btn_userInfo_in_search_plan);
         btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
 
         pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
         pullFromRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pullfromright);
 
-        slideLayout = (LinearLayout)findViewById(R.id.slide_layout_in_update_plan);
-        frameSelectMenu = (FrameLayout)findViewById(R.id.update_plan_frame);
+        slideLayout = (LinearLayout)findViewById(R.id.slide_layout_in_search_plan);
+        frameSelectMenu = (FrameLayout)findViewById(R.id.search_plan_frame);
         frameSelectMenu.bringChildToFront(slideLayout);
 
         backPressCloseHandler = new BackPressCloseHandler(this);
@@ -147,7 +150,7 @@ public class SearchPlanActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.fab_in_update_plan:
+            case R.id.fab_in_search_plan:
                 anim();
                 break;
         }
