@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,10 +20,10 @@ import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.data.model.User;
 import com.seoultech.lesson.souffle.ui.PlanUpdate.DeletePlanActivity;
 import com.seoultech.lesson.souffle.ui.PlanUpdate.ModifyPlanActivity;
+import com.seoultech.lesson.souffle.ui.adapter.SettingActivity;
 import com.seoultech.lesson.souffle.ui.add_Plan.SelectBuildingActivity;
 import com.seoultech.lesson.souffle.ui.PlanUpdate.SearchPlanActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
-import com.seoultech.lesson.souffle.ui.viewing.RoomPlanActivity;
 
 public class SelectMenuActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -172,6 +171,15 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
 //                Intent to_main_intent = new Intent(getApplicationContext(),SelectMenuActivity.class);
 //                startActivity(to_main_intent);
                 Toast.makeText(getApplicationContext(),"이미 메인화면입니다",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toSettingIntent = new Intent(getApplicationContext(), SettingActivity.class);
+                toSettingIntent.putExtra("user",user);
+                startActivity(toSettingIntent);
             }
         });
 

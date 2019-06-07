@@ -5,14 +5,11 @@
         <item>한국어</item>
     </string-array>
 
-    <string name="lecture_room_reserving_title_kr">강의실 예약 프로그램</string>
-    <string name="lecture_room_reserving_title_en">Lecture Room Reserve Application</string>
+    <string name="lecture_room_reserving_title">강의실 예약 프로그램</string>
 
-    <string name="add_reserve_menu_en">Add Reserve</string>
-    <string name="add_reserve_menu_kr">예약 추가</string>
+    <string name="add_reserve_menu">예약 추가</string>
 
-    <string name="update_reserve_menu_en">Update Reserve</string>
-    <string name="update_reserve_menu_kr">예약 </string>
+    <string name="update_reserve_menu">예약 </string>
 
     <string name="menu_setting">메뉴\nSettings</string>
 

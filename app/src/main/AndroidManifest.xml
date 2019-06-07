@@ -56,6 +56,9 @@
         <activity android:name=".ui.PlanUpdate.ModifyPlanActivity">
 
         </activity>
+        <activity android:name=".ui.adapter.SettingActivity">
+
+        </activity>
 
     </application>
 

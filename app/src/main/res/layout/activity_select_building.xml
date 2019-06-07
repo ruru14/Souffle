@@ -63,17 +63,23 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <ImageView
+                        <LinearLayout
                             android:layout_gravity="center_vertical"
-                            android:padding="5dp"
-                            android:layout_weight="3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="70dp"
-                            android:src="@drawable/seoultechlogo"/>
+                            android:layout_width="70dp"
+                            android:layout_height="70dp">
+                            <ImageView
+                                android:layout_gravity="center_vertical"
+                                android:padding="5dp"
+                                android:layout_width="65dp"
+                                android:layout_height="65dp"
+                                android:src="@drawable/seoultechlogo"/>
+                        </LinearLayout>
                         <TextView
-                            android:layout_marginLeft="5dp"
+
                             android:gravity="center_vertical"
                             android:layout_weight="1"
                             android:background="#FFFFFF"
@@ -89,22 +95,28 @@
                         android:background="#e2e2e2"
                         android:layout_width="match_parent"
                         android:layout_height="2dp" />
+
                     <LinearLayout
+                        android:layout_gravity="center"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp">
-                        <ImageView
-                            android:layout_gravity="center_vertical"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src = "@drawable/img_back_to_main"/>
+                        android:layout_height="55dp">
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_width="70dp"
+                            android:layout_height="55dp">
+                            <ImageView
+                                android:layout_gravity="center_horizontal|center_vertical"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src = "@drawable/img_back_to_main"/>
+                        </LinearLayout>
                         <TextView
                             android:gravity="center_vertical"
                             android:background="#FFFFFF"
                             android:id ="@+id/btn_to_main_in_select_building"
-                            android:layout_marginLeft="10dp"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="55dp"
                             android:textSize="22dp"
                             android:text ="처음으로"/>
                     </LinearLayout>
@@ -113,22 +125,28 @@
                         android:layout_width="match_parent"
                         android:layout_height="2dp" />
                     <LinearLayout
+                        android:layout_gravity="center_vertical"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <ImageView
-                            android:orientation="horizontal"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/img_search_plan_title">
-                        </ImageView>
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_width="70dp"
+                            android:layout_height="55dp">
+                            <ImageView
+                                android:layout_gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/img_setting">
+                            </ImageView>
+                        </LinearLayout>
                         <TextView
                             android:gravity="center_vertical"
                             android:background="#FFFFFF"
                             android:id = "@+id/btn_setting_in_select_building"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_marginLeft="10dp"
+                            android:layout_height="55dp"
                             android:text = "설정"
                             android:textSize="22dp" />
                     </LinearLayout>
@@ -140,17 +158,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src = "@drawable/img_logout"/>
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_width="70dp"
+                            android:layout_height="55dp">
+                            <ImageView
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src = "@drawable/img_logout"/>
+                        </LinearLayout>
                         <TextView
                             android:gravity="center_vertical"
                             android:background="#FFFFFF"
                             android:id = "@+id/btn_logout_in_select_building"
                             android:layout_width="match_parent"
-                            android:layout_marginLeft="10dp"
-                            android:layout_height="50dp"
+                            android:layout_height="55dp"
                             android:text="로그아웃"
                             android:textSize="22dp"/>
                     </LinearLayout>
