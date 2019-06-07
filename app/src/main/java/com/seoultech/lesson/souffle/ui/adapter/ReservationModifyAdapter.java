@@ -79,7 +79,7 @@ public class ReservationModifyAdapter extends BaseAdapter {
                 infoDlg.setTitle("상세 정보");
                 infoDlg.setMessage("학번 : " + reservationModifyList.get(position).getStudentNumber()+
                         "\n이름 : " + reservationModifyList.get(position).getName() +
-                        "\n예약 날짜 : " + reservationModifyList.get(position).getDate() + "\n " +
+                        "\n예약 날짜 : " + reservationModifyList.get(position).getDate() +
                         "\n예약 시간 : " + reservationModifyList.get(position).getTimeStart() + "~" +
                                 reservationModifyList.get(position).getTimeEnd() +
                         "\n건물명 : " + reservationModifyList.get(position).getBuilding() +

@@ -74,8 +74,6 @@ public class SelectBuildingActivity extends AppCompatActivity implements View.On
         frameSelectMenu.bringChildToFront(slideLayout);
         buildingSelecter = (Spinner)findViewById(R.id.spinner_building);
 
-        btnMirae = (Button)findViewById(R.id.btn_mirae);
-
         btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
 
         String[] buildingLayer = new String[]{"선택하세요", "미래관", "건물A", "건물B", "건물C"};
@@ -93,13 +91,6 @@ public class SelectBuildingActivity extends AppCompatActivity implements View.On
             }
         });
 
-
-        btnMirae.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         btnToMain.setOnClickListener(new View.OnClickListener() {
             @Override

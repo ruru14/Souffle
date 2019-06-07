@@ -8,7 +8,7 @@
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background = "@color/colorPrimary"
+        android:background = "@color/design_default_color_primary_dark"
         android:id = "@+id/layout_toolbar_in_select_building">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -57,15 +57,25 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:orientation="vertical">
-                <TextView
-                    android:background="#FFFFFF"
-                    android:id = "@+id/btn_userInfo_in_select_building"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:textSize="25dp"
-                    android:layout_marginBottom="10dp"
-                    android:text = "***님\n***과" />
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_weight="3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:src="@drawable/seoultechlogo"/>
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="#FFFFFF"
+                        android:id = "@+id/btn_userInfo_in_select_building"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:textSize="25dp"
+                        android:layout_marginBottom="10dp"
+                        android:text = "***님\n***과" />
+                </LinearLayout>
                 <ImageView
                     android:background="#CC000000"
                     android:layout_width="match_parent"
@@ -121,10 +131,7 @@
         android:layout_height="wrap_content"
         android:textSize="30dp"
         android:text = "건물 선택"/>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:background="#00FF00"/>
+
     <ScrollView
         android:padding = "30dp"
         android:layout_width="match_parent"
@@ -139,39 +146,8 @@
                 android:layout_height="50dp"
                 android:id="@+id/spinner_building"
                 android:layout_margin="20dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:text = "직접 선택하기"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:id = "@+id/btn_mirae"
-        android:text = "미래관"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id = "@+id/btn_building1"
-        android:layout_weight="1"
-        android:text = "건물A"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id = "@+id/btn_building2"
-        android:layout_weight="1"
-        android:text = "건물B"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id = "@+id/btn_building3"
-        android:layout_weight="1"
-        android:text = "건물C"
-        />
+
+
             <LinearLayout
                 android:gravity="right"
                 android:layout_width="match_parent"
