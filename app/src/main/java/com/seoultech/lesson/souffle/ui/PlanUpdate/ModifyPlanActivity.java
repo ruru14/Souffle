@@ -1,10 +1,12 @@
 package com.seoultech.lesson.souffle.ui.PlanUpdate;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
@@ -26,8 +28,10 @@ import com.seoultech.lesson.souffle.ui.adapter.ModifyListener;
 import com.seoultech.lesson.souffle.ui.adapter.ReservationListAdapter;
 import com.seoultech.lesson.souffle.ui.adapter.ReservationModifyAdapter;
 import com.seoultech.lesson.souffle.ui.add_Plan.AddOptionActivity;
+import com.seoultech.lesson.souffle.ui.login.LoginActivity;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
+import com.seoultech.lesson.souffle.ui.viewing.RoomPlanActivity;
 
 import org.w3c.dom.Text;
 
@@ -152,6 +156,25 @@ public class ModifyPlanActivity extends AppCompatActivity implements View.OnClic
                 Intent toMainMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
                 toMainMenuIntent.putExtra("user",user);
                 startActivity(toMainMenuIntent);
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder logoutDlg = new AlertDialog.Builder(ModifyPlanActivity.this);
+                logoutDlg.setTitle("로그아웃");
+                logoutDlg.setMessage("정말 로그아웃 하시겠습니까?");
+                logoutDlg.setNegativeButton("취소",null);
+                logoutDlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent toLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(toLoginIntent);
+                        finishActivity(0);
+                    }
+                });
+                logoutDlg.show();
             }
         });
 

@@ -33,6 +33,7 @@ import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.adapter.ItemData;
 import com.seoultech.lesson.souffle.ui.adapter.TimeListAdapter;
+import com.seoultech.lesson.souffle.ui.viewing.RoomPlanActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -177,6 +178,15 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(toLoginIntent);
+                finishActivity(0);
+            }
+        });
+
 
         btnTimeReserve.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,18 +239,19 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder logout_dlg = new AlertDialog.Builder(TimeReserveActivity.this);
-                logout_dlg.setTitle("로그아웃 확인");
-                logout_dlg.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                AlertDialog.Builder logoutDlg = new AlertDialog.Builder(TimeReserveActivity.this);
+                logoutDlg.setTitle("로그아웃");
+                logoutDlg.setMessage("정말 로그아웃 하시겠습니까?");
+                logoutDlg.setNegativeButton("취소",null);
+                logoutDlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //로그아웃 구현하면 됨
-                        Intent to_login_intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(to_login_intent);
+                        Intent toLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(toLoginIntent);
+                        finishActivity(0);
                     }
                 });
-                logout_dlg.setNegativeButton("No",null);
-                logout_dlg.show();
+                logoutDlg.show();
             }
         });
 

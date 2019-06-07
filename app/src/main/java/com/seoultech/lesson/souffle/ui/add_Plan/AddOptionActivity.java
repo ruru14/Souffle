@@ -22,8 +22,10 @@ import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.controller.AppController;
 import com.seoultech.lesson.souffle.data.model.Reservation;
 import com.seoultech.lesson.souffle.data.model.User;
+import com.seoultech.lesson.souffle.ui.login.LoginActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
+import com.seoultech.lesson.souffle.ui.viewing.RoomPlanActivity;
 
 public class AddOptionActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -127,7 +129,24 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
         editPhoneNumber = (EditText)findViewById(R.id.edit_phone_number);
         editName.setText(user.getName());
 
-
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder logoutDlg = new AlertDialog.Builder(AddOptionActivity.this);
+                logoutDlg.setTitle("로그아웃");
+                logoutDlg.setMessage("정말 로그아웃 하시겠습니까?");
+                logoutDlg.setNegativeButton("취소",null);
+                logoutDlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent toLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(toLoginIntent);
+                        finishActivity(0);
+                    }
+                });
+                logoutDlg.show();
+            }
+        });
 
 
         editStudentNumber.setText(Integer.toString(user.getStudentNumber()));

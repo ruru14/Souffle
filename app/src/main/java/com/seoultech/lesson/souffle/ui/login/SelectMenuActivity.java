@@ -2,9 +2,11 @@ package com.seoultech.lesson.souffle.ui.login;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
@@ -22,6 +24,7 @@ import com.seoultech.lesson.souffle.ui.PlanUpdate.ModifyPlanActivity;
 import com.seoultech.lesson.souffle.ui.add_Plan.SelectBuildingActivity;
 import com.seoultech.lesson.souffle.ui.PlanUpdate.SearchPlanActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
+import com.seoultech.lesson.souffle.ui.viewing.RoomPlanActivity;
 
 public class SelectMenuActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -39,6 +42,7 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
     private TextView btnUserInfo;
     private TextView btnSetting;
     private User user;
+    private TextView btnLogout;
 
     private Toast toast;
     private long backKeyPressedTime = 0;
@@ -70,6 +74,8 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         linearPlanUpdate = (LinearLayout)findViewById(R.id.linear_plan_update);
 
         btnToMain = (TextView)findViewById(R.id.btn_to_main_in_selectmenu) ;
+        btnLogout = (TextView)findViewById(R.id.btn_logout_in_selectmenu);
+
         fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_selectMenu);
 
         pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
@@ -82,11 +88,38 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
 
         btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
 
-        btnSetting.setText(R.string.menu_setting);
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder logoutDlg = new AlertDialog.Builder(SelectMenuActivity.this);
+                logoutDlg.setTitle("로그아웃");
+                logoutDlg.setMessage("정말 로그아웃 하시겠습니까?");
+                logoutDlg.setNegativeButton("취소",null);
+                logoutDlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent toLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(toLoginIntent);
+                        finishActivity(0);
+                    }
+                });
+                logoutDlg.show();
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(toLoginIntent);
+                finishActivity(0);
             }
         });
 

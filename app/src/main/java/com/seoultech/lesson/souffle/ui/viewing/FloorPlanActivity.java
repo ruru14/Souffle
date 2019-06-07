@@ -1,8 +1,10 @@
 package com.seoultech.lesson.souffle.ui.viewing;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 
 import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.data.model.User;
+import com.seoultech.lesson.souffle.ui.login.LoginActivity;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 
@@ -93,7 +96,7 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
         ImageView image_floor_plan = (ImageView) findViewById(R.id.image_floor_plan);
         boolFloorPlan = FloorPlanIntent.getExtras().getInt("floor_plan");
         boolRoomPlan = FloorPlanIntent.getExtras().getInt("room_plan");
-        floorNumber = FloorPlanIntent.getExtras().getInt("floorNumber");
+        floorNumber = FloorPlanIntent.getExtras().getInt("floor_number");
         int room_num_int = FloorPlanIntent.getExtras().getInt("room_num_int");
 
         btn109Room = (Button)findViewById(R.id.btn_109_plan);
@@ -215,6 +218,25 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
                 //Intent To_Floor_Select_intent = new Intent(getApplicationContext(), SelectRoomActivity.class);
                 //startActivity(To_Floor_Select_intent);
                 onBackPressed();
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder logoutDlg = new AlertDialog.Builder(FloorPlanActivity.this);
+                logoutDlg.setTitle("로그아웃");
+                logoutDlg.setMessage("정말 로그아웃 하시겠습니까?");
+                logoutDlg.setNegativeButton("취소",null);
+                logoutDlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent toLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(toLoginIntent);
+                        finishActivity(0);
+                    }
+                });
+                logoutDlg.show();
             }
         });
 
@@ -343,17 +365,17 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
                 break;
 
             case R.id.btn_b101_plan:
-                toRoomPlanIntent.putExtra("room_number_to_plan","b101");
+                toRoomPlanIntent.putExtra("room_number_to_plan","B101");
                 toRoomPlanIntent.putExtra("user",user);
                 startActivity(toRoomPlanIntent);
                 break;
             case R.id.btn_b105_plan:
-                toRoomPlanIntent.putExtra("room_number_to_plan","b105");
+                toRoomPlanIntent.putExtra("room_number_to_plan","B105");
                 toRoomPlanIntent.putExtra("user",user);
                 startActivity(toRoomPlanIntent);
                 break;
             case R.id.btn_b109_plan:
-                toRoomPlanIntent.putExtra("room_number_to_plan","b109");
+                toRoomPlanIntent.putExtra("room_number_to_plan","B109");
                 toRoomPlanIntent.putExtra("user",user);
                 startActivity(toRoomPlanIntent);
                 break;
