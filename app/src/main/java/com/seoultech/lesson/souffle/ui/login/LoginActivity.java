@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -23,6 +24,8 @@ import com.seoultech.lesson.souffle.controller.AppController;
 import com.seoultech.lesson.souffle.data.model.User;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 
 public class LoginActivity extends AppCompatActivity {
@@ -38,11 +41,13 @@ public class LoginActivity extends AppCompatActivity {
     private CheckBox chkAutoLogin;
     private AppController appController;
     private User user;
+    private String setLanguage = "ko";
 
     private Toast toast;
     private long backKeyPressedTime = 0;
     private Activity activity;
     private Context context;
+
 
     private BackPressCloseHandler backPressCloseHandler;
 
@@ -55,36 +60,51 @@ public class LoginActivity extends AppCompatActivity {
         }
         catch (NullPointerException e){}
 
-        setContentView(R.layout.activity_login);
-
         appController = AppController.getInstance();
         appController.init(this);
 
-        //만약 자동로그인 상태면 바로 다음화면으로 넘기게 할것 - if(isAutoLogin) => 다음액티비티
-        System.out.println(appController.isAutoLogin());
-        if(appController.isAutoLogin()){
-            Intent ToSelectMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
-            startActivity(ToSelectMenuIntent);
+        if(appController.getLanguage().equals("ko")){
+            Locale locale = new Locale("ko");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         }
+        else{
+            Locale locale = new Locale("en");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
+
+
+        setContentView(R.layout.activity_login);
+
+//        //만약 자동로그인 상태면 바로 다음화면으로 넘기게 할것 - if(isAutoLogin) => 다음액티비티
+//        System.out.println(appController.isAutoLogin());
+//        if(appController.isAutoLogin()){
+//            Intent ToSelectMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
+//            ToSelectMenuIntent.putExtra("user",user);
+//            startActivity(ToSelectMenuIntent);
+//        }
         backPressCloseHandler = new BackPressCloseHandler(this);
 
 
         chkAutoLogin = (CheckBox)findViewById(R.id.chkAutoLogin);
         toFloorSelectIntent = new Intent(this.getIntent());
-//        testId = (TextView) findViewById(R.id.test_ID);
-//        testPW = (TextView) findViewById(R.id.test_PW);
         textId = (TextView) findViewById(R.id.text_id);
         textPw = (TextView) findViewById(R.id.text_pw);
         textView = (TextView) findViewById(R.id.textView);
 
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnExit = (Button) findViewById(R.id.btn_exit);
-        btnTest = (Button) findViewById(R.id.btn_test);
 
         editId = (EditText) findViewById(R.id.edit_login_ID);
         editPW = (EditText) findViewById(R.id.edit_login_PW);
 
-        //textView.setPaintFlags(textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);   -> 글자에 선긋기
+
+
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,14 +123,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        btnTest.setVisibility(View.GONE);
-        btnTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                     Intent To_select_intent = new Intent(getApplicationContext(), SelectMenuActivity.class);
-                     startActivity(To_select_intent);
-            }
-        });
     }
 
     private class AutoLoginTask extends AsyncTask {
@@ -138,15 +150,15 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(Object o) {
             if(user.isAuthorized()){
                 Intent ToSelectMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
+                ToSelectMenuIntent.putExtra("user",user);
                 startActivity(ToSelectMenuIntent);
             }else{ // 로그인 실패
                 //메세지박스 다이얼로그 띄우삼
-//                    if(System.currentTimeMillis() >  timeChecker + 5000) {
-//                        AlertDialog.Builder failLoginDlg = new AlertDialog.Builder(LoginActivity.this);
-//                        failLoginDlg.setMessage("로그인에 실패하였습니다.\n다시 로그인해주세요");
-//                        failLoginDlg.setPositiveButton("알겠습니다",null);
-//                        failLoginDlg.show();
-//                    }
+                        AlertDialog.Builder failLoginDlg = new AlertDialog.Builder(LoginActivity.this);
+                        failLoginDlg.setMessage("로그인에 실패하였습니다.\n다시 로그인해주세요");
+                        failLoginDlg.setPositiveButton("알겠습니다",null);
+                        failLoginDlg.show();
+
             }
         }
     }
@@ -172,27 +184,34 @@ public class LoginActivity extends AppCompatActivity {
         protected Object doInBackground(Object[] objects) {
             if(!(editId.getText() == null || editPW.getText() == null))
             user = appController.login(Integer.parseInt(String.valueOf(editId.getText())), String.valueOf(editPW.getText()));
-
+            appController.setAutoLogin(false,user);
             return null;
         }
 
         // 끝나고 실행
+        // 로그인 성공 (체크)
+        // 로그인 성공 (ㄴ 체크)
+        // 로그인 실패
+
         @Override
         protected void onPostExecute(Object o) {
-            if(user.isAuthorized()){
+            if(user.isAuthorized()) {
                 // 자동로그인 체크여부 설정 -> 체크박스 만들기
+//                appController.setAutoLogin(false,user);
 
-                if(chkAutoLogin.isChecked()){
-                    appController.setAutoLogin(true, user);
+                if (chkAutoLogin.isChecked()) { //자동로그인 체크
+                    appController.setAutoLogin(chkAutoLogin.isChecked(), user);
+//                    appController.setAutoLogin(false, user);
+                    Intent toSelectMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
+                    toSelectMenuIntent.putExtra("user", user);
+                    progressDialog.dismiss();
+                    startActivity(toSelectMenuIntent);
+                }else{
+                    Intent toSelectMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
+                    toSelectMenuIntent.putExtra("user", user);
+                    progressDialog.dismiss();
+                    startActivity(toSelectMenuIntent);
                 }
-                appController.setAutoLogin(false, user);
-                Intent toSelectMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
-                toSelectMenuIntent.putExtra("user",user);
-                toSelectMenuIntent.putExtra("user_name",user.getName());
-                toSelectMenuIntent.putExtra("user_stNumber",user.getStudentNumber());
-                toSelectMenuIntent.putExtra("user_major",user.getMajor());
-                progressDialog.dismiss();
-                startActivity(toSelectMenuIntent);
             }else{ // 로그인 실패
                 AlertDialog.Builder logInFailDlg= new AlertDialog.Builder(LoginActivity.this);
                 logInFailDlg.setMessage("로그인에 실패하였습니다");
@@ -209,8 +228,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
-    @Override
+       @Override
     public void onBackPressed() {
         this.context = activity;
         if (System.currentTimeMillis() > backKeyPressedTime + 2000) {

@@ -1,10 +1,11 @@
-package com.seoultech.lesson.souffle.ui.add_Plan;
+package com.seoultech.lesson.souffle.ui.add_plan;
 
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -27,13 +28,12 @@ import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.controller.AppController;
 import com.seoultech.lesson.souffle.data.model.Reservation;
 import com.seoultech.lesson.souffle.data.model.User;
-import com.seoultech.lesson.souffle.ui.adapter.ReservationListAdapter;
+import com.seoultech.lesson.souffle.ui.Setting.SettingActivity;
 import com.seoultech.lesson.souffle.ui.login.LoginActivity;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.adapter.ItemData;
 import com.seoultech.lesson.souffle.ui.adapter.TimeListAdapter;
-import com.seoultech.lesson.souffle.ui.viewing.RoomPlanActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,6 +41,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 //해당 강의실을 예약할 날짜와 시간을 고르는 액티비티
@@ -94,7 +95,23 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
         } catch (NullPointerException e) {
         }
 
+        appController = AppController.getInstance();
+        appController.init(this);
 
+        if(appController.getLanguage().equals("ko")){
+            Locale locale = new Locale("ko");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
+        else{
+            Locale locale = new Locale("en");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
 
         setContentView(R.layout.activity_time_reserve);
         Intent timeReserveIntent = new Intent(this.getIntent());
@@ -120,7 +137,6 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
         listview.setAdapter(oAdapter);
 
         ProgressDialog progressDialogInTRA = new ProgressDialog(TimeReserveActivity.this);
-        appController = AppController.getInstance();
 
         btnTimeReserve = findViewById(R.id.btnTimeReserve);
 
@@ -187,6 +203,15 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
+        btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toSettingIntent = new Intent(getApplicationContext(), SettingActivity.class);
+                toSettingIntent.putExtra("user",user);
+                startActivity(toSettingIntent);
+                anim();
+            }
+        });
 
         btnTimeReserve.setOnClickListener(new View.OnClickListener() {
             @Override

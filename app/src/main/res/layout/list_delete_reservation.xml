@@ -7,34 +7,25 @@
     android:padding="10dp">
 
     <LinearLayout
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
                 android:textSize="25dp"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text = "yyyy-mm-dd"
                 android:layout_weight="1"
                 android:id = "@+id/txt_date_delete"/>
-            <Button
-                android:text ="확인"
-                android:id = "@+id/btn_confirm_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"/>
-            <Button
-                android:layout_weight="2"
-                android:text = "삭제"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id = "@+id/btn_delete_list"/>
-        </LinearLayout>
-
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
@@ -64,7 +55,25 @@
                 android:text = "시간"
                 android:id="@+id/txt_time_delete"/>
 
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <Button
+            android:text ="확인"
+            android:id = "@+id/btn_confirm_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"/>
+        <Button
+            android:layout_weight="2"
+            android:text = "삭제"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id = "@+id/btn_delete_list"/>
+        </LinearLayout>
 
     </LinearLayout>
 
+    </LinearLayout>
 </LinearLayout>

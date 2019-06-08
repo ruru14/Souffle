@@ -2,6 +2,7 @@ package com.seoultech.lesson.souffle.ui.viewing;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -18,9 +19,12 @@ import android.widget.TextView;
 import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.controller.AppController;
 import com.seoultech.lesson.souffle.data.model.User;
+import com.seoultech.lesson.souffle.ui.Setting.SettingActivity;
 import com.seoultech.lesson.souffle.ui.login.LoginActivity;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
+
+import java.util.Locale;
 
 public class RoomPlanActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -38,6 +42,7 @@ public class RoomPlanActivity extends AppCompatActivity implements View.OnClickL
     private TextView btnSettings;
     private TextView btnLogout;
     private User user;
+    private AppController appController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,25 @@ public class RoomPlanActivity extends AppCompatActivity implements View.OnClickL
             this.getSupportActionBar().hide();
         }
         catch (NullPointerException e){}
+
+        appController = AppController.getInstance();
+        appController.init(this);
+
+        if(appController.getLanguage().equals("ko")){
+            Locale locale = new Locale("ko");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
+        else{
+            Locale locale = new Locale("en");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
+
         setContentView(R.layout.activity_room_plan);
         Intent roomPlanIntent = new Intent(this.getIntent());
         user = (User) roomPlanIntent.getSerializableExtra("user");
@@ -68,17 +92,8 @@ public class RoomPlanActivity extends AppCompatActivity implements View.OnClickL
         frameSelectMenu.bringChildToFront(slideLayout);
 //
         txtRoomGuide = (TextView)findViewById(R.id.txt_room_guide);
-    btnBackToRoomSelect = (Button)findViewById(R.id.btn_back_to_room_select);
-
 
     txtRoomGuide.setText(roomPlanIntent.getExtras().getString("room_number_to_plan") + "호 강의실 사진");
-
-    btnBackToRoomSelect.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            finish();
-        }
-    });
 
         btnToMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +101,15 @@ public class RoomPlanActivity extends AppCompatActivity implements View.OnClickL
                 Intent toMainMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
                 toMainMenuIntent.putExtra("user",user);
                 startActivity(toMainMenuIntent);
+            }
+        });
+
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toSettingIntent = new Intent(getApplicationContext(), SettingActivity.class);
+                toSettingIntent.putExtra("user",user);
+                startActivity(toSettingIntent);
             }
         });
 

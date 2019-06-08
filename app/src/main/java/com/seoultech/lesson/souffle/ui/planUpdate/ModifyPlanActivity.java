@@ -1,8 +1,9 @@
-package com.seoultech.lesson.souffle.ui.PlanUpdate;
+package com.seoultech.lesson.souffle.ui.planUpdate;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -22,21 +23,17 @@ import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.controller.AppController;
 import com.seoultech.lesson.souffle.data.model.Reservation;
 import com.seoultech.lesson.souffle.data.model.User;
-import com.seoultech.lesson.souffle.ui.adapter.DeleteListener;
-import com.seoultech.lesson.souffle.ui.adapter.ModifyInsertActivity;
+import com.seoultech.lesson.souffle.ui.Setting.SettingActivity;
 import com.seoultech.lesson.souffle.ui.adapter.ModifyListener;
-import com.seoultech.lesson.souffle.ui.adapter.ReservationListAdapter;
 import com.seoultech.lesson.souffle.ui.adapter.ReservationModifyAdapter;
-import com.seoultech.lesson.souffle.ui.add_Plan.AddOptionActivity;
+import com.seoultech.lesson.souffle.ui.add_plan.AddOptionActivity;
 import com.seoultech.lesson.souffle.ui.login.LoginActivity;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
-import com.seoultech.lesson.souffle.ui.viewing.RoomPlanActivity;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ModifyPlanActivity extends AppCompatActivity implements View.OnClickListener, ModifyListener {
     private AppController appController;
@@ -66,6 +63,25 @@ public class ModifyPlanActivity extends AppCompatActivity implements View.OnClic
             this.getSupportActionBar().hide();
         } catch (NullPointerException e) {
         }
+
+        appController = AppController.getInstance();
+        appController.init(this);
+
+        if(appController.getLanguage().equals("ko")){
+            Locale locale = new Locale("ko");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
+        else{
+            Locale locale = new Locale("en");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
+
         setContentView(R.layout.activity_modify_plan);
         appController = AppController.getInstance();
         Intent deletePlanIntent = new Intent(this.getIntent());
@@ -86,7 +102,6 @@ public class ModifyPlanActivity extends AppCompatActivity implements View.OnClic
 
         backPressCloseHandler = new BackPressCloseHandler(this);
 
-        btnBackToMain = (Button)findViewById(R.id.btn_back_main);
         btnSettings = (TextView)findViewById(R.id.btn_setting_in_modify_plan);
         btnLogout = (TextView)findViewById(R.id.btn_logout_in_modify_plan);
 
@@ -96,6 +111,16 @@ public class ModifyPlanActivity extends AppCompatActivity implements View.OnClic
         listView_modify.setAdapter(reservationModifyAdapter);
 
         ProgressDialog progressDialogInDO = new ProgressDialog(ModifyPlanActivity.this);
+
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toSettingIntent = new Intent(getApplicationContext(), SettingActivity.class);
+                toSettingIntent.putExtra("user",user);
+                startActivity(toSettingIntent);
+                anim();
+            }
+        });
 
         new AsyncTask<Integer, Integer, List<Reservation>>() {
             @Override
@@ -141,14 +166,7 @@ public class ModifyPlanActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
-        btnBackToMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent toMainMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
-                toMainMenuIntent.putExtra("user",user);
-                startActivity(toMainMenuIntent);
-            }
-        });
+
 
         btnToMain.setOnClickListener(new View.OnClickListener() {
             @Override

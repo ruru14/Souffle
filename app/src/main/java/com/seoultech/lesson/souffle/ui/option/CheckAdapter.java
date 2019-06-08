@@ -1,9 +1,8 @@
 package com.seoultech.lesson.souffle.ui.option;
 
 import android.view.View;
-import android.widget.CheckBox;
 
-import com.seoultech.lesson.souffle.ui.add_Plan.TimeReserveActivity;
+import com.seoultech.lesson.souffle.ui.add_plan.TimeReserveActivity;
 
 import java.util.ArrayList;
 

@@ -233,22 +233,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id = "@+id/btn_109_plan"
-                android:text = "109호"/>
+                android:text = "@string/room_109"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id = "@+id/btn_111_plan"
-                android:text = "111호"/>
+                android:text = "@string/room_111"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id = "@+id/btn_113_plan"
-                android:text = "113호"/>
+                android:text = "@string/room_113"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id = "@+id/btn_115_plan"
-                android:text = "115호"/>
+                android:text = "@string/room_115"/>
         </GridLayout>
         <GridLayout
             android:id = "@+id/grid_mirae_2nd_floor"
@@ -258,22 +258,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id = "@+id/btn_209_plan"
-                android:text = "209호"/>
+                android:text = "@string/room_209"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id = "@+id/btn_211_plan"
-                android:text = "211호"/>
+                android:text = "@string/room_211"/>
             <Button
                 android:id = "@+id/btn_213_plan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "213호"/>
+                android:text = "@string/room_213"/>
             <Button
                 android:id = "@+id/btn_215_plan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "215호"/>
+                android:text = "@string/room_215"/>
         </GridLayout>
         <GridLayout
             android:id = "@+id/grid_mirae_3rd_floor"
@@ -283,17 +283,17 @@
                 android:id = "@+id/btn_301_plan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "301호"/>
+                android:text = "@string/room_301"/>
             <Button
                 android:id = "@+id/btn_305_plan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "305호"/>
+                android:text = "@string/room_305"/>
             <Button
                 android:id = "@+id/btn_309_plan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "309호"/>
+                android:text = "@string/room_309"/>
         </GridLayout>
         <GridLayout
             android:id = "@+id/grid_mirae_4th_floor"
@@ -303,17 +303,17 @@
                 android:id = "@+id/btn_401_plan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "401호"/>
-            <Button
-                android:id = "@+id/btn_403_plan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text = "403호"/>
+                android:text = "@string/room_401"/>
             <Button
                 android:id = "@+id/btn_405_plan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "405호"/>
+                android:text = "@string/room_405"/>
+            <Button
+                android:id = "@+id/btn_409_plan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "@string/room_409"/>
         </GridLayout>
         <GridLayout
             android:id = "@+id/grid_mirae_5th_floor"
@@ -323,17 +323,17 @@
                 android:id = "@+id/btn_501_plan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "501호"/>
+                android:text = "@string/room_501"/>
             <Button
                 android:id = "@+id/btn_505_plan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "505호"/>
+                android:text = "@string/room_505"/>
             <Button
                 android:id = "@+id/btn_509_plan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "509호"/>
+                android:text = "@string/room_509"/>
         </GridLayout>
         <GridLayout
             android:id = "@+id/grid_mirae_b1th_floor"
@@ -343,28 +343,20 @@
                 android:id = "@+id/btn_b101_plan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "b101호"/>
+                android:text = "@string/room_b101"/>
             <Button
                 android:id = "@+id/btn_b105_plan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "b105호"/>
+                android:text = "@string/room_b105"/>
             <Button
                 android:id = "@+id/btn_b109_plan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "b109호"/>
+                android:text = "@string/room_b109"/>
         </GridLayout>
     </FrameLayout>
 
-    <Button
-        android:id="@+id/btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_alignEnd="@+id/image_floor_plan"
-        android:layout_below="@+id/image_floor_plan"
-        android:text="뒤로가기" />
     </LinearLayout>
 
     </FrameLayout>

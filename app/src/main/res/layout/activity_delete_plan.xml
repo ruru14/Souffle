@@ -205,7 +205,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="예약 내용 삭제"
+                android:text="@string/delete_plan"
                 android:textSize="30dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginBottom="50dp"/>
@@ -223,13 +223,7 @@
             <LinearLayout
                 android:gravity="right"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id = "@+id/btn_back_main"
-                    android:text = "뒤로 가기"/>
-            </LinearLayout>
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </FrameLayout>
 </LinearLayout>

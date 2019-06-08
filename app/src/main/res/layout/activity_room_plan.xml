@@ -117,7 +117,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="55dp"
                             android:textSize="22dp"
-                            android:text ="처음으로"/>
+                            android:text ="@string/toMain"/>
                     </LinearLayout>
                     <ImageView
                         android:background="#e2e2e2"
@@ -146,7 +146,7 @@
                             android:id = "@+id/btn_setting_in_room_plan"
                             android:layout_width="match_parent"
                             android:layout_height="55dp"
-                            android:text = "설정"
+                            android:text = "@string/setting"
                             android:textSize="22dp" />
                     </LinearLayout>
                     <ImageView
@@ -173,7 +173,7 @@
                             android:id = "@+id/btn_logout_in_room_plan"
                             android:layout_width="match_parent"
                             android:layout_height="55dp"
-                            android:text="로그아웃"
+                            android:text="@string/logout"
                             android:textSize="22dp"/>
                     </LinearLayout>
                     <ImageView
@@ -202,12 +202,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/floor_mirae_1st" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="뒤로 가기"
-        android:layout_gravity="right"
-        android:id = "@+id/btn_back_to_room_select"/>
     </LinearLayout>
     </FrameLayout>
 

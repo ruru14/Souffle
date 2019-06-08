@@ -1,7 +1,8 @@
-package com.seoultech.lesson.souffle.ui.add_Plan;
+package com.seoultech.lesson.souffle.ui.add_plan;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -17,13 +18,15 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.controller.AppController;
 import com.seoultech.lesson.souffle.data.model.User;
+import com.seoultech.lesson.souffle.ui.Setting.SettingActivity;
 import com.seoultech.lesson.souffle.ui.login.LoginActivity;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
-import com.seoultech.lesson.souffle.ui.viewing.RoomPlanActivity;
+
+import java.util.Locale;
 
 import butterknife.ButterKnife;
 
@@ -46,6 +49,7 @@ public class SelectBuildingActivity extends AppCompatActivity implements View.On
     private TextView btnToMain, btnUserInfo, btnSettings, btnLogout;
     private User user;
     private Spinner buildingSelecter;
+    private AppController appController;
 
 
     @Override
@@ -56,6 +60,24 @@ public class SelectBuildingActivity extends AppCompatActivity implements View.On
             this.getSupportActionBar().hide();
         }
         catch (NullPointerException e){}
+
+        appController = AppController.getInstance();
+        appController.init(this);
+
+        if(appController.getLanguage().equals("ko")){
+            Locale locale = new Locale("ko");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
+        else{
+            Locale locale = new Locale("en");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
         setContentView(R.layout.activity_select_building);
 
         Intent selectBuildingIntent = new Intent(this.getIntent());
@@ -82,6 +104,7 @@ public class SelectBuildingActivity extends AppCompatActivity implements View.On
         btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
 
         String[] buildingLayer = new String[]{"선택하세요", "미래관", "건물A", "건물B", "건물C"};
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, buildingLayer);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         buildingSelecter.setOnItemSelectedListener((OnItemSelectedListener) this);
@@ -93,6 +116,7 @@ public class SelectBuildingActivity extends AppCompatActivity implements View.On
                 toRoomSelectIntent.putExtra("building_name",buildingName);
                 toRoomSelectIntent.putExtra("user",user);
                 startActivity(toRoomSelectIntent);
+                anim();
             }
         });
 
@@ -112,6 +136,15 @@ public class SelectBuildingActivity extends AppCompatActivity implements View.On
                     }
                 });
                 logoutDlg.show();
+            }
+        });
+
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toSettingIntent = new Intent(getApplicationContext(), SettingActivity.class);
+                toSettingIntent.putExtra("user",user);
+                startActivity(toSettingIntent);
             }
         });
 

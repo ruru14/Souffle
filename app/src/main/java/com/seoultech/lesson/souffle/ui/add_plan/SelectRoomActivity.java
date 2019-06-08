@@ -1,7 +1,8 @@
-package com.seoultech.lesson.souffle.ui.add_Plan;
+package com.seoultech.lesson.souffle.ui.add_plan;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -20,12 +21,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.controller.AppController;
 import com.seoultech.lesson.souffle.data.model.User;
+import com.seoultech.lesson.souffle.ui.Setting.SettingActivity;
 import com.seoultech.lesson.souffle.ui.login.LoginActivity;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.viewing.FloorPlanActivity;
-import com.seoultech.lesson.souffle.ui.viewing.RoomPlanActivity;
+
+import java.util.Locale;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
@@ -60,6 +64,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
     private FrameLayout frameSelectMenu;
     private TextView btnToMain, btnUserInfo, btnSettings, btnLogout;
     private User user;
+    private AppController appController;
 
 
     @Override
@@ -70,6 +75,24 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
             this.getSupportActionBar().hide();
         }
         catch (NullPointerException e){}
+
+        appController = AppController.getInstance();
+        appController.init(this);
+
+        if(appController.getLanguage().equals("ko")){
+            Locale locale = new Locale("ko");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
+        else{
+            Locale locale = new Locale("en");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
         setContentView(R.layout.activity_select_room);
 
         backPressCloseHandler = new BackPressCloseHandler(this);
@@ -97,7 +120,6 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
         btnSettings = (TextView)findViewById(R.id.btn_setting_in_select_room);
         btnLogout = (TextView)findViewById(R.id.btn_logout_in_select_room);
         btnLayerSelect = (Button) findViewById(R.id.btn_layer_select);
-        btnReturnMain = (Button) findViewById(R.id.btn_Return_Main);
 
         btn_109 = (Button) findViewById(R.id.btn_109);
         btn_111 = (Button) findViewById(R.id.btn_111);
@@ -113,13 +135,13 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
         btn_305 = (Button) findViewById(R.id.btn_305);
         btn_309 = (Button) findViewById(R.id.btn_309);
 
-        btn_401 = (Button) findViewById(R.id.btn_301);
-        btn_405 = (Button) findViewById(R.id.btn_305);
-        btn_409 = (Button) findViewById(R.id.btn_309);
+        btn_401 = (Button) findViewById(R.id.btn_401);
+        btn_405 = (Button) findViewById(R.id.btn_405);
+        btn_409 = (Button) findViewById(R.id.btn_409);
 
-        btn_501 = (Button) findViewById(R.id.btn_301);
-        btn_505 = (Button) findViewById(R.id.btn_305);
-        btn_509 = (Button) findViewById(R.id.btn_309);
+        btn_501 = (Button) findViewById(R.id.btn_501);
+        btn_505 = (Button) findViewById(R.id.btn_505);
+        btn_509 = (Button) findViewById(R.id.btn_509);
 
         btn_b101 = (Button) findViewById(R.id.btn_b101);
         btn_b105 = (Button) findViewById(R.id.btn_b105);
@@ -134,17 +156,15 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
         gridFifthFloor = (GridLayout)findViewById(R.id.grid_fifth_floor);
         gridB1Floor = (GridLayout)findViewById(R.id.grid_b1_floor);
 
-
         toFloorPlanIntent = new Intent(getApplicationContext(), FloorPlanActivity.class);
         toTimeReserveIntent = new Intent(getApplicationContext(), TimeReserveActivity.class);
 
-        spinnerLayer.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
         floorLayer = new String[]{"선택하세요", "B1F", "1F", "2F", "3F", "4F", "5F"};
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, floorLayer);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerLayer.setAdapter(adapter);
 
+        spinnerLayer.setOnItemSelectedListener(this);
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,13 +185,6 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
             }
         });
 
-        btnReturnMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent toMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
-                startActivity(toMenuIntent);
-            }
-        });
 
         btn_109.setOnClickListener(this);        btn_111.setOnClickListener(this);
         btn_113.setOnClickListener(this);        btn_115.setOnClickListener(this);
@@ -197,6 +210,16 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
                 Intent toMainMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
                 toMainMenuIntent.putExtra("user",user);
                 startActivity(toMainMenuIntent);
+            }
+        });
+
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toSettingIntent = new Intent(getApplicationContext(), SettingActivity.class);
+                toSettingIntent.putExtra("user",user);
+                startActivity(toSettingIntent);
+                anim();
             }
         });
 

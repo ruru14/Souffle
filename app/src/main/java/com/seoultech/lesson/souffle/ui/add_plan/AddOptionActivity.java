@@ -1,8 +1,9 @@
-package com.seoultech.lesson.souffle.ui.add_Plan;
+package com.seoultech.lesson.souffle.ui.add_plan;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -22,10 +23,12 @@ import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.controller.AppController;
 import com.seoultech.lesson.souffle.data.model.Reservation;
 import com.seoultech.lesson.souffle.data.model.User;
+import com.seoultech.lesson.souffle.ui.Setting.SettingActivity;
 import com.seoultech.lesson.souffle.ui.login.LoginActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
-import com.seoultech.lesson.souffle.ui.viewing.RoomPlanActivity;
+
+import java.util.Locale;
 
 public class AddOptionActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -69,6 +72,25 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
             this.getSupportActionBar().hide();
         }
         catch (NullPointerException e){}
+
+        appController = AppController.getInstance();
+        appController.init(this);
+
+        if(appController.getLanguage().equals("ko")){
+            Locale locale = new Locale("ko");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
+        else{
+            Locale locale = new Locale("en");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
+
         setContentView(R.layout.activity_add_option);
         Intent AddOptionIntent = new Intent(this.getIntent());
 
@@ -206,14 +228,14 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
 
                 if(boolModify == false) {
                     reservation = new Reservation(Integer.parseInt(roomNum),
-                            year + " - " + month +  " - " + day,
+                            year + "-" + month +  "-" + day,
                             user.getStudentNumber(),
                             user.getName(),
                             editObjective.getText().toString(),
                             Integer.parseInt(editPeopleNumber.getText().toString()),
                             fromTime,
                             toTime,
-                            editBuilding.getText().toString());
+                            building_name);
                 }
                 else{
                     reservation = (Reservation) AddOptionIntent.getSerializableExtra("reservation_modify");
@@ -288,6 +310,17 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
                 reserveCommitDlg.show();
             }
         });
+
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toSettingIntent = new Intent(getApplicationContext(), SettingActivity.class);
+                toSettingIntent.putExtra("user",user);
+                startActivity(toSettingIntent);
+                anim();
+            }
+        });
+
 
         btnToMain.setOnClickListener(new View.OnClickListener() {
             @Override

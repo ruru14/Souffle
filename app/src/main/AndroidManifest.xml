@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
     package="com.seoultech.lesson.souffle">
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
@@ -23,7 +24,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.add_Plan.SelectRoomActivity">
+        <activity android:name=".ui.add_plan.SelectRoomActivity">
 
         </activity>
 
@@ -31,32 +32,32 @@
 
         </activity>
 
-        <activity android:name=".ui.add_Plan.TimeReserveActivity">
+        <activity android:name=".ui.add_plan.TimeReserveActivity">
 
         </activity>
-        <activity android:name=".ui.add_Plan.SelectBuildingActivity">
+        <activity android:name=".ui.add_plan.SelectBuildingActivity">
 
         </activity>
 
         <activity android:name=".ui.login.SelectMenuActivity">
 
         </activity>
-        <activity android:name=".ui.PlanUpdate.DeletePlanActivity">
+        <activity android:name=".ui.planUpdate.DeletePlanActivity">
 
         </activity>
-        <activity android:name=".ui.PlanUpdate.SearchPlanActivity">
+        <activity android:name=".ui.planUpdate.SearchPlanActivity">
 
         </activity>
-        <activity android:name=".ui.add_Plan.AddOptionActivity">
+        <activity android:name=".ui.add_plan.AddOptionActivity">
 
         </activity>
         <activity android:name=".ui.viewing.RoomPlanActivity">
 
     </activity>
-        <activity android:name=".ui.PlanUpdate.ModifyPlanActivity">
+        <activity android:name=".ui.planUpdate.ModifyPlanActivity">
 
         </activity>
-        <activity android:name=".ui.adapter.SettingActivity">
+        <activity android:name=".ui.Setting.SettingActivity">
 
         </activity>
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -17,13 +18,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.controller.AppController;
 import com.seoultech.lesson.souffle.data.model.User;
-import com.seoultech.lesson.souffle.ui.PlanUpdate.DeletePlanActivity;
-import com.seoultech.lesson.souffle.ui.PlanUpdate.ModifyPlanActivity;
-import com.seoultech.lesson.souffle.ui.adapter.SettingActivity;
-import com.seoultech.lesson.souffle.ui.add_Plan.SelectBuildingActivity;
-import com.seoultech.lesson.souffle.ui.PlanUpdate.SearchPlanActivity;
+import com.seoultech.lesson.souffle.ui.planUpdate.DeletePlanActivity;
+import com.seoultech.lesson.souffle.ui.planUpdate.ModifyPlanActivity;
+import com.seoultech.lesson.souffle.ui.Setting.SettingActivity;
+import com.seoultech.lesson.souffle.ui.add_plan.SelectBuildingActivity;
+import com.seoultech.lesson.souffle.ui.planUpdate.SearchPlanActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
+
+import java.util.Locale;
 
 public class SelectMenuActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -42,6 +46,7 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
     private TextView btnSetting;
     private User user;
     private TextView btnLogout;
+    private AppController appController;
 
     private Toast toast;
     private long backKeyPressedTime = 0;
@@ -58,6 +63,25 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
             this.getSupportActionBar().hide();
         }
         catch (NullPointerException e){}
+
+        appController = AppController.getInstance();
+        appController.init(this);
+
+        if(appController.getLanguage().equals("ko")){
+            Locale locale = new Locale("ko");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
+        else{
+            Locale locale = new Locale("en");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
+
         setContentView(R.layout.activity_select_menu);
 
         selectMenuIntent = new Intent(this.getIntent());
@@ -87,6 +111,8 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
 
         btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
 
+
+
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,14 +139,6 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent toLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(toLoginIntent);
-                finishActivity(0);
-            }
-        });
 
        linearPlanAdd.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -179,7 +197,10 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
             public void onClick(View v) {
                 Intent toSettingIntent = new Intent(getApplicationContext(), SettingActivity.class);
                 toSettingIntent.putExtra("user",user);
+                toSettingIntent.putExtra("activity", SelectMenuActivity.class);
                 startActivity(toSettingIntent);
+                finishActivity(0);
+                anim();
             }
         });
 

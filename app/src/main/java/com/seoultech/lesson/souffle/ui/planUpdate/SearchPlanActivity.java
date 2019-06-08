@@ -1,8 +1,9 @@
-package com.seoultech.lesson.souffle.ui.PlanUpdate;
+package com.seoultech.lesson.souffle.ui.planUpdate;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -21,15 +22,16 @@ import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.controller.AppController;
 import com.seoultech.lesson.souffle.data.model.Reservation;
 import com.seoultech.lesson.souffle.data.model.User;
+import com.seoultech.lesson.souffle.ui.Setting.SettingActivity;
 import com.seoultech.lesson.souffle.ui.adapter.ReservationListAdapter;
 import com.seoultech.lesson.souffle.ui.login.LoginActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.adapter.ItemData;
-import com.seoultech.lesson.souffle.ui.viewing.RoomPlanActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SearchPlanActivity extends AppCompatActivity implements View.OnClickListener{
     public int rYear;
@@ -63,6 +65,22 @@ public class SearchPlanActivity extends AppCompatActivity implements View.OnClic
         }
         catch (NullPointerException e){}
         appController = AppController.getInstance();
+        appController.init(this);
+
+        if(appController.getLanguage().equals("ko")){
+            Locale locale = new Locale("ko");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
+        else{
+            Locale locale = new Locale("en");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
         setContentView(R.layout.activity_search_plan);
         Intent updatePlanIntent = new Intent(this.getIntent());
         user = (User) updatePlanIntent.getSerializableExtra("user");
@@ -125,7 +143,15 @@ public class SearchPlanActivity extends AppCompatActivity implements View.OnClic
 
         backPressCloseHandler = new BackPressCloseHandler(this);
 
-        btnBackToMain = (Button)findViewById(R.id.btn_back_main);
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toSettingIntent = new Intent(getApplicationContext(), SettingActivity.class);
+                toSettingIntent.putExtra("user",user);
+                startActivity(toSettingIntent);
+                anim();
+            }
+        });
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,14 +172,6 @@ public class SearchPlanActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
-        btnBackToMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent toMainMenuIntent = new Intent(getApplicationContext(), SelectMenuActivity.class);
-                toMainMenuIntent.putExtra("user",user);
-                startActivity(toMainMenuIntent);
-            }
-        });
 
         btnToMain.setOnClickListener(new View.OnClickListener() {
             @Override

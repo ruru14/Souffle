@@ -118,7 +118,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="55dp"
                             android:textSize="22dp"
-                            android:text ="처음으로"/>
+                            android:text ="@string/toMain"/>
                     </LinearLayout>
                     <ImageView
                         android:background="#e2e2e2"
@@ -147,7 +147,7 @@
                             android:id = "@+id/btn_setting_in_select_building"
                             android:layout_width="match_parent"
                             android:layout_height="55dp"
-                            android:text = "설정"
+                            android:text = "@string/setting"
                             android:textSize="22dp" />
                     </LinearLayout>
                     <ImageView
@@ -174,7 +174,7 @@
                             android:id = "@+id/btn_logout_in_select_building"
                             android:layout_width="match_parent"
                             android:layout_height="55dp"
-                            android:text="로그아웃"
+                            android:text="@string/logout"
                             android:textSize="22dp"/>
                     </LinearLayout>
                     <ImageView
@@ -195,7 +195,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30dp"
-        android:text = "건물 선택"/>
+        android:text = "@string/select_building"/>
 
     <ScrollView
         android:padding = "30dp"
@@ -206,19 +206,24 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <LinearLayout
+                android:outlineSpotShadowColor="#99FFFFFF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <Spinner
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="70dp"
+                android:scrollbarSize="150dp"
                 android:id="@+id/spinner_building"
                 android:layout_margin="20dp"/>
-
+            </LinearLayout>
 
             <LinearLayout
                 android:gravity="right"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <Button
-                android:text = "확인"
+                android:text = "@string/ok"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id = "@+id/btn_selectBuilding"/>

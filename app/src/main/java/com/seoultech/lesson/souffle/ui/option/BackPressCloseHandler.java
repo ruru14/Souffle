@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
@@ -27,6 +28,10 @@ public class BackPressCloseHandler extends AppCompatActivity{
 
     public void onBackPressed() {
         activity.finish();
+    }
+
+    public void onBackPressed(int i){
+
     }
 
     public void showGuide() {

@@ -2,6 +2,7 @@ package com.seoultech.lesson.souffle.ui.viewing;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -17,12 +18,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.seoultech.lesson.souffle.R;
+import com.seoultech.lesson.souffle.controller.AppController;
 import com.seoultech.lesson.souffle.data.model.User;
+import com.seoultech.lesson.souffle.ui.Setting.SettingActivity;
 import com.seoultech.lesson.souffle.ui.login.LoginActivity;
 import com.seoultech.lesson.souffle.ui.login.SelectMenuActivity;
 import com.seoultech.lesson.souffle.ui.option.BackPressCloseHandler;
 
 import org.w3c.dom.Text;
+
+import java.util.Locale;
 
 public class FloorPlanActivity extends AppCompatActivity implements  View.OnClickListener{
 
@@ -36,7 +41,7 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
     private GridLayout gridMiraeFirstFloor, gridMiraeSecondFloor, gridMiraeThirdFloor, gridMiraeFourthFloor,
             gridMiraeFifthFloor, gridMiraeB1thFloor;
     private Button btn109Room, btn111Room, btn113Room, btn115Room, btn209Room, btn211Room, btn213Room, btn215Room,
-            btn301Room, btn305Room, btn309Room, btn401Room, btn403Room, btn405Room, btn501Room, btn505Room, btn509Room,
+            btn301Room, btn305Room, btn309Room, btn401Room, btn405Room, btn409Room, btn501Room, btn505Room, btn509Room,
             btnB101Room, btnB105Room, btnB109Room;
 
     private Animation pullFromRight, pushToRight;
@@ -49,6 +54,7 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
     private TextView btnSettings;
     private TextView btnLogout;
     private User user;
+    private AppController appController;
 
 
 
@@ -61,6 +67,25 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
             this.getSupportActionBar().hide();
         }
         catch (NullPointerException e){}
+
+        appController = AppController.getInstance();
+        appController.init(this);
+
+        if(appController.getLanguage().equals("ko")){
+            Locale locale = new Locale("ko");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
+        else{
+            Locale locale = new Locale("en");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        }
+
         setContentView(R.layout.activity_floor_plan);
         Intent FloorPlanIntent = new Intent(this.getIntent());
         user = (User) FloorPlanIntent.getSerializableExtra("user");
@@ -90,7 +115,6 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
         gridMiraeFifthFloor = (GridLayout)findViewById(R.id.grid_mirae_5th_floor);
         gridMiraeB1thFloor = (GridLayout)findViewById(R.id.grid_mirae_b1th_floor);
 
-        btnBack = (Button) findViewById(R.id.btn_back);
         guide = (TextView) findViewById(R.id.txt_guide);
 
         ImageView image_floor_plan = (ImageView) findViewById(R.id.image_floor_plan);
@@ -114,8 +138,8 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
         btn309Room = (Button)findViewById(R.id.btn_309_plan);
 
         btn401Room = (Button)findViewById(R.id.btn_401_plan);
-        btn403Room = (Button)findViewById(R.id.btn_403_plan);
         btn405Room = (Button)findViewById(R.id.btn_405_plan);
+        btn409Room = (Button)findViewById(R.id.btn_409_plan);
 
         btn501Room = (Button)findViewById(R.id.btn_501_plan);
         btn505Room = (Button)findViewById(R.id.btn_505_plan);
@@ -135,8 +159,8 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
         btn301Room.setOnClickListener(this);        btn305Room.setOnClickListener(this);
         btn309Room.setOnClickListener(this);
 
-        btn401Room.setOnClickListener(this);        btn403Room.setOnClickListener(this);
-        btn405Room.setOnClickListener(this);
+        btn401Room.setOnClickListener(this);        btn405Room.setOnClickListener(this);
+        btn409Room.setOnClickListener(this);
 
         btn501Room.setOnClickListener(this);        btn505Room.setOnClickListener(this);
         btn509Room.setOnClickListener(this);
@@ -212,15 +236,6 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
             }
         }
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Intent To_Floor_Select_intent = new Intent(getApplicationContext(), SelectRoomActivity.class);
-                //startActivity(To_Floor_Select_intent);
-                onBackPressed();
-            }
-        });
-
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -237,6 +252,14 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
                     }
                 });
                 logoutDlg.show();
+            }
+        });
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toSettingIntent = new Intent(getApplicationContext(), SettingActivity.class);
+                toSettingIntent.putExtra("user",user);
+                startActivity(toSettingIntent);
             }
         });
 
@@ -337,13 +360,13 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
                 toRoomPlanIntent.putExtra("user",user);
                 startActivity(toRoomPlanIntent);
                 break;
-            case R.id.btn_403_plan:
-                toRoomPlanIntent.putExtra("room_number_to_plan","403");
+            case R.id.btn_405_plan:
+                toRoomPlanIntent.putExtra("room_number_to_plan","405");
                 toRoomPlanIntent.putExtra("user",user);
                 startActivity(toRoomPlanIntent);
                 break;
-            case R.id.btn_405_plan:
-                toRoomPlanIntent.putExtra("room_number_to_plan","405");
+            case R.id.btn_409_plan:
+                toRoomPlanIntent.putExtra("room_number_to_plan","409");
                 toRoomPlanIntent.putExtra("user",user);
                 startActivity(toRoomPlanIntent);
                 break;

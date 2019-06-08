@@ -1,0 +1,66 @@
+<resources>
+
+    <string name="app_name">Souffle</string>
+
+    <string name="ok">ok</string>
+    <string name="yes">yes</string>
+
+    <string name="title">Lecture Room Reserving Program</string>
+    <string name="isAutoLogin">AutoLogin</string>
+    <string name="add_reserve">Add Reserve</string>
+    <string name="modify_reserve">Modify Reserve</string>
+    <string name="delete_reserve">Delete Reserve</string>
+    <string name="search_reserve">Search Reserve</string>
+    <string name="select_building">Select Building</string>
+    <string name="please_select">"Please Select"</string>
+    <string name="select_layer">Select LectureRoom</string>
+    <string name="see_floor_plan">See layer drawing</string>
+    <string name="see_room_plan">See LectureRoom drawing</string>
+    <string name="select_date_and_time">Select Date and Time</string>
+    <string name="select_date">Select Date</string>
+    <string name="input_details">Input Details</string>
+    <string name="search_plan">Search Your Plan</string>
+    <string name="modify_plan">Modify Your Plan</string>
+    <string name="delete_plan">Delete Your Plan</string>
+
+    <string name="setting">Setting</string>
+    <string name="logout">Logout</string>
+    <string name="toMain">Go to Main</string>
+
+    <string name="student_number">Student Number</string>
+    <string name="name">Name</string>
+    <string name="phone_number">Cell</string>
+    <string name="reserve_time">Reserve Time</string>
+    <string name="building_name">Building Name</string>
+    <string name="total_number">Total Number</string>
+    <string name="lecture_room">Lecture Room</string>
+    <string name="purpose">Purpose</string>
+
+    <string name="room_109">Room 109</string>
+    <string name="room_111">Room 111</string>
+    <string name="room_113">Room 113</string>
+    <string name="room_115">Room 115</string>
+
+    <string name="room_209">Room 209</string>
+    <string name="room_211">Room 211</string>
+    <string name="room_213">Room 213</string>
+    <string name="room_215">Room 215</string>
+
+    <string name="room_301">Room 301</string>
+    <string name="room_305">Room 305</string>
+    <string name="room_309">Room 309</string>
+
+    <string name="room_401">Room 401</string>
+    <string name="room_405">Room 405</string>
+    <string name="room_409">Room 409</string>
+
+    <string name="room_501">Room 501</string>
+    <string name="room_505">Room 505</string>
+    <string name="room_509">Room 509</string>
+
+    <string name="room_b101">Room b101</string>
+    <string name="room_b105">Room b105</string>
+    <string name="room_b109">Room b109</string>
+
+
+</resources>
