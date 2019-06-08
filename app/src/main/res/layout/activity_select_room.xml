@@ -194,26 +194,21 @@
         android:orientation="vertical">
     <TextView
         android:layout_marginBottom="20dp"
-        android:id="@+id/textView2"
+        android:id="@+id/txt_select_lectureroom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30dp"
-        android:text="@string/select_layer" />
+        android:text="@string/select_lectureroom" />
     <Spinner
         android:id="@+id/spinner_layer"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView2"
-        android:layout_marginTop="20dp" />
-    <Button
-        android:id="@+id/btn_layer_select"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/spinner_layer"
-        android:text="@string/ok" />
-    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="60dp"/>
+
+        <TextView
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
         android:id="@+id/textView4"

@@ -86,6 +86,7 @@ public class SelectBuildingActivity extends AppCompatActivity implements View.On
 
         ButterKnife.bind(this);
 
+
         btnToMain = (TextView) findViewById(R.id.btn_to_main_in_select_building);
         btnUserInfo = (TextView) findViewById(R.id.btn_userInfo_in_select_building);
         btnSettings = (TextView)findViewById(R.id.btn_setting_in_select_building);
@@ -160,6 +161,15 @@ public class SelectBuildingActivity extends AppCompatActivity implements View.On
 
         fabMenu.setOnClickListener(this);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TextView txt_select_building = findViewById(R.id.txt_select_building);
+        txt_select_building.setText(R.string.select_building);
+        btnSelectBuilding.setText(R.string.ok);
+    }
+
 
     @Override
     public void onClick(View v) {

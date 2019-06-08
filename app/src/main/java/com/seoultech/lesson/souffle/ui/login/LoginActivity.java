@@ -48,6 +48,8 @@ public class LoginActivity extends AppCompatActivity {
     private Activity activity;
     private Context context;
 
+    private TextView txt_title,txt_autoLogin;
+
 
     private BackPressCloseHandler backPressCloseHandler;
 
@@ -95,7 +97,11 @@ public class LoginActivity extends AppCompatActivity {
         toFloorSelectIntent = new Intent(this.getIntent());
         textId = (TextView) findViewById(R.id.text_id);
         textPw = (TextView) findViewById(R.id.text_pw);
-        textView = (TextView) findViewById(R.id.textView);
+        txt_title = (TextView)findViewById(R.id.txt_Title);
+        txt_autoLogin= (TextView)findViewById(R.id.txt_autoLogin);
+
+        txt_title.setText(R.string.title);
+        txt_autoLogin.setText(R.string.isAutoLogin);
 
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnExit = (Button) findViewById(R.id.btn_exit);

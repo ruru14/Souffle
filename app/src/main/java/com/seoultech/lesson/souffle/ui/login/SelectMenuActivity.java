@@ -47,6 +47,7 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
     private User user;
     private TextView btnLogout;
     private AppController appController;
+    private TextView txt_add, txt_delete, txt_modify, txt_search;
 
     private Toast toast;
     private long backKeyPressedTime = 0;
@@ -96,6 +97,8 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         linearPlanModify = (LinearLayout)findViewById(R.id.linear_plan_modify);
         linearPlanUpdate = (LinearLayout)findViewById(R.id.linear_plan_update);
 
+
+
         btnToMain = (TextView)findViewById(R.id.btn_to_main_in_selectmenu) ;
         btnLogout = (TextView)findViewById(R.id.btn_logout_in_selectmenu);
 
@@ -138,6 +141,8 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
                 logoutDlg.show();
             }
         });
+
+
 
 
        linearPlanAdd.setOnClickListener(new View.OnClickListener() {
@@ -208,6 +213,19 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
 
     }
     //onCreate End
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        txt_add = (TextView)findViewById(R.id.txt_add_reserve);
+        txt_add.setText(R.string.add_reserve);
+        txt_modify = (TextView)findViewById(R.id.txt_modify_reserve);
+        txt_modify.setText(R.string.modify_reserve);
+        txt_delete = (TextView)findViewById(R.id.txt_delete_reserve);
+        txt_delete.setText(R.string.delete_reserve);
+        txt_search = (TextView)findViewById(R.id.txt_search_reserve);
+        txt_search.setText(R.string.search_reserve);
+    }
 
 
     @Override

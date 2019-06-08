@@ -87,6 +87,7 @@ public class SearchPlanActivity extends AppCompatActivity implements View.OnClic
         ArrayList<ItemData> reservationList = new ArrayList<>();
         listViewReservation = (ListView)findViewById(R.id.listView_reservation);
 
+
         ProgressDialog progressDialogInAO = new ProgressDialog(SearchPlanActivity.this);
 
         new AsyncTask<Integer, Integer, List<Reservation>>() {
@@ -187,6 +188,15 @@ public class SearchPlanActivity extends AppCompatActivity implements View.OnClic
 
     }
     //OnCreate End
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TextView txt_search_list = findViewById(R.id.txt_search_list);
+        txt_search_list.setText(R.string.search_plan);
+    }
+
+
     @Override
     public void onClick(View v) {
         int id = v.getId();

@@ -101,6 +101,7 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
 
         spinnerLayer = (Spinner) findViewById(R.id.spinner_layer);
 
+
         btnToMain = (TextView) findViewById(R.id.btn_to_main_in_select_room);
 
         fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_select_room);
@@ -148,6 +149,8 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
         btn_b109 = (Button) findViewById(R.id.btn_b109);
 
         btnPlan = (Button) findViewById(R.id.btn_plan);
+
+
 
         gridFirstFloor = (GridLayout) findViewById(R.id.grid_first_select);
         gridSecondFloor = (GridLayout) findViewById(R.id.grid_second_floor);
@@ -233,6 +236,40 @@ public class SelectRoomActivity extends AppCompatActivity implements AdapterView
     }
 
     //OnCreate end
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TextView txt_select_lectureroom = findViewById(R.id.txt_select_lectureroom);
+        txt_select_lectureroom.setText(R.string.select_lectureroom);
+        btn_109.setText(R.string.room_109);
+        btn_111.setText(R.string.room_111);
+        btn_113.setText(R.string.room_113);
+        btn_115.setText(R.string.room_115);
+
+        btn_209.setText(R.string.room_209);
+        btn_211.setText(R.string.room_211);
+        btn_213.setText(R.string.room_213);
+        btn_215.setText(R.string.room_215);
+
+        btn_301.setText(R.string.room_301);
+        btn_305.setText(R.string.room_305);
+        btn_309.setText(R.string.room_309);
+
+        btn_401.setText(R.string.room_401);
+        btn_405.setText(R.string.room_405);
+        btn_409.setText(R.string.room_409);
+
+        btn_501.setText(R.string.room_501);
+        btn_505.setText(R.string.room_505);
+        btn_509.setText(R.string.room_509);
+
+        btn_b101.setText(R.string.room_b101);
+        btn_b105.setText(R.string.room_b105);
+        btn_b109.setText(R.string.room_b109);
+
+        btnPlan.setText(R.string.ok);
+    }
 
     public void anim() {
         if (isFabOpen) {

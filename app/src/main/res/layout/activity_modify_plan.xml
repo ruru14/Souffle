@@ -200,7 +200,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/img_modify_plan_title"/>
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/txt_modify_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/modify_plan"

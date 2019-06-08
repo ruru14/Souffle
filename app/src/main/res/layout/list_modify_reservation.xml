@@ -61,6 +61,7 @@
 
     </LinearLayout>
     <Button
+        android:layout_gravity="center_vertical"
         android:text = "수정"
         android:layout_weight="4"
         android:layout_width="match_parent"

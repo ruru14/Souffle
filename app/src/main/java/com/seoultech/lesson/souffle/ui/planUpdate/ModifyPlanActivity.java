@@ -82,6 +82,7 @@ public class ModifyPlanActivity extends AppCompatActivity implements View.OnClic
             getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         }
 
+
         setContentView(R.layout.activity_modify_plan);
         appController = AppController.getInstance();
         Intent deletePlanIntent = new Intent(this.getIntent());
@@ -198,6 +199,13 @@ public class ModifyPlanActivity extends AppCompatActivity implements View.OnClic
 
         fabMenu.setOnClickListener(this);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TextView txt_modify_plan = findViewById(R.id.txt_modify_list);
+        txt_modify_plan.setText(R.string.modify_plan);
     }
 
     @Override

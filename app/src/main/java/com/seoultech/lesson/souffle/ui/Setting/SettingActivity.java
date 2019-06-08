@@ -12,6 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.seoultech.lesson.souffle.R;
 import com.seoultech.lesson.souffle.controller.AppController;
@@ -78,6 +80,10 @@ public class SettingActivity extends AppCompatActivity implements AdapterView.On
             String getLanguage = appController.getLanguage();
             config.locale = new Locale("ko");
             getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+            Toast.makeText(getApplicationContext(),"한국어로 변경되었습니다",Toast.LENGTH_SHORT).show();
+            Intent resetIntent = getIntent();
+            finish();
+            startActivity(resetIntent);
         }
         else if(i == 2){
             appController.setLanguage("en");
@@ -85,7 +91,22 @@ public class SettingActivity extends AppCompatActivity implements AdapterView.On
             String getLanguage = appController.getLanguage();
             config.locale = new Locale("en");
             getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+            Toast.makeText(getApplicationContext(),"Translate to English",Toast.LENGTH_SHORT).show();
+            Intent resetIntent = getIntent();
+            finish();
+            startActivity(resetIntent);
         }
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        TextView txt_setting_title = findViewById(R.id.txt_setting_title);
+        txt_setting_title.setText(R.string.setting);
+        TextView txt_language = findViewById(R.id.txt_language);
+        txt_language.setText(R.string.language);
+        TextView txt_autoLogin_in_setting = findViewById(R.id.txt_autologin_in_setting);
+        txt_autoLogin_in_setting.setText(R.string.isAutoLogin);
     }
 
     @Override

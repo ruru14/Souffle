@@ -184,6 +184,11 @@ public class TimeReserveActivity extends AppCompatActivity implements View.OnCli
         sdf_date.format(currentTime.getTime());
         String today = sdf.format(currentTime);
 
+        TextView txt_select_date = findViewById(R.id.txt_select_date);
+        txt_select_date.setText(R.string.select_date_and_time);
+        btnSelectDate.setText(R.string.select_date);
+        btnDate.setText(R.string.ok);
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {

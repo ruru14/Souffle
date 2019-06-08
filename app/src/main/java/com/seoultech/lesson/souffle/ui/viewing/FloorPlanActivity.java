@@ -171,6 +171,8 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
 
 
 
+
+
         if(boolFloorPlan == 1) {
             switch (floorNumber) {         //각 층의 도면보여주기
                 case 0:
@@ -280,6 +282,36 @@ public class FloorPlanActivity extends AppCompatActivity implements  View.OnClic
         });
     }
     //onCreate End
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        btn109Room.setText(R.string.room_109);
+        btn111Room.setText(R.string.room_111);
+        btn113Room.setText(R.string.room_113);
+        btn115Room.setText(R.string.room_115);
+
+        btn209Room.setText(R.string.room_209);
+        btn211Room.setText(R.string.room_211);
+        btn213Room.setText(R.string.room_213);
+        btn215Room.setText(R.string.room_215);
+
+        btn301Room.setText(R.string.room_301);
+        btn305Room.setText(R.string.room_305);
+        btn309Room.setText(R.string.room_309);
+
+        btn401Room.setText(R.string.room_401);
+        btn405Room.setText(R.string.room_405);
+        btn409Room.setText(R.string.room_409);
+
+        btn501Room.setText(R.string.room_501);
+        btn505Room.setText(R.string.room_505);
+        btn509Room.setText(R.string.room_509);
+
+        btnB101Room.setText(R.string.room_b101);
+        btnB105Room.setText(R.string.room_b105);
+        btnB109Room.setText(R.string.room_b109);
+    }
 
     public void anim() {
         if (isFabOpen) {

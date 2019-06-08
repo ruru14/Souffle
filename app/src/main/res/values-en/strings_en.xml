@@ -13,7 +13,7 @@
     <string name="search_reserve">Search Reserve</string>
     <string name="select_building">Select Building</string>
     <string name="please_select">"Please Select"</string>
-    <string name="select_layer">Select LectureRoom</string>
+    <string name="select_lectureroom">Select LectureRoom</string>
     <string name="see_floor_plan">See layer drawing</string>
     <string name="see_room_plan">See LectureRoom drawing</string>
     <string name="select_date_and_time">Select Date and Time</string>
@@ -22,8 +22,9 @@
     <string name="search_plan">Search Your Plan</string>
     <string name="modify_plan">Modify Your Plan</string>
     <string name="delete_plan">Delete Your Plan</string>
-
     <string name="setting">Setting</string>
+    <string name="language">Languege</string>
+
     <string name="logout">Logout</string>
     <string name="toMain">Go to Main</string>
 

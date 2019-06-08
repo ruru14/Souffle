@@ -87,6 +87,9 @@ public class DeletePlanActivity extends AppCompatActivity implements View.OnClic
         Intent deletePlanIntent = new Intent(this.getIntent());
         user = (User)deletePlanIntent.getSerializableExtra("user");
 
+
+
+
         btnToMain = (TextView)findViewById(R.id.btn_to_main_in_delete_plan);
         fabMenu = (FloatingActionButton) findViewById(R.id.fab_in_delete_plan);
 
@@ -94,6 +97,8 @@ public class DeletePlanActivity extends AppCompatActivity implements View.OnClic
         btnUserInfo.setText(user.getName() + "님\n" + "학번 : " + user.getStudentNumber() + "\n" + user.getMajor());
         btnSettings = (TextView)findViewById(R.id.btn_setting_in_delete_plan);
         btnLogout = (TextView)findViewById(R.id.btn_logout_in_delete_plan);
+
+
 
         pushToRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pushtoright);
         pullFromRight = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.pullfromright);
@@ -184,6 +189,13 @@ public class DeletePlanActivity extends AppCompatActivity implements View.OnClic
         });
 
         fabMenu.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TextView txt_delete_list = findViewById(R.id.txt_delete_list);
+        txt_delete_list.setText(R.string.delete_plan);
     }
 
     @Override

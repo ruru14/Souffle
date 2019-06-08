@@ -151,6 +151,8 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
         editPhoneNumber = (EditText)findViewById(R.id.edit_phone_number);
         editName.setText(user.getName());
 
+
+
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -335,6 +337,27 @@ public class AddOptionActivity extends AppCompatActivity implements View.OnClick
 
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TextView txt_stNumber = findViewById(R.id.option_student_number);
+        txt_stNumber.setText(R.string.student_number);
+        TextView txt_name = findViewById(R.id.option_name);
+        txt_name.setText(R.string.name);
+        TextView txt_phone_number = findViewById(R.id.option_phone_number);
+        txt_phone_number.setText(R.string.phone_number);
+        TextView txt_reserve_time = findViewById(R.id.option_time);
+        txt_reserve_time.setText(R.string.reserve_time);
+        TextView txt_building = findViewById(R.id.option_building);
+        txt_building.setText(R.string.building_name);
+        TextView txt_totalPeople = findViewById(R.id.option_people_nunber);
+        txt_totalPeople.setText(R.string.total_number);
+        TextView txt_room = findViewById(R.id.option_room);
+        txt_room.setText(R.string.lecture_room);
+        TextView txt_purpose = findViewById(R.id.option_object);
+        txt_purpose.setText(R.string.purpose);
     }
 
     @Override
